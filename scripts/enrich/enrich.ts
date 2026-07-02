@@ -1,5 +1,5 @@
 /**
- * enrich.ts — the human-in-the-loop harness for the multi-agent Tier B
+ * enrich.ts: the human-in-the-loop harness for the multi-agent Tier B
  * enrichment workflow. Two modes:
  *
  *   npm run enrich:plan  [N]      # pick the next N airports missing Tier B,
@@ -71,11 +71,11 @@ function isEnriched(a: Airport): boolean {
 
 function briefFor(a: Airport): string {
   return [
-    `Airport: ${a.name} (${a.iata ?? a.icao}) — ${[a.city, a.country].filter(Boolean).join(', ')}.`,
+    `Airport: ${a.name} (${a.iata ?? a.icao}): ${[a.city, a.country].filter(Boolean).join(', ')}.`,
     `Find, WITH a source URL for each claim:`,
     `  1) Which ground handler(s) run the ramp (Swissport, Menzies, dnata, Unifi, SATS, Celebi, or a local/carrier in-house unit).`,
     `  2) Is GSE carrier-led (airline self-handles) or handler-led? Which model dominates.`,
-    `  3) Any autonomous-GSE competitor on site (TractEasy/EZTow, Aurrigo/Auto DollyTug, or others) — trial/deployed/approved.`,
+    `  3) Any autonomous-GSE competitor on site (TractEasy/EZTow, Aurrigo/Auto DollyTug, or others): trial/deployed/approved.`,
     `  4) Labor / turnover / staffing-shortage signals for ramp work at this airport or in its country.`,
     `  5) Recent news (last ~18 months) relevant to autonomous ground handling here.`,
     `If a field cannot be sourced, OMIT it (do not guess). Set confidence low unless multiple sources agree (then medium).`,
@@ -108,7 +108,7 @@ function plan(n: number) {
   console.log(`Next: run one research subagent per airport (in parallel). Each writes`)
   console.log(`results/<IATA>.json per the schema, then run: npm run enrich:merge\n`)
   for (const t of tasks) {
-    console.log(`  • ${t.id.padEnd(4)} ${t.name} — ${t.city ?? ''}, ${t.country}`)
+    console.log(`  • ${t.id.padEnd(4)} ${t.name}: ${t.city ?? ''}, ${t.country}`)
   }
 }
 

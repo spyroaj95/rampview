@@ -46,6 +46,7 @@ export interface NewsItem {
   headline: string
   url?: string
   relevance?: string //  why it matters to AeroVect
+  firstSeen?: string //  when the news-refresh run first found it (ISO)
 }
 
 export interface Airport {

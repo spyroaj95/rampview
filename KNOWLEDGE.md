@@ -1,4 +1,4 @@
-# KNOWLEDGE.md — AeroVect ground-handling intelligence primer
+# KNOWLEDGE.md: AeroVect ground-handling intelligence primer
 
 This file grounds the Tier B enrichment. It is context for humans and for the
 research subagents in `scripts/enrich/`. Treat it as background, not gospel:
@@ -9,12 +9,12 @@ anything written into `airports.json` must still carry its own source.
 AeroVect is autonomous-driving software that **retrofits existing** airport
 baggage and cargo tractors so they operate driverless, sold as
 **robotics-as-a-service** (opex, not capex). The wedge versus every competitor is
-that AeroVect does **not** sell new vehicles — it makes the tractors an operator
+that AeroVect does **not** sell new vehicles: it makes the tractors an operator
 already owns autonomous.
 
 That is why the whole tool is organized around one question per airport: **who
 operates the ground support equipment (GSE), and are they a target?** The buyer
-is whoever owns the ramp labor and the tractors — sometimes the airline
+is whoever owns the ramp labor and the tractors: sometimes the airline
 (carrier-led), sometimes an outsourced ground handler (handler-led), often both
 (mixed).
 
@@ -40,7 +40,7 @@ scale across a mixed fleet.
 | **Unifi Aviation** | ~210 US airports | **Delta owns ~20%**; grew out of Delta Global Services. A Delta reference is the bridge to Unifi's US network. |
 | **SATS** | Asia-Pacific leader (Singapore Changi home) | Government-linked; autonomy-forward market. |
 | **GAT** | US regional handler | **AeroVect partner** (up to ~50 US vehicles). |
-| **Fraport Ground Services (FraGround)** | Frankfurt | Fraport is **both the airport operator and the handler** — the rare "authority + handler in one." |
+| **Fraport Ground Services (FraGround)** | Frankfurt | Fraport is **both the airport operator and the handler**: the rare "authority + handler in one." |
 
 ## Ownership archetypes (who can say yes)
 
@@ -48,7 +48,7 @@ scale across a mixed fleet.
   autonomy-forward, but access and procurement can be political.
 - **Airport authority = handler** (FRA / Fraport): a single decision-maker owns the
   ramp labor. Cleanest single-throat-to-choke, but co-determination stakeholders
-  (works councils) matter — frame autonomy as filling *unstaffable* jobs.
+  (works councils) matter: frame autonomy as filling *unstaffable* jobs.
 - **Carrier fortress hubs** (DFW/American, ATL/Delta): the airline self-handles, so
   the airline is the buyer and the reference travels to its whole network.
 - **US public airports with multi-handler ramps** (JFK, LAX, ORD, MCO, LAS): high
@@ -56,26 +56,62 @@ scale across a mixed fleet.
 
 ## Recurring tailwinds to look for during enrichment
 
-1. **Ramp labor shortage / turnover** — the core "unstaffable shift" argument. Acute
+1. **Ramp labor shortage / turnover**: the core "unstaffable shift" argument. Acute
    in the US, Japan, and parts of Europe.
-2. **Existing autonomy trials** — an operator that already trialed autonomy (Fraport's
+2. **Existing autonomy trials**: an operator that already trialed autonomy (Fraport's
    ~8km apron route; Changi and Singapore trials; Incheon smart-airport pilots) has
    already made the internal case.
-3. **Greenfield / newly expanded aprons** (DWC, PKX) — clean-sheet deployment
+3. **Greenfield / newly expanded aprons** (DWC, PKX): clean-sheet deployment
    environments.
 4. **Capital-rich, autonomy-forward operators** (Gulf carriers/handlers, Changi,
-   Incheon) — willingness and budget to move.
+   Incheon): willingness and budget to move.
+
+## The buying committee (who signs, who blocks)
+
+Selling autonomous GSE is a committee sale. RampView's contact personas encode it:
+
+- **VP Ground Ops** (BUYER): the economic buyer and usual champion. Owns the P&L
+  the labor gap is bleeding.
+- **Head of GSE Fleet** (OWNER): the functional owner. The retrofit story is FOR
+  this person: their existing tractors become autonomous, no fleet replacement.
+- **Head of Safety / SMS** (GATE): can veto everything via the safety case. Win
+  early with data from live deployments.
+- **Head of Innovation** (ENTRY): the usual door in and first champion; convert
+  their pilot into the ops org's program.
+- **Procurement** (COMMERCIAL): the commercial gate; RaaS terms simplify this.
+- **Finance / CFO** (FINANCE): capex vs opex. Robotics-as-a-service turns a fleet
+  purchase into an operating line, which is the lever.
+- **Station / Ramp Manager** (LOCAL): local make-or-break at go-live; if the ramp
+  hates it, the rollout dies quietly.
+- **Airport Authority** (AUTHORITY): external airside-approval gate, sometimes a
+  mandator (and at Fraport, the same entity as the handler).
+- **Labor / Works Council** (STAKEHOLDER): neutralize by framing autonomy as
+  filling unstaffable shifts, never as headcount cuts. In Germany the
+  Betriebsrat has real statutory power.
+- **Exec Sponsor** (SPONSOR): CEO/CCO level, needed on network-wide deals.
+
+## Warm bridges (how one win becomes many)
+
+- **dnata DXB pilot** travels the dnata network (~130 airports) and, via the
+  Emirates Group parent (Investment Corporation of Dubai), bridges to Emirates
+  the airline.
+- **Delta pilot** bridges to Unifi (Delta owns ~20%) and Unifi's ~210 US
+  stations; ATL is the hinge.
+- **Prove dnata, sell Menzies**: a credible handler reference is the door into
+  the other global handlers (~350 airports at Menzies).
+- Encoded as arcs in src/data/bridges.json; each bridge carries a rationale and
+  feeds the BRIDGE component of the opportunity score.
 
 ## Tiers (how the schema is split)
 
-- **Tier A — auto-seedable** from open sources (OurAirports, Wikidata/Wikipedia):
+- **Tier A: auto-seedable** from open sources (OurAirports, Wikidata/Wikipedia):
   name, IATA/ICAO, coordinates, country/region, size class, annual passengers,
   owner/operator, hub carriers. Seeded by `scripts/buildSeed.ts`.
-- **Tier B — golden, not public in structured form**: GSE model (carrier vs handler
+- **Tier B: golden, not public in structured form**: GSE model (carrier vs handler
   led), which ground handler, GSE fleet estimate, labor pressure, AeroVect account
   status, competitor presence, tailwinds/news, ops notes. Enriched by hand or by the
   `scripts/enrich/` subagents. Every Tier B field carries a **confidence** and a
-  **source**. **Unknown is a first-class, correct value — never fabricate it.**
+  **source**. **Unknown is a first-class, correct value: never fabricate it.**
 
 ## Insurance-of-GSE glossary (quick reference)
 

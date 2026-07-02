@@ -1,0 +1,272 @@
+{
+  "sample": true,
+  "deals": [
+    {
+      "airportId": "DXB",
+      "stage": "pilot_live",
+      "owner": "Sample AE (replace)",
+      "handlerOrCarrier": "dnata",
+      "unitsTarget": 60,
+      "unitsLive": 12,
+      "value": 1800000,
+      "nextStep": "Quarterly ops review with dnata; agree DXB ramp expansion criteria",
+      "nextStepDue": "2026-07-16",
+      "lastTouch": "2026-06-24",
+      "contacts": [
+        {
+          "id": "dxb-c1",
+          "name": "Dana Sample",
+          "role": "vp_ground_ops",
+          "title": "SVP Airport Operations (SAMPLE)",
+          "org": "dnata",
+          "email": "dana.sample@example.com",
+          "disposition": "champion",
+          "notes": "Dummy contact shipped with the public build. Replace in local pipeline.json."
+        },
+        {
+          "id": "dxb-c2",
+          "name": "Farid Sample",
+          "role": "head_gse_fleet",
+          "title": "Head of GSE Fleet (SAMPLE)",
+          "org": "dnata",
+          "email": "farid.sample@example.com",
+          "disposition": "neutral",
+          "notes": "Dummy contact."
+        },
+        {
+          "id": "dxb-c3",
+          "name": "Sam Placeholder",
+          "role": "head_safety_sms",
+          "title": "Head of Safety / SMS (SAMPLE)",
+          "org": "dnata",
+          "disposition": "unknown",
+          "notes": "Safety case is the gate. Dummy contact."
+        }
+      ],
+      "activity": [
+        {
+          "id": "dxb-a1",
+          "date": "2026-06-10",
+          "type": "milestone",
+          "summary": "Partnership announced: plan for up to 100 autonomous vehicles across DXB and DWC (public)."
+        },
+        {
+          "id": "dxb-a2",
+          "date": "2026-06-24",
+          "type": "meeting",
+          "summary": "Ops sync on pilot telemetry and ramp routing (sample entry)."
+        }
+      ]
+    },
+    {
+      "airportId": "DWC",
+      "stage": "pilot_live",
+      "owner": "Sample AE (replace)",
+      "handlerOrCarrier": "dnata",
+      "unitsTarget": 40,
+      "unitsLive": 8,
+      "value": 1200000,
+      "nextStep": "Define cargo-apron night-shift coverage plan",
+      "nextStepDue": "2026-07-24",
+      "lastTouch": "2026-06-20",
+      "contacts": [
+        {
+          "id": "dwc-c1",
+          "name": "Dana Sample",
+          "role": "vp_ground_ops",
+          "title": "SVP Airport Operations (SAMPLE)",
+          "org": "dnata",
+          "disposition": "champion",
+          "notes": "Same sponsor as DXB. Dummy contact."
+        }
+      ],
+      "activity": [
+        {
+          "id": "dwc-a1",
+          "date": "2026-06-20",
+          "type": "note",
+          "summary": "Greenfield apron is the clean-sheet canvas; TractEasy EZTow also operating (dnata hedges vendors). Sample entry."
+        }
+      ]
+    },
+    {
+      "airportId": "ATL",
+      "stage": "engaged",
+      "owner": "Sample AE (replace)",
+      "handlerOrCarrier": "Delta Air Lines",
+      "unitsTarget": 30,
+      "value": 950000,
+      "nextStep": "Scope ATL expansion review after Delta pilot results readout",
+      "nextStepDue": "2026-07-20",
+      "lastTouch": "2026-06-18",
+      "contacts": [
+        {
+          "id": "atl-c1",
+          "name": "Jordan Sample",
+          "role": "head_innovation",
+          "title": "Director, Ops Innovation (SAMPLE)",
+          "org": "Delta Air Lines",
+          "disposition": "champion",
+          "notes": "Entry point. Dummy contact."
+        },
+        {
+          "id": "atl-c2",
+          "name": "Riley Placeholder",
+          "role": "labor_union",
+          "title": "Ramp workforce rep (SAMPLE)",
+          "org": "ATL ramp",
+          "disposition": "neutral",
+          "notes": "Frame as filling unstaffable shifts, not headcount cuts. Dummy contact."
+        }
+      ],
+      "activity": [
+        {
+          "id": "atl-a1",
+          "date": "2026-06-18",
+          "type": "call",
+          "summary": "Delta innovation sync; a Delta reference bridges to Unifi's ~210 US stations (sample entry)."
+        }
+      ]
+    },
+    {
+      "airportId": "FRA",
+      "stage": "pilot_scoping",
+      "owner": "Sample AE (replace)",
+      "handlerOrCarrier": "Fraport Ground Services (FraGround)",
+      "unitsTarget": 25,
+      "value": 800000,
+      "nextStep": "Draft works-council briefing; autonomy fills unstaffable jobs framing",
+      "nextStepDue": "2026-07-10",
+      "lastTouch": "2026-06-12",
+      "contacts": [
+        {
+          "id": "fra-c1",
+          "name": "Kai Sample",
+          "role": "head_innovation",
+          "title": "Innovation Lead (SAMPLE)",
+          "org": "Fraport AG",
+          "disposition": "champion",
+          "notes": "Fraport already trialed an autonomous apron tractor on an ~8km route. Dummy contact."
+        },
+        {
+          "id": "fra-c2",
+          "name": "Betriebsrat Placeholder",
+          "role": "labor_union",
+          "title": "Works council (SAMPLE)",
+          "org": "Fraport AG",
+          "disposition": "unknown",
+          "notes": "Co-determination stakeholder with real power. Dummy contact."
+        }
+      ],
+      "activity": [
+        {
+          "id": "fra-a1",
+          "date": "2026-06-12",
+          "type": "meeting",
+          "summary": "Scoping session: authority + handler in one buyer (sample entry)."
+        }
+      ]
+    },
+    {
+      "airportId": "ZRH",
+      "stage": "competitor_won",
+      "owner": "Sample AE (replace)",
+      "handlerOrCarrier": "Swissport",
+      "nextStep": "Monitor Aurrigo pilot performance; revisit if it underdelivers",
+      "lastTouch": "2026-05-02",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "zrh-a1",
+          "date": "2026-05-02",
+          "type": "note",
+          "summary": "Swissport aligned with Aurrigo at ZRH (2025 pilot). Retrofit-as-a-service is the counter-position if the account reopens."
+        }
+      ]
+    },
+    {
+      "airportId": "SIN",
+      "stage": "identified",
+      "handlerOrCarrier": "SATS",
+      "lastTouch": "2026-04-02",
+      "nextStep": "Map SATS org; watch TractEasy trial outcomes",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "sin-a1",
+          "date": "2026-04-02",
+          "type": "note",
+          "summary": "Autonomy-forward, government-backed, competitor-active. Deliberately stale sample entry (demonstrates the stalled-deal metric)."
+        }
+      ]
+    },
+    {
+      "airportId": "JFK",
+      "stage": "researching",
+      "handlerOrCarrier": "Unifi Aviation",
+      "unitsTarget": 15,
+      "nextStep": "Build JFK station brief off the Delta-to-Unifi bridge",
+      "nextStepDue": "2026-07-30",
+      "lastTouch": "2026-06-26",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "jfk-a1",
+          "date": "2026-06-26",
+          "type": "note",
+          "summary": "Multi-handler ramp, high labor pressure; Unifi presence keys off Delta reference (sample entry)."
+        }
+      ]
+    },
+    {
+      "airportId": "MAD",
+      "stage": "identified",
+      "handlerOrCarrier": "Iberia Airport Services / South (SOEGS)",
+      "nextStep": "Track SOEGS strike resolution; qualify handler pain",
+      "lastTouch": "2026-06-28",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "mad-a1",
+          "date": "2026-06-28",
+          "type": "note",
+          "summary": "Agent-enriched: AENA licensed regime, chronic ramp strikes, no autonomy competitor on the ramp (sourced in airport record)."
+        }
+      ]
+    },
+    {
+      "airportId": "LAS",
+      "stage": "identified",
+      "handlerOrCarrier": "Unifi Aviation",
+      "nextStep": "Qualify Southwest self-handle fleet vs Unifi third-party ramp",
+      "lastTouch": "2026-06-27",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "las-a1",
+          "date": "2026-06-27",
+          "type": "note",
+          "summary": "Agent-enriched: Southwest ~43% pax self-handled; no autonomy competitor found at LAS (sourced in airport record)."
+        }
+      ]
+    },
+    {
+      "airportId": "MCO",
+      "stage": "researching",
+      "handlerOrCarrier": "Unifi Aviation",
+      "unitsTarget": 10,
+      "nextStep": "Confirm whether GAT (AeroVect partner) operates a MCO station",
+      "nextStepDue": "2026-07-25",
+      "lastTouch": "2026-06-27",
+      "contacts": [],
+      "activity": [
+        {
+          "id": "mco-a1",
+          "date": "2026-06-27",
+          "type": "note",
+          "summary": "Agent-enriched: fragmented multi-handler ramp (Menzies, Unifi, Swissport, Prospect, Quantem), high labor pressure (sourced in airport record)."
+        }
+      ]
+    }
+  ]
+}

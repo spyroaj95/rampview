@@ -1,0 +1,50 @@
+[
+  {
+    "id": "dxb-auh",
+    "from": "DXB",
+    "to": "AUH",
+    "via": "dnata",
+    "label": "dnata network: AUH",
+    "rationale": "dnata handles ground ops at AUH. DXB pilot success travels across dnata stations."
+  },
+  {
+    "id": "dxb-sin",
+    "from": "DXB",
+    "to": "SIN",
+    "via": "dnata",
+    "label": "dnata Singapore",
+    "rationale": "dnata Singapore operates at Changi. Contested market (TractEasy trials), but the dnata relationship is the door."
+  },
+  {
+    "id": "dxb-lhr",
+    "from": "DXB",
+    "to": "LHR",
+    "via": "dnata",
+    "label": "dnata at LHR",
+    "rationale": "dnata runs ramp and cargo at Heathrow. A DXB reference derisks a slot-constrained, high-value station."
+  },
+  {
+    "id": "atl-jfk",
+    "from": "ATL",
+    "to": "JFK",
+    "via": "Unifi Aviation",
+    "label": "Delta ref to Unifi JFK",
+    "rationale": "Delta owns ~20% of Unifi. An ATL/Delta reference unlocks Unifi's ~210 US stations, starting with the big hubs."
+  },
+  {
+    "id": "atl-lax",
+    "from": "ATL",
+    "to": "LAX",
+    "via": "Unifi Aviation",
+    "label": "Delta ref to Unifi LAX",
+    "rationale": "Same Delta-to-Unifi ownership bridge; Unifi operates at LAX."
+  },
+  {
+    "id": "atl-mco",
+    "from": "ATL",
+    "to": "MCO",
+    "via": "Unifi Aviation",
+    "label": "Delta ref to Unifi MCO",
+    "rationale": "Unifi confirmed at MCO (agent-verified 2026); high-turnover, multi-handler ramp."
+  }
+]

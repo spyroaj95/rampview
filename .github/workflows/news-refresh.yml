@@ -1,0 +1,50 @@
+# OPTIONAL template: scheduled news refresh that opens a reviewable PR.
+#
+# The plan/merge steps are plain node. The RESEARCH step in the middle needs an
+# agent runner (e.g. Claude Code CLI with an API key secret) to execute the
+# briefs in scripts/news/tasks.json and write scripts/news/results/*.json.
+# Without that step this workflow is a no-op by design: it will never invent
+# news items (C5: sources are mandatory, fabrication is not).
+#
+# To enable: uncomment the cron, add ANTHROPIC_API_KEY to repo secrets, and
+# fill in the research step with your runner of choice.
+
+name: news-refresh
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Plan research tasks
+        run: npm run news:plan
+      - name: Research (requires an agent runner)
+        run: |
+          echo "Wire an agent runner here to execute scripts/news/tasks.json briefs"
+          echo "and write scripts/news/results/*.json. Example:"
+          echo "  npx @anthropic-ai/claude-code -p \"Run the research briefs in scripts/news/tasks.json...\""
+          echo "Skipping: no runner configured."
+      - name: Merge sourced results
+        run: npm run news:merge
+      - name: Open PR for review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: news-refresh
+          title: 'News refresh: tailwind updates for review'
+          commit-message: 'news: merge sourced tailwind updates'
+          body: |
+            Automated news-refresh run. Every item carries a source URL;
+            unsourced items were dropped by scripts/refreshNews.ts.
+            Review before merging: human entries are never modified.

@@ -43,13 +43,41 @@
       {
         "headline": "Delta positioned as the gold-standard US reference account",
         "relevance": "A marquee reference unlocks the broader US network"
+      },
+      {
+        "headline": "Delta details ramp innovation at ATL: autonomous bag tugs (4,000 miles since 2023, 15 units planned), autonomous jet bridges, and Baggage AI within a $110M baggage/GSE investment",
+        "url": "https://news.delta.com/delta-spurs-innovation-worlds-busiest-ramp",
+        "date": "2025-12-03",
+        "relevance": "Delta is already operating autonomous tugs on ATL's ramp, proving airside autonomy demand at the busiest US hub while signaling Delta may build or buy in house rather than through handlers.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "NPR goes inside ATL: Delta's Baggage AI now routes tug drivers across 100,000 bags a day, lifting transfer rates up to 20%, with expansion to Detroit and Minneapolis in 2026",
+        "url": "https://www.npr.org/2026/05/26/nx-s1-5801537/atl-airport-atlanta-baggage-handling-delta",
+        "date": "2026-05-26",
+        "relevance": "ATL's ramp is being run on AI dispatch for human-driven tugs, a direct precursor and integration point for AeroVect's driverless retrofit and fleet orchestration pitch.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Delta ends long-running Unifi Aviation commissary/ground services contract at ATL, affecting 379 workers, with Newrest taking over September 30, 2025",
+        "url": "https://simpleflying.com/delta-air-lines-atlanta-job-cuts/",
+        "date": "2025-08-12",
+        "relevance": "Ground services contracts at ATL are in flux and Unifi, a key handler roughly 20% owned by Delta, is losing scope, creating churn that opens doors for cost-saving RaaS conversations.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Glydways autonomous shuttle pilot at ATL breaks ground: half-mile driverless guideway linking the SkyTrain to the Georgia International Convention Center, service targeted for 2026",
+        "url": "https://atlanta.urbanize.city/post/glydways-atl-airport-autonomous-transportation-shuttle-project",
+        "date": "2025-12-12",
+        "relevance": "ATL leadership is actively hosting autonomous vehicle pilots on airport property, a receptivity signal that lowers the stakeholder and approval barrier for airside GSE autonomy.",
+        "firstSeen": "2026-07-02"
       }
     ],
     "sources": [
       "City of Atlanta Dept. of Aviation",
       "Unifi Aviation corporate profile (Delta ~20% ownership; ~210 US airports)"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-02"
   },
   {
     "id": "DXB",
@@ -98,6 +126,34 @@
       {
         "headline": "dnata to roughly double ground-handling capacity with its DWC move",
         "relevance": "Autonomy-forward, capital-rich handler expanding its footprint"
+      },
+      {
+        "date": "2025-07-15",
+        "headline": "dnata rolls out six autonomous TractEasy EZTow baggage tractors at Dubai World Central, with Level 4 autonomy targeted for early 2026",
+        "url": "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/",
+        "relevance": "Competitor TractEasy now has a live autonomous tug fleet with dnata in Dubai, giving the EZTow camp a home-field foothold that shapes what dnata deploys at DXB.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2025-07-29",
+        "headline": "UAE GCAA grants first national regulatory approval for autonomous baggage handling vehicle trials at DWC with Dubai Airports and dnata",
+        "url": "https://www.khaleejtimes.com/business/aviation/uae-trial-baggage-vehicles-al-maktoum-international",
+        "relevance": "The UAE now has a regulatory framework for driverless airside vehicles, lowering the approval barrier for any AeroVect retrofit entry into Dubai airports.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2025-11-20",
+        "headline": "Dubai Airports deploys Assaia AI-powered turnaround management across all aircraft stands at DXB with Emirates, flydubai and dnata",
+        "url": "https://www.assaia.com/resources/dubai-airports-explores-ai-powered-turnaround-management-to-elevate-performance-and-guest-experience",
+        "relevance": "DXB is instrumenting its entire apron with AI turnaround visibility, signaling appetite for airside automation and creating data hooks autonomous GSE can plug into.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2025-12-09",
+        "headline": "Aurrigo launches international licensing and hub programme, naming Dubai as its Middle East hub after a 14.1 million pound fundraise",
+        "url": "https://www.aviationpros.com/ground-support-worldwide/gse/news/55337138/aurrigo-international-launches-licensing-and-hub-program-to-accelerate-global-scale-up",
+        "relevance": "Purpose-built rival Aurrigo is planting its regional commercial base in Dubai, escalating the competitive land grab for Gulf autonomous GSE deals.",
+        "firstSeen": "2026-07-02"
       }
     ],
     "sources": [
@@ -105,7 +161,7 @@
       "Dubai Airports corporate profile",
       "dnata network facts (130 airports / 35+ countries / 700k+ turns)"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-02"
   },
   {
     "id": "DFW",
@@ -134,7 +190,37 @@
     "sources": [
       "Public airport/airline references"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-02",
+    "tailwinds": [
+      {
+        "date": "2026-02-05",
+        "headline": "PrimeFlight Aviation Services acquires GAT Airline Ground Support, a handler with roughly 6,000 employees at nearly 70 North American airports including DFW",
+        "url": "https://www.prnewswire.com/news-releases/atlantic-street-capital-announces-sale-of-gat-airline-ground-support-to-primeflight-aviation-services-302679258.html",
+        "relevance": "GAT is AeroVect's US deployment partner and operates at DFW, so the change to PrimeFlight ownership reshapes partner dynamics and could open a 250 airport distribution channel or put the partnership at risk.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2026-06-02",
+        "headline": "Fort Worth Report details DFW's innovation strategy spanning AI, robotics and AGVs in baggage handling, automation pilots and advanced air mobility",
+        "url": "https://fortworthreport.org/2026/06/02/inside-dfw-airports-innovation-strategy-ai-automation-flying-taxis/",
+        "relevance": "DFW leadership is publicly funding automation and robotics programs across operations, signaling a receptive airport authority for autonomous GSE retrofit pilots.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2025-12-26",
+        "headline": "American Airlines announces overhaul of its DFW flagship hub, moving from 9 to 13 daily banks from April 2026 with 930 plus departures and nine added gates ahead of Terminal F in 2030",
+        "url": "https://news.aa.com/news/news-details/2025/Doubling-down-on-DFW-American-further-strengthens-its-Flagship-hub-OPS-OTH-12/",
+        "relevance": "A denser bank structure and gate growth at AeroVect's largest US target hub increases ramp tempo and turn pressure, strengthening the economic case for driverless baggage tractors.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "date": "2025-07-09",
+        "headline": "Oak Ridge National Laboratory publishes DOE sponsored assessment of ground support equipment electrification infrastructure and logistics at DFW",
+        "url": "https://www.osti.gov/biblio/2586884",
+        "relevance": "Federal modeling of electric GSE charging and logistics at DFW points to an infrastructure buildout that AeroVect's retrofitted electric tractors can plug into directly.",
+        "firstSeen": "2026-07-02"
+      }
+    ]
   },
   {
     "id": "LHR",
@@ -177,7 +263,37 @@
     "sources": [
       "Public airport/airline references"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-02",
+    "tailwinds": [
+      {
+        "headline": "UK aviation leaders including Heathrow launch Airside Automation Group to advance autonomous airside mobility",
+        "url": "https://www.passengerterminaltoday.com/news/ground-support/uk-aviation-leaders-launch-airside-automation-group.html",
+        "date": "2025-09-03",
+        "relevance": "Heathrow is a founding member of a Zenzic-led group pushing autonomous airside vehicles, giving AeroVect an institutional channel where Aurrigo and Oxa are already named players.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Heathrow unlocks £1.3bn 2026 investment including new Terminal 2 baggage system and AI cameras across all aircraft stands",
+        "url": "https://mediacentre.heathrow.com/pressrelease/detail/24516",
+        "date": "2025-12-19",
+        "relevance": "Heathrow is spending on baggage infrastructure and stand-level AI turnaround analytics with ground handlers, showing budget and appetite for exactly the ramp automation layer AeroVect sells.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Aurrigo signs contract with Teesside International Airport for first integrated Auto-Shuttle and Auto-DollyTug deployment, airside from early 2026",
+        "url": "https://aurrigo.com/aurrigo-international-plc-moves-into-the-north-east-with-global-first-at-teesside-international-airport/",
+        "date": "2025-08-13",
+        "relevance": "Competitor Aurrigo is building a live UK airside reference for its purpose-built Auto-DollyTug, strengthening its position to sell into Heathrow ahead of AeroVect's retrofit approach.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "WHILL trials autonomous mobility service at London Heathrow Terminal 3",
+        "url": "https://runwaygirlnetwork.com/2026/06/whill-trials-autonomous-mobility-at-london-heathrow-t3/",
+        "date": "",
+        "relevance": "Heathrow is running autonomous vehicle trials in live passenger operations, evidence its safety case and approval pathway for autonomy at LHR is open and active.",
+        "firstSeen": "2026-07-02"
+      }
+    ]
   },
   {
     "id": "HND",
@@ -243,6 +359,20 @@
         "date": "2023-09-01",
         "url": "https://airsideint.com/japan-labour-shortages-prompt-ground-handling-recruitment-drive/",
         "relevance": "Documents structural ground-handling labor shortage in Japan (ramp handling down ~5% vs March 2019 across 61 major handlers), the underlying tailwind for GSE automation demand. (URL cited from search summary; direct fetch returned a bot-verification page.)"
+      },
+      {
+        "headline": "TractEasy and EasyMile power JAL's Level 4 autonomous EZTow baggage and cargo towing at Narita, claimed as Japan's first",
+        "url": "https://easymile.com/en/news-insights/easymile-technology-powers-japan-s-first-level-4-autonomous-towing-at-narita-international-airport-2",
+        "date": "2025-12-15",
+        "relevance": "Direct competitor TractEasy converted its six-year JAL relationship into full Level 4 operations at Tokyo's other hub, showing JAL splitting autonomous GSE vendors and leaving little open lane for AeroVect with Japan's flag carriers.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "JAL partners with GMO AI and Robotics to trial humanoid robots for baggage loading and ground handling at Haneda",
+        "url": "https://aerospaceglobalnews.com/news/japan-airlines-trial-humanoid-robots-tokyo-haneda-airport/",
+        "date": "2026-04-30",
+        "relevance": "JAL's ramp labor shortage is severe enough that it is testing humanoid robots and eyeing robot-operated GSE, confirming HND ground handlers will fund automation that stretches existing equipment, which is exactly AeroVect's retrofit value proposition.",
+        "firstSeen": "2026-07-02"
       }
     ],
     "operationsNotes": "GSE is carrier-led: JAL Group (JAL Ground Service) and ANA Group self-handle ramp/towing and dominate (~62% combined). Third parties like Swissport hold a minority. As of Dec 15, 2025, ANA runs three Toyota Industries '3ATE25' Level 4 electric towing tractors (cargo warehouse to Terminal 2, ~1.5 km) and JAL runs a ROBO-HI 'RoboCar Tractor 25T' (based on China's Weihai Guangtai design) in the East/West cargo area; described by ANA/Carscoops as first practical Level 4 autonomous driving in a Japanese airport restricted area. ANA plans 6 units by end of FY2025 and ~50 at Haneda by 2030; JAL plans 3 at Haneda by summer 2026 and ~50 within five years. Vehicles are purpose-built, not retrofits.",
@@ -289,7 +419,30 @@
     "sources": [
       "Public airport/airline references"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-02",
+    "tailwinds": [
+      {
+        "headline": "Automated baggage handling system planned for Denver International Airport Concourse A expansion, with Daifuku supplying conveyors and eight makeup units through Q2 2027",
+        "url": "https://www.aviationpros.com/ground-support-worldwide/news/55361620/automated-baggage-handling-system-planned-for-denver-international-airport-concourse-expansion",
+        "date": "2026-03-04",
+        "relevance": "DEN is actively funding baggage automation to hit 100M passengers, signaling airport appetite for automated tarmac tug routes that feed these new makeup units.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Denver airport opens $700M Concourse C-West with 11 new gates as United targets roughly 700 daily departures at its DEN hub",
+        "url": "https://thepointsguy.com/news/denver-airports-11-new-gates/",
+        "date": "2025-12-24",
+        "relevance": "Hub growth and 11 added gates mean more aircraft turns and bigger baggage tractor fleets at DEN, widening the retrofit opportunity for AeroVect.",
+        "firstSeen": "2026-07-02"
+      },
+      {
+        "headline": "Delta wins four Colorado Clean Diesel Program grants in 2024-2025 to buy six electric baggage tugs and seven electric belt loaders at Denver International Airport",
+        "url": "https://cocleandiesel.org/airport-ground-support-equipment/",
+        "date": "",
+        "relevance": "Carriers are refreshing DEN tug fleets to electric with state grant money, creating new-generation tractors that are prime candidates for AeroVect driverless retrofits.",
+        "firstSeen": "2026-07-02"
+      }
+    ]
   },
   {
     "id": "IST",
@@ -727,7 +880,7 @@
       {
         "name": "Fraport Ground Services (FraGround)",
         "role": "primary ramp & cargo handler",
-        "notes": "Fraport is BOTH the airport operator AND the handler — the rare \"authority + handler in one\""
+        "notes": "Fraport is BOTH the airport operator AND the handler: the rare \"authority + handler in one\""
       }
     ],
     "aerovectNotes": "Fraport already ran an autonomous baggage/cargo tractor trial on an ~8km apron route. Ownership is majority public (State of Hesse ~31%, City of Frankfurt ~21%, Lufthansa ~8%).",

@@ -15,3 +15,10 @@ yarn-error.log*
 scripts/enrich/results/*.json
 !scripts/enrich/results/.gitkeep
 !scripts/enrich/results/example.json
+scripts/news/results/*.json
+!scripts/news/results/.gitkeep
+!scripts/news/results/example.json
+
+# C1 privacy: real CRM data never leaves this machine.
+# The committed pipeline.sample.json (dummy contacts) is the public fallback.
+src/data/pipeline.json

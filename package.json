@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "build:seed": "tsx scripts/buildSeed.ts",
     "enrich:plan": "tsx scripts/enrich/enrich.ts plan",
-    "enrich:merge": "tsx scripts/enrich/enrich.ts merge"
+    "enrich:merge": "tsx scripts/enrich/enrich.ts merge",
+    "news:plan": "tsx scripts/refreshNews.ts plan",
+    "news:merge": "tsx scripts/refreshNews.ts merge"
   },
   "dependencies": {
     "react": "^18.3.1",

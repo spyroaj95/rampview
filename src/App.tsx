@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Airport } from './types/airport'
+import type { Deal, DealStage, Bridge } from './types/pipeline'
 import {
   loadAirports,
   filterAirports,
@@ -11,56 +12,234 @@ import {
   EMPTY_FILTERS,
   type FilterState,
 } from './services/dataService'
-import GlobeView from './components/GlobeView'
-import TopBar from './components/TopBar'
+import {
+  loadPipeline,
+  loadBridges,
+  upsertDeal,
+  serializePipeline,
+  serializeBridges,
+  getDeal,
+} from './services/pipelineService'
+import { opportunityScore, type ScoreInfo } from './lib/scoring'
+import { layerColor, whitespaceCategory, type LayerKey } from './lib/layers'
+import { ORG_REGISTRY, orgByKey, airportsForOrg } from './lib/orgs'
+import { gateRequired } from './lib/gate'
+import { targetListCsv, downloadText, openAccountBrief } from './lib/exports'
+import { todayIso } from './lib/format'
+import type { DemoStep } from './lib/demoScript'
+import digestRaw from './data/newsDigest.json'
+
+import GlobeView, { type ArcDatum } from './components/GlobeView'
+import TopBar, { type ViewKey, type WhatsNewItem } from './components/TopBar'
 import FilterBar from './components/FilterBar'
 import Legend from './components/Legend'
-import DetailPanel from './components/DetailPanel'
+import DetailPanel, { type PanelTab } from './components/DetailPanel'
 import EditForm from './components/EditForm'
+import LayerToggle from './components/LayerToggle'
+import PipelineTable from './components/PipelineTable'
+import BoardView from './components/BoardView'
+import NetworkView from './components/NetworkView'
+import WhitespacePanel from './components/WhitespacePanel'
+import CoverageView from './components/CoverageView'
+import DemoMode from './components/DemoMode'
+import PassGate from './components/PassGate'
+import { ShortcutsOverlay, AboutModal } from './components/Modals'
+
+const ARC_COLOR = '#22d3ee'
+const NEWS_SEEN_KEY = 'rv_news_seen'
+
+interface Digest {
+  ranAt: string | null
+  items: WhatsNewItem[]
+}
+
+/** Error boundary so a WebGL/driver failure degrades gracefully (A4). */
+class GlobeBoundary extends Component<
+  { children: ReactNode; onError?: () => void },
+  { failed: boolean }
+> {
+  state = { failed: false }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  componentDidCatch() {
+    // Dismiss the loading overlay: onGlobeReady will never fire if the
+    // renderer threw, and the fallback + data views must stay reachable.
+    this.props.onError?.()
+  }
+  render() {
+    if (this.state.failed) {
+      return (
+        <div className="error-fallback">
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 10 }}>
+              Globe failed to render
+            </div>
+            <p style={{ color: 'var(--text-lo)', fontSize: 13 }}>
+              This usually means WebGL is unavailable. The data views still work.
+            </p>
+            <button className="btn" onClick={() => location.reload()}>
+              Reload
+            </button>
+          </div>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function App() {
+  // ---- data ----
   const [airports, setAirports] = useState<Airport[] | null>(null)
+  const [deals, setDeals] = useState<Deal[]>([])
+  const [bridges, setBridges] = useState<Bridge[]>([])
+  const [sampleCrm, setSampleCrm] = useState(true)
+
+  // ---- ui state ----
+  const [view, setView] = useState<ViewKey>('globe')
+  const [layer, setLayer] = useState<LayerKey>('status')
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [panelOpen, setPanelOpen] = useState(true)
+  const [panelTab, setPanelTab] = useState<PanelTab>('intel')
+  const [highlightId, setHighlightId] = useState<string | null>(null)
+  const [selectedOrg, setSelectedOrg] = useState<string | null>(null)
+  const [onlyOpen, setOnlyOpen] = useState(false)
   const [editing, setEditing] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const [demoOn, setDemoOn] = useState(false)
+  const [showShortcuts, setShowShortcuts] = useState(false)
+  const [showAbout, setShowAbout] = useState(false)
+  const [globeReady, setGlobeReady] = useState(false)
+  const [gateLocked, setGateLocked] = useState(gateRequired())
+  const [narrow, setNarrow] = useState(window.innerWidth < 900)
+
+  // ---- dirty tracking (C4) ----
+  const [airportsDirty, setAirportsDirty] = useState(false)
+  const [pipelineDirty, setPipelineDirty] = useState(false)
+  const [bridgesDirty, setBridgesDirty] = useState(false)
+  const dirty = airportsDirty || pipelineDirty || bridgesDirty
+
+  const searchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     loadAirports().then(setAirports)
+    loadPipeline().then((p) => {
+      setDeals(p.deals)
+      setSampleCrm(p.sample)
+    })
+    loadBridges().then(setBridges)
   }, [])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)')
+    const on = () => setNarrow(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+
+  // Hovered rows can unmount without firing onMouseLeave (view switch, demo
+  // start, board drag-drop); clear the highlight so no phantom ring lingers.
+  useEffect(() => {
+    setHighlightId(null)
+  }, [view, demoOn])
+
+  // Warn on navigating away with unsaved edits (C4).
+  useEffect(() => {
+    if (!dirty) return
+    const onUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', onUnload)
+    return () => window.removeEventListener('beforeunload', onUnload)
+  }, [dirty])
 
   const flash = useCallback((msg: string) => {
     setToast(msg)
-    window.setTimeout(() => setToast((t) => (t === msg ? null : t)), 2400)
+    window.setTimeout(() => setToast((t) => (t === msg ? null : t)), 2600)
   }, [])
 
-  // Escape closes edit, then panel.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return
-      if (editing) setEditing(false)
-      else if (selectedId) setSelectedId(null)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [editing, selectedId])
-
+  // ---- derived data ----
   const list = airports ?? []
+  const byId = useMemo(() => new Map(list.map((a) => [a.id, a])), [list])
+  const dealsById = useMemo(() => new Map(deals.map((d) => [d.airportId, d])), [deals])
   const stats = useMemo(() => computeStats(list), [list])
   const regions = useMemo(() => getRegions(list), [list])
   const handlers = useMemo(() => getHandlers(list), [list])
-  const activeIds = useMemo(
-    () => new Set(filterAirports(list, filters).map((a) => a.id)),
-    [list, filters],
+
+  const scores = useMemo(() => {
+    const m = new Map<string, ScoreInfo>()
+    for (const a of list) m.set(a.id, opportunityScore(a, bridges))
+    return m
+  }, [list, bridges])
+  const scoreOf = useCallback(
+    (a: Airport) => scores.get(a.id) ?? { score: 0, components: [] },
+    [scores],
   )
-  const selected = useMemo(
-    () => list.find((a) => a.id === selectedId) ?? null,
-    [list, selectedId],
+  const dealOf = useCallback((a: Airport) => dealsById.get(a.id), [dealsById])
+
+  // Whitespace view forces its own encoding; everywhere else the toggle rules.
+  const effectiveLayer: LayerKey = view === 'whitespace' ? 'whitespace' : layer
+  const colorFor = useCallback(
+    (a: Airport) => layerColor(effectiveLayer, a, scores.get(a.id), dealsById.get(a.id)),
+    [effectiveLayer, scores, dealsById],
   )
 
+  // Visible points: filters + view-specific narrowing (org highlight, only-open).
+  const visibleIds = useMemo(() => {
+    let base = filterAirports(list, filters)
+    if (view === 'network' && selectedOrg) {
+      const org = orgByKey(selectedOrg)
+      if (org) {
+        const ids = new Set(airportsForOrg(list, org).map((a) => a.id))
+        base = base.filter((a) => ids.has(a.id))
+      }
+    }
+    if (view === 'whitespace' && onlyOpen) {
+      base = base.filter((a) => whitespaceCategory(a, dealsById.get(a.id)) === 'open')
+    }
+    return new Set(base.map((a) => a.id))
+  }, [list, filters, view, selectedOrg, onlyOpen, dealsById])
+
+  // Expansion arcs: network view (all, or the selected org's) and demo network steps.
+  const arcs: ArcDatum[] = useMemo(() => {
+    if (view !== 'network') return []
+    let show = bridges
+    if (selectedOrg) {
+      const org = orgByKey(selectedOrg)
+      if (org) {
+        const ids = new Set(airportsForOrg(list, org).map((a) => a.id))
+        show = bridges.filter(
+          (b) => org.pattern.test(b.via) || ids.has(b.from) || ids.has(b.to),
+        )
+      }
+    }
+    return show
+      .map((b) => {
+        const f = byId.get(b.from)
+        const t = byId.get(b.to)
+        if (!f || !t) return null
+        return {
+          startLat: f.lat,
+          startLng: f.lng,
+          endLat: t.lat,
+          endLng: t.lng,
+          label: `${b.label}: ${b.rationale}`,
+          color: ARC_COLOR,
+        }
+      })
+      .filter(Boolean) as ArcDatum[]
+  }, [view, bridges, selectedOrg, byId, list])
+
+  const selected = selectedId ? byId.get(selectedId) ?? null : null
+
+  // ---- selection / navigation ----
   const select = useCallback((id: string) => {
     setSelectedId(id)
+    setPanelOpen(true)
     setEditing(false)
   }, [])
 
@@ -69,89 +248,421 @@ export default function App() {
     setEditing(false)
   }, [])
 
-  // ---- edit / export handlers (all data access via dataService) ----
-  const handleSave = useCallback(
+  /** Arrow keys: cycle the filtered set by opportunity score (A1). */
+  const cycle = useCallback(
+    (dir: 1 | -1) => {
+      const ranked = list
+        .filter((a) => visibleIds.has(a.id))
+        .sort((a, b) => (scores.get(b.id)?.score ?? 0) - (scores.get(a.id)?.score ?? 0))
+      if (!ranked.length) return
+      const idx = ranked.findIndex((a) => a.id === selectedId)
+      const next = idx === -1 ? ranked[0] : ranked[(idx + dir + ranked.length) % ranked.length]
+      select(next.id)
+    },
+    [list, visibleIds, scores, selectedId, select],
+  )
+
+  // ---- demo mode (A2/C3) ----
+  const applyDemoStep = useCallback((step: DemoStep) => {
+    setEditing(false)
+    setShowShortcuts(false)
+    setShowAbout(false)
+    setView(step.view === 'network' ? 'network' : step.view === 'whitespace' ? 'whitespace' : step.view === 'coverage' ? 'coverage' : 'globe')
+    if (step.layer) setLayer(step.layer)
+    setSelectedOrg(step.orgKey ?? null)
+    setSelectedId(step.airportId ?? null)
+    setPanelOpen(step.panel ?? false)
+    setPanelTab('intel')
+  }, [])
+
+  const exitDemo = useCallback(() => {
+    setDemoOn(false)
+    setView('globe')
+    setLayer('status')
+    setSelectedOrg(null)
+    setSelectedId(null)
+  }, [])
+
+  // ---- keyboard shortcuts (A1) ----
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement
+      const typing = t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT'
+      if (e.key === 'Escape') {
+        if (typing) {
+          ;(t as HTMLInputElement).blur()
+          return
+        }
+        if (demoOn) exitDemo()
+        else if (showShortcuts) setShowShortcuts(false)
+        else if (showAbout) setShowAbout(false)
+        else if (editing) setEditing(false)
+        else if (selectedId) closePanel()
+        return
+      }
+      // The walkthrough owns the stage: no view/selection shortcuts mid-demo.
+      if (demoOn) return
+      if (typing) return
+      if (e.key === '?') {
+        setShowShortcuts((s) => !s)
+      } else if (e.key === '/') {
+        e.preventDefault()
+        searchRef.current?.focus()
+      } else if (e.key === 'i') {
+        if (selectedId) setPanelOpen((p) => !p)
+      } else if (e.key === 'ArrowRight') {
+        cycle(1)
+      } else if (e.key === 'ArrowLeft') {
+        cycle(-1)
+      } else if (e.key === 'g') setView('globe')
+      else if (e.key === 'p') setView('pipeline')
+      else if (e.key === 'b') setView('board')
+      else if (e.key === 'n') setView('network')
+      else if (e.key === 'w') setView('whitespace')
+      else if (e.key === 'c') setView('coverage')
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [demoOn, showShortcuts, showAbout, editing, selectedId, closePanel, cycle, exitDemo])
+
+  // ---- mutations ----
+  const handleSaveAirport = useCallback(
     (next: Airport) => {
       setAirports((prev) => upsertAirport(prev ?? [], next))
+      setAirportsDirty(true)
       setEditing(false)
       flash(`Saved ${next.iata ?? next.name} to the map`)
     },
     [flash],
   )
 
-  const downloadFile = (filename: string, contents: string) => {
-    const blob = new Blob([contents], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = filename
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
-  const handleExport = useCallback(
+  const handleExportAirports = useCallback(
     (next: Airport) => {
       const updated = upsertAirport(airports ?? [], next)
       setAirports(updated)
-      downloadFile('airports.json', serializeAirports(updated))
-      flash('Downloaded airports.json — commit it to persist')
+      downloadText('airports.json', serializeAirports(updated), 'application/json')
+      setAirportsDirty(false)
+      flash('Downloaded airports.json, commit it to persist')
     },
     [airports, flash],
   )
 
-  const handleCopy = useCallback(
+  const handleCopyAirports = useCallback(
     (next: Airport) => {
       const updated = upsertAirport(airports ?? [], next)
       setAirports(updated)
       navigator.clipboard?.writeText(serializeAirports(updated)).then(
         () => flash('Copied full airports.json to clipboard'),
-        () => flash('Clipboard blocked — use Download instead'),
+        () => flash('Clipboard blocked, use Download instead'),
       )
     },
     [airports, flash],
   )
 
+  const handleUpsertDeal = useCallback((deal: Deal) => {
+    setDeals((prev) => upsertDeal(prev, deal))
+    setPipelineDirty(true)
+  }, [])
+
+  const handleStageChange = useCallback(
+    (airportId: string, stage: DealStage) => {
+      setHighlightId(null) // the dragged card unmounts; avoid a stale hover ring
+      const deal = deals.find((d) => d.airportId === airportId)
+      if (!deal || deal.stage === stage) return
+      handleUpsertDeal({
+        ...deal,
+        stage,
+        lastTouch: todayIso(),
+        activity: [
+          ...deal.activity,
+          {
+            id: `act-${Date.now().toString(36)}`,
+            date: todayIso(),
+            type: 'milestone',
+            summary: `Stage changed to ${stage.replace(/_/g, ' ')}`,
+          },
+        ],
+      })
+      flash(`${airportId} moved to ${stage.replace(/_/g, ' ')}`)
+    },
+    [deals, handleUpsertDeal, flash],
+  )
+
+  const downloadPipeline = useCallback(() => {
+    downloadText('pipeline.json', serializePipeline(deals, sampleCrm), 'application/json')
+    setPipelineDirty(false)
+    flash('Downloaded pipeline.json, keep it local (gitignored)')
+  }, [deals, sampleCrm, flash])
+
+  const copyPipeline = useCallback(() => {
+    navigator.clipboard?.writeText(serializePipeline(deals, sampleCrm)).then(
+      () => flash('Copied pipeline.json to clipboard'),
+      () => flash('Clipboard blocked, use Download instead'),
+    )
+  }, [deals, sampleCrm, flash])
+
+  const handleAddBridge = useCallback(
+    (b: Bridge) => {
+      setBridges((prev) => [...prev, b])
+      setBridgesDirty(true)
+      flash(`Bridge ${b.from} → ${b.to} added`)
+    },
+    [flash],
+  )
+
+  const downloadBridges = useCallback(() => {
+    downloadText('bridges.json', serializeBridges(bridges), 'application/json')
+    setBridgesDirty(false)
+    flash('Downloaded bridges.json, commit it to persist')
+  }, [bridges, flash])
+
+  const downloadAllDirty = useCallback(() => {
+    if (airportsDirty && airports) {
+      downloadText('airports.json', serializeAirports(airports), 'application/json')
+      setAirportsDirty(false)
+    }
+    if (pipelineDirty) {
+      downloadText('pipeline.json', serializePipeline(deals, sampleCrm), 'application/json')
+      setPipelineDirty(false)
+    }
+    if (bridgesDirty) {
+      downloadText('bridges.json', serializeBridges(bridges), 'application/json')
+      setBridgesDirty(false)
+    }
+    flash('Downloaded updated files')
+  }, [airportsDirty, pipelineDirty, bridgesDirty, airports, deals, bridges, sampleCrm, flash])
+
+  const exportCsv = useCallback(
+    (items: { airport: Airport }[] | Airport[]) => {
+      const arr = (items as any[]).map((x) => (x.airport ? x.airport : x)) as Airport[]
+      // C1: deal columns (owner, next step, units) stay behind the gate.
+      const dealCol = gateLocked ? () => undefined : dealOf
+      downloadText('rampview_targets.csv', targetListCsv(arr, scoreOf, dealCol), 'text/csv')
+      flash(gateLocked ? `Exported ${arr.length} rows (deal columns locked)` : `Exported ${arr.length} rows to CSV`)
+    },
+    [scoreOf, dealOf, flash, gateLocked],
+  )
+
+  const openBrief = useCallback(() => {
+    if (!selected) return
+    // C1: the brief carries buying-committee and deal intel only when unlocked.
+    openAccountBrief(selected, gateLocked ? undefined : dealOf(selected), scoreOf(selected), bridges)
+  }, [selected, dealOf, scoreOf, bridges, gateLocked])
+
+  // ---- what's new (B5) ----
+  const digest = digestRaw as Digest
+  const [newsSeenAt, setNewsSeenAt] = useState<string | null>(() => localStorage.getItem(NEWS_SEEN_KEY))
+  const whatsNewUnread = digest.ranAt && digest.ranAt !== newsSeenAt ? digest.items.length : 0
+  const markNewsSeen = useCallback(() => {
+    if (digest.ranAt) {
+      localStorage.setItem(NEWS_SEEN_KEY, digest.ranAt)
+      setNewsSeenAt(digest.ranAt)
+    }
+  }, [digest.ranAt])
+
+  // ---- render ----
   if (!airports) {
     return (
       <div className="app">
-        <div className="loading">Initializing RampView…</div>
+        <div className="loading-overlay">
+          <div className="loading-box">
+            <div className="ring" />
+            INITIALIZING RAMPVIEW
+          </div>
+        </div>
       </div>
     )
   }
 
+  const overlayView = view === 'pipeline' || view === 'board' || view === 'coverage'
+  const showLegend = view === 'globe' || view === 'whitespace' || view === 'network'
+  const gatedViewLocked = (view === 'pipeline' || view === 'board') && gateLocked
+
   return (
     <div className="app">
-      <GlobeView airports={list} visibleIds={activeIds} selectedId={selectedId} onSelect={select} />
+      {narrow && <div className="desktop-banner">RAMPVIEW IS BUILT FOR DESKTOP PRESENTATION</div>}
+
+      <GlobeBoundary onError={() => setGlobeReady(true)}>
+        <GlobeView
+          airports={list}
+          visibleIds={visibleIds}
+          selectedId={selectedId}
+          highlightId={highlightId}
+          onSelect={select}
+          onHover={setHighlightId}
+          colorFor={colorFor}
+          arcs={arcs}
+          onReady={() => setGlobeReady(true)}
+        />
+      </GlobeBoundary>
       <div className="vignette" />
 
-      <TopBar
-        airports={list}
-        stats={stats}
-        query={searchQuery}
-        onQuery={setSearchQuery}
-        onSelect={(id) => {
-          select(id)
-          setSearchQuery('')
-        }}
-      />
+      <div className={`loading-overlay${globeReady ? ' done' : ''}`}>
+        <div className="loading-box">
+          <div className="ring" />
+          INITIALIZING RAMPVIEW
+        </div>
+      </div>
 
-      <FilterBar filters={filters} onChange={setFilters} regions={regions} handlers={handlers} />
+      {!demoOn && (
+        <TopBar
+          airports={list}
+          stats={stats}
+          view={view}
+          onView={setView}
+          gateLocked={gateLocked}
+          query={searchQuery}
+          onQuery={setSearchQuery}
+          onSelect={(id) => {
+            select(id)
+            setSearchQuery('')
+          }}
+          searchRef={searchRef}
+          dirty={dirty}
+          onDownloadAll={downloadAllDirty}
+          onPlayDemo={() => setDemoOn(true)}
+          whatsNew={digest.items}
+          whatsNewUnread={whatsNewUnread}
+          onWhatsNewOpen={markNewsSeen}
+          sample={sampleCrm}
+          onAbout={() => setShowAbout(true)}
+        />
+      )}
 
-      <Legend airports={list} />
+      {!demoOn && (view === 'globe' || view === 'whitespace') && (
+        <FilterBar filters={filters} onChange={setFilters} regions={regions} handlers={handlers} />
+      )}
 
+      {/* empty state (A4) */}
+      {view === 'globe' && visibleIds.size === 0 && (
+        <div className="empty-float">
+          <div className="eyebrow">No airports match</div>
+          <button
+            className="minibtn accent"
+            onClick={() => setFilters({ ...EMPTY_FILTERS })}
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
+
+      {showLegend && (
+        <Legend
+          airports={list}
+          layer={effectiveLayer}
+          scoreOf={(a) => scores.get(a.id)}
+          dealOf={dealOf}
+          right={view !== 'globe'}
+        />
+      )}
+
+      {view === 'globe' && !demoOn && <LayerToggle layer={layer} onChange={setLayer} />}
+
+      {/* ---------- view overlays ---------- */}
+      {!demoOn && view === 'pipeline' && (
+        gatedViewLocked ? (
+          <div className="overlay-panel slim">
+            <div className="overlay-head"><h3>Pipeline</h3></div>
+            <PassGate what="The pipeline view" onUnlocked={() => setGateLocked(false)} />
+          </div>
+        ) : (
+          <PipelineTable
+            deals={deals}
+            airportsById={byId}
+            scoreOf={scoreOf}
+            regions={regions}
+            onSelect={select}
+            onHover={setHighlightId}
+            onExportCsv={exportCsv}
+            onDownloadPipeline={downloadPipeline}
+            highlightId={highlightId}
+          />
+        )
+      )}
+
+      {!demoOn && view === 'board' && (
+        gatedViewLocked ? (
+          <div className="overlay-panel slim">
+            <div className="overlay-head"><h3>Board</h3></div>
+            <PassGate what="The board view" onUnlocked={() => setGateLocked(false)} />
+          </div>
+        ) : (
+          <BoardView
+            deals={deals}
+            airportsById={byId}
+            onStageChange={handleStageChange}
+            onSelect={select}
+            onHover={setHighlightId}
+          />
+        )
+      )}
+
+      {view === 'network' && !demoOn && (
+        <NetworkView
+          airports={list}
+          deals={deals}
+          bridges={bridges}
+          selectedOrg={selectedOrg}
+          onSelectOrg={setSelectedOrg}
+          onSelect={select}
+          onHover={setHighlightId}
+          onAddBridge={handleAddBridge}
+          onDownloadBridges={downloadBridges}
+          highlightId={highlightId}
+        />
+      )}
+
+      {view === 'whitespace' && !demoOn && (
+        <WhitespacePanel
+          airports={filterAirports(list, filters)}
+          dealOf={dealOf}
+          scoreOf={scoreOf}
+          onlyOpen={onlyOpen}
+          onOnlyOpen={setOnlyOpen}
+          onSelect={select}
+          onHover={setHighlightId}
+          onExportCsv={exportCsv}
+          highlightId={highlightId}
+        />
+      )}
+
+      {view === 'coverage' && !demoOn && (
+        <CoverageView airports={list} scoreOf={scoreOf} onSelect={select} onHover={setHighlightId} />
+      )}
+
+      {/* ---------- right instrument panel ---------- */}
       {editing && selected ? (
         <EditForm
           airport={selected}
-          onSave={handleSave}
+          onSave={handleSaveAirport}
           onCancel={() => setEditing(false)}
-          onExport={handleExport}
-          onCopy={handleCopy}
+          onExport={handleExportAirports}
+          onCopy={handleCopyAirports}
         />
       ) : (
-        <DetailPanel airport={selected} onClose={closePanel} onEdit={() => setEditing(true)} />
+        <DetailPanel
+          airport={panelOpen ? selected : null}
+          deal={selected ? dealOf(selected) : undefined}
+          scoreInfo={selected ? scoreOf(selected) : undefined}
+          sample={sampleCrm}
+          tab={panelTab}
+          onTab={setPanelTab}
+          pipelineLocked={gateLocked}
+          onUnlocked={() => setGateLocked(false)}
+          onClose={closePanel}
+          onEdit={() => setEditing(true)}
+          onBrief={openBrief}
+          onUpsertDeal={handleUpsertDeal}
+          onDownloadPipeline={downloadPipeline}
+          onCopyPipeline={copyPipeline}
+        />
       )}
 
+      {demoOn && <DemoMode applyStep={applyDemoStep} onExit={exitDemo} />}
+      {showShortcuts && <ShortcutsOverlay onClose={() => setShowShortcuts(false)} />}
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       {toast && <div className="toast">{toast}</div>}
+      {overlayView && null}
     </div>
   )
 }

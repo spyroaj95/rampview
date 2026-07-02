@@ -1,0 +1,313 @@
+{
+  "ranAt": "2026-07-02T14:21:37.229Z",
+  "items": [
+    {
+      "airportId": "ATL",
+      "headline": "Delta details ramp innovation at ATL: autonomous bag tugs (4,000 miles since 2023, 15 units planned), autonomous jet bridges, and Baggage AI within a $110M baggage/GSE investment",
+      "url": "https://news.delta.com/delta-spurs-innovation-worlds-busiest-ramp",
+      "date": "2025-12-03",
+      "relevance": "Delta is already operating autonomous tugs on ATL's ramp, proving airside autonomy demand at the busiest US hub while signaling Delta may build or buy in house rather than through handlers."
+    },
+    {
+      "airportId": "ATL",
+      "headline": "NPR goes inside ATL: Delta's Baggage AI now routes tug drivers across 100,000 bags a day, lifting transfer rates up to 20%, with expansion to Detroit and Minneapolis in 2026",
+      "url": "https://www.npr.org/2026/05/26/nx-s1-5801537/atl-airport-atlanta-baggage-handling-delta",
+      "date": "2026-05-26",
+      "relevance": "ATL's ramp is being run on AI dispatch for human-driven tugs, a direct precursor and integration point for AeroVect's driverless retrofit and fleet orchestration pitch."
+    },
+    {
+      "airportId": "ATL",
+      "headline": "Delta ends long-running Unifi Aviation commissary/ground services contract at ATL, affecting 379 workers, with Newrest taking over September 30, 2025",
+      "url": "https://simpleflying.com/delta-air-lines-atlanta-job-cuts/",
+      "date": "2025-08-12",
+      "relevance": "Ground services contracts at ATL are in flux and Unifi, a key handler roughly 20% owned by Delta, is losing scope, creating churn that opens doors for cost-saving RaaS conversations."
+    },
+    {
+      "airportId": "ATL",
+      "headline": "Glydways autonomous shuttle pilot at ATL breaks ground: half-mile driverless guideway linking the SkyTrain to the Georgia International Convention Center, service targeted for 2026",
+      "url": "https://atlanta.urbanize.city/post/glydways-atl-airport-autonomous-transportation-shuttle-project",
+      "date": "2025-12-12",
+      "relevance": "ATL leadership is actively hosting autonomous vehicle pilots on airport property, a receptivity signal that lowers the stakeholder and approval barrier for airside GSE autonomy."
+    },
+    {
+      "airportId": "DEN",
+      "headline": "Automated baggage handling system planned for Denver International Airport Concourse A expansion, with Daifuku supplying conveyors and eight makeup units through Q2 2027",
+      "url": "https://www.aviationpros.com/ground-support-worldwide/news/55361620/automated-baggage-handling-system-planned-for-denver-international-airport-concourse-expansion",
+      "date": "2026-03-04",
+      "relevance": "DEN is actively funding baggage automation to hit 100M passengers, signaling airport appetite for automated tarmac tug routes that feed these new makeup units."
+    },
+    {
+      "airportId": "DEN",
+      "headline": "Denver airport opens $700M Concourse C-West with 11 new gates as United targets roughly 700 daily departures at its DEN hub",
+      "url": "https://thepointsguy.com/news/denver-airports-11-new-gates/",
+      "date": "2025-12-24",
+      "relevance": "Hub growth and 11 added gates mean more aircraft turns and bigger baggage tractor fleets at DEN, widening the retrofit opportunity for AeroVect."
+    },
+    {
+      "airportId": "DEN",
+      "headline": "Delta wins four Colorado Clean Diesel Program grants in 2024-2025 to buy six electric baggage tugs and seven electric belt loaders at Denver International Airport",
+      "url": "https://cocleandiesel.org/airport-ground-support-equipment/",
+      "date": "",
+      "relevance": "Carriers are refreshing DEN tug fleets to electric with state grant money, creating new-generation tractors that are prime candidates for AeroVect driverless retrofits."
+    },
+    {
+      "airportId": "DFW",
+      "date": "2026-02-05",
+      "headline": "PrimeFlight Aviation Services acquires GAT Airline Ground Support, a handler with roughly 6,000 employees at nearly 70 North American airports including DFW",
+      "url": "https://www.prnewswire.com/news-releases/atlantic-street-capital-announces-sale-of-gat-airline-ground-support-to-primeflight-aviation-services-302679258.html",
+      "relevance": "GAT is AeroVect's US deployment partner and operates at DFW, so the change to PrimeFlight ownership reshapes partner dynamics and could open a 250 airport distribution channel or put the partnership at risk."
+    },
+    {
+      "airportId": "DFW",
+      "date": "2026-06-02",
+      "headline": "Fort Worth Report details DFW's innovation strategy spanning AI, robotics and AGVs in baggage handling, automation pilots and advanced air mobility",
+      "url": "https://fortworthreport.org/2026/06/02/inside-dfw-airports-innovation-strategy-ai-automation-flying-taxis/",
+      "relevance": "DFW leadership is publicly funding automation and robotics programs across operations, signaling a receptive airport authority for autonomous GSE retrofit pilots."
+    },
+    {
+      "airportId": "DFW",
+      "date": "2025-12-26",
+      "headline": "American Airlines announces overhaul of its DFW flagship hub, moving from 9 to 13 daily banks from April 2026 with 930 plus departures and nine added gates ahead of Terminal F in 2030",
+      "url": "https://news.aa.com/news/news-details/2025/Doubling-down-on-DFW-American-further-strengthens-its-Flagship-hub-OPS-OTH-12/",
+      "relevance": "A denser bank structure and gate growth at AeroVect's largest US target hub increases ramp tempo and turn pressure, strengthening the economic case for driverless baggage tractors."
+    },
+    {
+      "airportId": "DFW",
+      "date": "2025-07-09",
+      "headline": "Oak Ridge National Laboratory publishes DOE sponsored assessment of ground support equipment electrification infrastructure and logistics at DFW",
+      "url": "https://www.osti.gov/biblio/2586884",
+      "relevance": "Federal modeling of electric GSE charging and logistics at DFW points to an infrastructure buildout that AeroVect's retrofitted electric tractors can plug into directly."
+    },
+    {
+      "airportId": "DXB",
+      "date": "2025-07-15",
+      "headline": "dnata rolls out six autonomous TractEasy EZTow baggage tractors at Dubai World Central, with Level 4 autonomy targeted for early 2026",
+      "url": "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/",
+      "relevance": "Competitor TractEasy now has a live autonomous tug fleet with dnata in Dubai, giving the EZTow camp a home-field foothold that shapes what dnata deploys at DXB."
+    },
+    {
+      "airportId": "DXB",
+      "date": "2025-07-29",
+      "headline": "UAE GCAA grants first national regulatory approval for autonomous baggage handling vehicle trials at DWC with Dubai Airports and dnata",
+      "url": "https://www.khaleejtimes.com/business/aviation/uae-trial-baggage-vehicles-al-maktoum-international",
+      "relevance": "The UAE now has a regulatory framework for driverless airside vehicles, lowering the approval barrier for any AeroVect retrofit entry into Dubai airports."
+    },
+    {
+      "airportId": "DXB",
+      "date": "2025-11-20",
+      "headline": "Dubai Airports deploys Assaia AI-powered turnaround management across all aircraft stands at DXB with Emirates, flydubai and dnata",
+      "url": "https://www.assaia.com/resources/dubai-airports-explores-ai-powered-turnaround-management-to-elevate-performance-and-guest-experience",
+      "relevance": "DXB is instrumenting its entire apron with AI turnaround visibility, signaling appetite for airside automation and creating data hooks autonomous GSE can plug into."
+    },
+    {
+      "airportId": "DXB",
+      "date": "2025-12-09",
+      "headline": "Aurrigo launches international licensing and hub programme, naming Dubai as its Middle East hub after a 14.1 million pound fundraise",
+      "url": "https://www.aviationpros.com/ground-support-worldwide/gse/news/55337138/aurrigo-international-launches-licensing-and-hub-program-to-accelerate-global-scale-up",
+      "relevance": "Purpose-built rival Aurrigo is planting its regional commercial base in Dubai, escalating the competitive land grab for Gulf autonomous GSE deals."
+    },
+    {
+      "airportId": "HND",
+      "headline": "TractEasy and EasyMile power JAL's Level 4 autonomous EZTow baggage and cargo towing at Narita, claimed as Japan's first",
+      "url": "https://easymile.com/en/news-insights/easymile-technology-powers-japan-s-first-level-4-autonomous-towing-at-narita-international-airport-2",
+      "date": "2025-12-15",
+      "relevance": "Direct competitor TractEasy converted its six-year JAL relationship into full Level 4 operations at Tokyo's other hub, showing JAL splitting autonomous GSE vendors and leaving little open lane for AeroVect with Japan's flag carriers."
+    },
+    {
+      "airportId": "HND",
+      "headline": "JAL partners with GMO AI and Robotics to trial humanoid robots for baggage loading and ground handling at Haneda",
+      "url": "https://aerospaceglobalnews.com/news/japan-airlines-trial-humanoid-robots-tokyo-haneda-airport/",
+      "date": "2026-04-30",
+      "relevance": "JAL's ramp labor shortage is severe enough that it is testing humanoid robots and eyeing robot-operated GSE, confirming HND ground handlers will fund automation that stretches existing equipment, which is exactly AeroVect's retrofit value proposition."
+    },
+    {
+      "airportId": "LHR",
+      "headline": "UK aviation leaders including Heathrow launch Airside Automation Group to advance autonomous airside mobility",
+      "url": "https://www.passengerterminaltoday.com/news/ground-support/uk-aviation-leaders-launch-airside-automation-group.html",
+      "date": "2025-09-03",
+      "relevance": "Heathrow is a founding member of a Zenzic-led group pushing autonomous airside vehicles, giving AeroVect an institutional channel where Aurrigo and Oxa are already named players."
+    },
+    {
+      "airportId": "LHR",
+      "headline": "Heathrow unlocks £1.3bn 2026 investment including new Terminal 2 baggage system and AI cameras across all aircraft stands",
+      "url": "https://mediacentre.heathrow.com/pressrelease/detail/24516",
+      "date": "2025-12-19",
+      "relevance": "Heathrow is spending on baggage infrastructure and stand-level AI turnaround analytics with ground handlers, showing budget and appetite for exactly the ramp automation layer AeroVect sells."
+    },
+    {
+      "airportId": "LHR",
+      "headline": "Aurrigo signs contract with Teesside International Airport for first integrated Auto-Shuttle and Auto-DollyTug deployment, airside from early 2026",
+      "url": "https://aurrigo.com/aurrigo-international-plc-moves-into-the-north-east-with-global-first-at-teesside-international-airport/",
+      "date": "2025-08-13",
+      "relevance": "Competitor Aurrigo is building a live UK airside reference for its purpose-built Auto-DollyTug, strengthening its position to sell into Heathrow ahead of AeroVect's retrofit approach."
+    },
+    {
+      "airportId": "LHR",
+      "headline": "WHILL trials autonomous mobility service at London Heathrow Terminal 3",
+      "url": "https://runwaygirlnetwork.com/2026/06/whill-trials-autonomous-mobility-at-london-heathrow-t3/",
+      "date": "",
+      "relevance": "Heathrow is running autonomous vehicle trials in live passenger operations, evidence its safety case and approval pathway for autonomy at LHR is open and active."
+    },
+    {
+      "topic": "Aurrigo Auto-DollyTug autonomous ground handling",
+      "date": "2025-09-05",
+      "headline": "Aurrigo raises 14.1M GBP to scale autonomous GSE, led by Next Gen Mobility",
+      "url": "https://aerospaceglobalnews.com/news/aurrigo-raises-14m-autonomous-gse/",
+      "relevance": "Fresh capital lets Aurrigo deliver demonstrator fleets to seven engaged airports including Zurich and Changi, funding a direct purpose-built rival to AeroVect's retrofit model."
+    },
+    {
+      "topic": "Aurrigo Auto-DollyTug autonomous ground handling",
+      "date": "2025-12-09",
+      "headline": "Aurrigo launches licensing and hub program with planned hubs in Cincinnati, Singapore/Malaysia, Dubai and Amsterdam",
+      "url": "https://www.aviationpros.com/ground-support-worldwide/gse/news/55337138/aurrigo-international-launches-licensing-and-hub-program-to-accelerate-global-scale-up",
+      "relevance": "Aurrigo's partner-funded regional hub model is a scaling play into North America and Asia that could contest the same handler accounts AeroVect targets, including in the US."
+    },
+    {
+      "topic": "Aurrigo Auto-DollyTug autonomous ground handling",
+      "date": "2026-03-17",
+      "headline": "Aurrigo shows Auto-DollyTug and Auto-Shuttle at PTE World 2026, cites 8 live trial sites and largest ever contract for 25 AGVs",
+      "url": "https://www.airport-suppliers.com/aurrigo-international-brings-auto-dolly-tug-and-auto-shuttle-to-pte-world-2026/",
+      "relevance": "Confirms Aurrigo's current footprint (Cincinnati, Schiphol, Zurich, East Midlands, Teesside) and growing commercial traction, a benchmark for how many live sites AeroVect must match."
+    },
+    {
+      "topic": "Aurrigo Auto-DollyTug autonomous ground handling",
+      "date": "2025-08-13",
+      "headline": "Aurrigo signs 0.9M GBP Teesside contract for global-first integration of Auto-DollyTug and Auto-Shuttle airside",
+      "url": "https://aurrigo.com/aurrigo-international-plc-moves-into-the-north-east-with-global-first-at-teesside-international-airport/",
+      "relevance": "First live airport running Aurrigo cargo and passenger AVs together, a reference-site proof point Aurrigo will use in sales cycles against AeroVect's retrofit pitch."
+    },
+    {
+      "topic": "dnata autonomous vehicles and ground-handling expansion",
+      "date": "2025-07-15",
+      "headline": "dnata rolls out six autonomous TractEasy EZTow baggage tractors in live operations at Dubai World Central",
+      "url": "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/",
+      "relevance": "dnata put competitor TractEasy's purpose-built EZTow into day-to-day ramp service with a GCAA regulatory framework, the deployment AeroVect's retrofit model competes against directly."
+    },
+    {
+      "topic": "dnata autonomous vehicles and ground-handling expansion",
+      "date": "2025-11-26",
+      "headline": "dnata CEO outlines plan to expand airside autonomy beyond tractors to buses and high loaders, with Level 4 approval at DWC expected early 2026",
+      "url": "https://simpleflying.com/dnata-autonomous-airside-vehicles/",
+      "relevance": "Signals dnata intends fleet-wide autonomy on the EasyMile stack, raising urgency for AeroVect to land handlers before the TractEasy alignment hardens."
+    },
+    {
+      "topic": "dnata autonomous vehicles and ground-handling expansion",
+      "date": "2026-06-30",
+      "headline": "dnata wins seven-year ground handling license renewal at Amsterdam Schiphol covering 16,000 flights and 500,000 tonnes of cargo annually",
+      "url": "https://www.gdnonline.com/Details/1399213/dnata-gets-seven-year-extension-for-ground-handling-services-at-Amsterdam",
+      "relevance": "A locked-in seven-year term at a major EU hub gives dnata payback horizon to invest in airside automation, making Schiphol a station to watch or contest."
+    },
+    {
+      "topic": "dnata autonomous vehicles and ground-handling expansion",
+      "date": "2026-04-03",
+      "headline": "dnata completes integration of Italian ground handling business, expanding to Rome Fiumicino and investing EUR 25M in Milan Malpensa cargo capacity",
+      "url": "https://payloadasia.com/2026/04/dnata-finalises-integration-italian-ground-handling-business-following-strategic-acquisition/",
+      "relevance": "dnata nearly doubled its Italian footprint to three airports and 150,000 flights a year, new stations with tractor fleets AeroVect retrofits could target."
+    },
+    {
+      "topic": "airport ramp ground-handling labor shortage / strikes",
+      "date": "2026-06-27",
+      "headline": "CUB Trasporti calls 24-hour nationwide Italian airport strike for July 5, covering baggage handlers, ramp agents, pushback and fuelling crews with no protected windows",
+      "url": "https://www.traveltourister.com/news/italy-july-5-2026-strike-milan-acc-atc-rome-fiumicino-security-cub-trasporti-eu261-rights/",
+      "relevance": "A full day with every pushback tractor and baggage belt idle across Italy is a direct proof point for autonomous ramp resilience that AeroVect can cite to airlines and handlers."
+    },
+    {
+      "topic": "airport ramp ground-handling labor shortage / strikes",
+      "date": "2026-06-18",
+      "headline": "Italy nationwide ground handling strike on June 26 hits Rome, Milan and other hubs with 24-hour withdrawal from baggage logistics and aircraft turnaround",
+      "url": "https://www.nomadlawyer.org/italy-airport-ground-handling-strike-june-2026",
+      "relevance": "Recurring nationwide ramp walkouts (prior strike days saw 38-40% cancellations) show handler labor fragility that driverless tug fleets can hedge."
+    },
+    {
+      "topic": "airport ramp ground-handling labor shortage / strikes",
+      "date": "2026-04-02",
+      "headline": "Groundforce ramp staff continue indefinite Mon/Wed/Fri strikes at 12 Spanish airports over pay while Menzies averts its Easter walkout with a last-minute mediation deal",
+      "url": "https://www.traveltourister.com/news/spain-easter-strike-menzies-called-off-april-2-2026-groundforce-continues/",
+      "relevance": "Sustained ramp stoppages squeezing Menzies and Groundforce make labor-independent baggage tows a concrete pitch to handlers already in AeroVect's target segment."
+    },
+    {
+      "topic": "airport ramp ground-handling labor shortage / strikes",
+      "date": "2026-06-11",
+      "headline": "Ground staff including baggage handlers and ramp agents strike at all three Paris airports (CDG, Orly, Le Bourget) on June 18 over airside badge rules, with up to 40% capacity cuts expected",
+      "url": "https://www.airhelp.com/en-int/flight-disruptions/paris-ground-staff-strike-cdg-orly-le-bourget-18062026/",
+      "relevance": "Shows even non-wage issues like security badge rules can pull ramp agents off duty at major hubs, strengthening the reliability case for driverless GSE."
+    },
+    {
+      "topic": "airport ramp ground-handling labor shortage / strikes",
+      "date": "2026-04-22",
+      "headline": "US immigration crackdown shrinks the ramp and ground-handling labor pool, with foreign-born workers at ~20% of air transport workforce and ground-handling costs up 7% year over year",
+      "url": "https://simpleflying.com/trump-immigration-crackdown-influencing-aviation-worker-shortages/",
+      "relevance": "A structurally shrinking US ramp labor pool and rising handling costs improve the ROI math for AeroVect's robotics-as-a-service in its home market with GAT."
+    },
+    {
+      "topic": "Swissport autonomy / automation programs",
+      "headline": "Swissport and Aurrigo launch first global pilot of autonomous ground handling at Zurich Airport, with Swissport taking exclusive operational rights",
+      "url": "https://www.airport-technology.com/news/swissport-aurrigo-pilot-zurich-airport/",
+      "date": "2025-05-21",
+      "relevance": "Swissport locked exclusive rights to Aurrigo's autonomous GSE at its co-operated stations, closing that handler channel to rivals and sharpening the case for AeroVect's retrofit model with other handlers like GAT and Menzies."
+    },
+    {
+      "topic": "Swissport autonomy / automation programs",
+      "headline": "Aurrigo raises 14.1 million pounds to scale autonomous GSE production, citing Swissport Zurich pilot and projects at seven airports",
+      "url": "https://aerospaceglobalnews.com/news/aurrigo-raises-14m-autonomous-gse/",
+      "date": "2025-09-05",
+      "relevance": "AeroVect's purpose-built competitor now has fresh capital to expand Auto-DollyTug manufacturing and demonstrator fleets, accelerating the Swissport-aligned threat."
+    },
+    {
+      "topic": "Swissport autonomy / automation programs",
+      "headline": "Swissport completes Switzerland's first fully electric aircraft turnaround at Geneva Airport, targeting 55 percent GSE electrification by 2032",
+      "url": "https://aerospaceglobalnews.com/news/swissport-electric-aircraft-turnaround-geneva-airport/",
+      "date": "2026-02-04",
+      "relevance": "Swissport is converting baggage tractors to electric fleet-wide, and a growing electric tractor base is exactly the hardware AeroVect's retrofit autonomy kits target."
+    },
+    {
+      "topic": "Swissport autonomy / automation programs",
+      "headline": "Swissport enters China with fully electric, AI-driven intelligent cargo terminal at Shanghai Pudong",
+      "url": "https://www.indexbox.io/blog/swissport-launches-operations-at-shanghai-pudong-intelligent-cargo-terminal/",
+      "date": "2026-06-03",
+      "relevance": "Shows Swissport investing heavily in automation and AI for cargo operations, signaling airside automation appetite that currently flows to Aurrigo rather than retrofit vendors."
+    },
+    {
+      "topic": "Swissport autonomy / automation programs",
+      "headline": "Swissport Italy ground staff stage 24-hour strike at Milan Linate and Malpensa",
+      "url": "https://www.theflightclub.it/en/2026/01/january-9-airport-strike/",
+      "date": "2026-01-09",
+      "relevance": "Recurring ramp labor actions at Swissport stations strengthen the cost and reliability argument for driverless baggage tractor retrofits across handlers."
+    },
+    {
+      "topic": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "date": "2026-06-03",
+      "headline": "TractEasy deploys autonomous cargo operations at Istanbul Airport with Turkish Cargo",
+      "url": "https://tracteasy.com/news/tracteasy-deploys-autonomous-cargo-operations-at-istanbul-airport/",
+      "relevance": "Competitor is landing new flagship hubs; Level 4 towing from warehouse to apron across live traffic shows TractEasy expanding beyond baggage into cargo lanes AeroVect could contest."
+    },
+    {
+      "topic": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "date": "2026-04-07",
+      "headline": "TractEasy EZTow clocks 120 daily autonomous missions at Lufthansa Cargo's Frankfurt hub, 20,000+ km in first year",
+      "url": "https://www.stattimes.com/amp/aviation/tracteasy-eztow-clocks-120-daily-missions-at-lufthansa-cargo-hub-1358711",
+      "relevance": "Production-scale proof point at a top European cargo hub raises the reliability bar AeroVect's retrofit pitch must match in carrier and handler conversations."
+    },
+    {
+      "topic": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "date": "2025-12-15",
+      "headline": "Japan Airlines reaches full Level 4 autonomous towing at Narita using TractEasy EZTow with EasyMile tech, approved by Japan's civil aviation authority",
+      "url": "https://easymile.com/en/news-insights/easymile-technology-powers-japan-s-first-level-4-autonomous-towing-at-narita-international-airport-2",
+      "relevance": "First JCAB-sanctioned Level 4 airside towing sets a regulatory precedent AeroVect can cite, but it cements TractEasy's head start with airlines in Asia."
+    },
+    {
+      "topic": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "date": "2025-12-15",
+      "headline": "Munich Airport partners with TractEasy to advance autonomous cargo towing, with trials, safety validation and a scaling roadmap",
+      "url": "https://centreforaviation.com/news/munich-airport-partners-with-tracteasy-to-advance-autonomous-cargo-towing-1343504",
+      "relevance": "TractEasy is locking in airport-operator partnerships as a channel, a model AeroVect should counter at other majors before roadmaps get committed."
+    },
+    {
+      "topic": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "date": "2025-07-15",
+      "headline": "dnata rolls out six EZTow autonomous electric baggage tractors at Dubai World Central, Level 4 upgrade planned for early 2026",
+      "url": "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/",
+      "relevance": "Deepens the dnata-TractEasy alignment and builds a GCAA regulatory framework at DWC, effectively closing a major handler and hub to AeroVect."
+    }
+  ]
+}

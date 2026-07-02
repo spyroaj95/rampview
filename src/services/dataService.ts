@@ -1,5 +1,5 @@
 /**
- * dataService — the ONLY module that knows where airport data comes from.
+ * dataService: the ONLY module that knows where airport data comes from.
  *
  * Today it reads the committed src/data/airports.json. Tomorrow loadAirports()
  * can `await fetch('/api/airports')` against a hosted DB and nothing in the UI

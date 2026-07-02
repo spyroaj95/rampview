@@ -149,7 +149,7 @@ export default function EditForm({ airport, onSave, onCancel, onExport, onCopy }
             <div className="form-row">
               <label>Confidence (Tier B)</label>
               <select value={f.confidence} onChange={(e) => set('confidence', e.target.value as Confidence | '')}>
-                <option value="">—</option>
+                <option value="">-</option>
                 <option value="high">high</option>
                 <option value="medium">medium</option>
                 <option value="low">low</option>

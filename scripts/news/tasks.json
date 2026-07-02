@@ -1,0 +1,77 @@
+{
+  "count": 11,
+  "tasks": [
+    {
+      "id": "ATL",
+      "kind": "airport",
+      "name": "Hartsfield Jackson Atlanta International Airport",
+      "country": "United States",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at Hartsfield Jackson Atlanta International Airport (ATL), United States.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/ATL.json as {\"airportId\":\"ATL\",\"items\":[...]}."
+    },
+    {
+      "id": "DXB",
+      "kind": "airport",
+      "name": "Dubai International Airport",
+      "country": "United Arab Emirates",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at Dubai International Airport (DXB), United Arab Emirates.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/DXB.json as {\"airportId\":\"DXB\",\"items\":[...]}."
+    },
+    {
+      "id": "DFW",
+      "kind": "airport",
+      "name": "Dallas Fort Worth International Airport",
+      "country": "United States",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at Dallas Fort Worth International Airport (DFW), United States.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/DFW.json as {\"airportId\":\"DFW\",\"items\":[...]}."
+    },
+    {
+      "id": "LHR",
+      "kind": "airport",
+      "name": "London Heathrow Airport",
+      "country": "United Kingdom",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at London Heathrow Airport (LHR), United Kingdom.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/LHR.json as {\"airportId\":\"LHR\",\"items\":[...]}."
+    },
+    {
+      "id": "HND",
+      "kind": "airport",
+      "name": "Tokyo Haneda International Airport",
+      "country": "Japan",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at Tokyo Haneda International Airport (HND), Japan.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/HND.json as {\"airportId\":\"HND\",\"items\":[...]}."
+    },
+    {
+      "id": "DEN",
+      "kind": "airport",
+      "name": "Denver International Airport",
+      "country": "United States",
+      "prompt": "Find RECENT news (last ~12 months) relevant to autonomous ground support equipment at Denver International Airport (DEN), United States.\nRelevant: autonomous/electric GSE trials or deployments, ground-handling contract changes, ramp labor actions or shortages, airside automation mandates, competitor moves (TractEasy, Aurrigo, purpose-built autonomy vendors).\nRules: every item MUST have a real source url you retrieved. Omit anything you cannot source. 0 items is a valid result.\nReturn items as: { \"headline\", \"date\" (YYYY-MM-DD if known), \"url\", \"relevance\" (one line, why it matters to AeroVect) }.\nWrite JSON to scripts/news/results/DEN.json as {\"airportId\":\"DEN\",\"items\":[...]}."
+    },
+    {
+      "id": "topic-tracteasy",
+      "kind": "topic",
+      "name": "TractEasy / EasyMile EZTow autonomous tow tractors",
+      "prompt": "Find RECENT news (last ~12 months) about: TractEasy / EasyMile EZTow autonomous tow tractors.\nFocus on what matters to AeroVect (retrofit autonomous-GSE, robotics-as-a-service): deployments, contracts, funding, airport wins/losses, labor drivers.\nRules: every item MUST have a real source url you retrieved; omit anything unsourced; 0 items is valid.\nWrite JSON to scripts/news/results/topic-tracteasy.json as {\"airportId\":null,\"topic\":\"TractEasy / EasyMile EZTow autonomous tow tractors\",\"items\":[...]}."
+    },
+    {
+      "id": "topic-aurrigo",
+      "kind": "topic",
+      "name": "Aurrigo Auto-DollyTug autonomous ground handling",
+      "prompt": "Find RECENT news (last ~12 months) about: Aurrigo Auto-DollyTug autonomous ground handling.\nFocus on what matters to AeroVect (retrofit autonomous-GSE, robotics-as-a-service): deployments, contracts, funding, airport wins/losses, labor drivers.\nRules: every item MUST have a real source url you retrieved; omit anything unsourced; 0 items is valid.\nWrite JSON to scripts/news/results/topic-aurrigo.json as {\"airportId\":null,\"topic\":\"Aurrigo Auto-DollyTug autonomous ground handling\",\"items\":[...]}."
+    },
+    {
+      "id": "topic-swissport",
+      "kind": "topic",
+      "name": "Swissport autonomy / automation programs",
+      "prompt": "Find RECENT news (last ~12 months) about: Swissport autonomy / automation programs.\nFocus on what matters to AeroVect (retrofit autonomous-GSE, robotics-as-a-service): deployments, contracts, funding, airport wins/losses, labor drivers.\nRules: every item MUST have a real source url you retrieved; omit anything unsourced; 0 items is valid.\nWrite JSON to scripts/news/results/topic-swissport.json as {\"airportId\":null,\"topic\":\"Swissport autonomy / automation programs\",\"items\":[...]}."
+    },
+    {
+      "id": "topic-dnata",
+      "kind": "topic",
+      "name": "dnata autonomous vehicles and ground-handling expansion",
+      "prompt": "Find RECENT news (last ~12 months) about: dnata autonomous vehicles and ground-handling expansion.\nFocus on what matters to AeroVect (retrofit autonomous-GSE, robotics-as-a-service): deployments, contracts, funding, airport wins/losses, labor drivers.\nRules: every item MUST have a real source url you retrieved; omit anything unsourced; 0 items is valid.\nWrite JSON to scripts/news/results/topic-dnata.json as {\"airportId\":null,\"topic\":\"dnata autonomous vehicles and ground-handling expansion\",\"items\":[...]}."
+    },
+    {
+      "id": "topic-labor",
+      "kind": "topic",
+      "name": "airport ramp ground-handling labor shortage / strikes",
+      "prompt": "Find RECENT news (last ~12 months) about: airport ramp ground-handling labor shortage / strikes.\nFocus on what matters to AeroVect (retrofit autonomous-GSE, robotics-as-a-service): deployments, contracts, funding, airport wins/losses, labor drivers.\nRules: every item MUST have a real source url you retrieved; omit anything unsourced; 0 items is valid.\nWrite JSON to scripts/news/results/topic-labor.json as {\"airportId\":null,\"topic\":\"airport ramp ground-handling labor shortage / strikes\",\"items\":[...]}."
+    }
+  ]
+}

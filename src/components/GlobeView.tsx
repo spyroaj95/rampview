@@ -4,12 +4,30 @@ import type { Airport } from '../types/airport'
 import { statusMeta } from '../lib/statusMeta'
 import { compactNumber } from '../lib/format'
 
+export interface ArcDatum {
+  startLat: number
+  startLng: number
+  endLat: number
+  endLng: number
+  label: string
+  color: string
+}
+
 interface Props {
   airports: Airport[]
   /** ids that pass the active filters; anything else is dimmed. */
   visibleIds: Set<string>
   selectedId: string | null
+  /** hover-highlight from lists/tables (two-way linking) */
+  highlightId: string | null
   onSelect: (id: string) => void
+  /** globe hover back to the lists (the other half of two-way linking) */
+  onHover: (id: string | null) => void
+  /** active-layer color for a point (App owns the layer logic) */
+  colorFor: (a: Airport) => string
+  /** expansion arcs (network view / demo) */
+  arcs: ArcDatum[]
+  onReady: () => void
 }
 
 const MAX_PAX = 105_000_000
@@ -25,7 +43,17 @@ function altitudeFor(a: Airport): number {
   return 0.006 + 0.05 * (Math.min(p, MAX_PAX) / MAX_PAX)
 }
 
-export default function GlobeView({ airports, visibleIds, selectedId, onSelect }: Props) {
+export default function GlobeView({
+  airports,
+  visibleIds,
+  selectedId,
+  highlightId,
+  onSelect,
+  onHover,
+  colorFor,
+  arcs,
+  onReady,
+}: Props) {
   const globeRef = useRef<GlobeMethods | undefined>(undefined)
   const containerRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight })
@@ -66,7 +94,7 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
     const onEnd = () => {
       interactingRef.current = false
       window.clearTimeout(resumeTimer.current)
-      // Resume drifting after a idle beat, but only if nothing is selected.
+      // Resume drifting after an idle beat, but only if nothing is selected.
       resumeTimer.current = window.setTimeout(() => {
         if (!interactingRef.current && !selectedIdRef.current) controls.autoRotate = true
       }, 5000)
@@ -80,8 +108,12 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
     }
   }, [])
 
-  // Keep a live ref of selection for the controls closure above.
+  // Keep live refs for the controls closure above; the camera flies only when
+  // the SELECTION changes, not when the airports array identity changes
+  // (e.g. an edit save re-creating the list mid-view).
   const selectedIdRef = useRef<string | null>(selectedId)
+  const airportsRef = useRef(airports)
+  airportsRef.current = airports
   useEffect(() => {
     selectedIdRef.current = selectedId
     const g = globeRef.current
@@ -89,34 +121,46 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
     const controls = g.controls() as any
     if (selectedId) {
       controls.autoRotate = false
-      const a = airports.find((x) => x.id === selectedId)
+      const a = airportsRef.current.find((x) => x.id === selectedId)
       if (a) g.pointOfView({ lat: a.lat, lng: a.lng, altitude: 1.7 }, 1100)
     } else if (!interactingRef.current) {
       controls.autoRotate = true
     }
-  }, [selectedId, airports])
+  }, [selectedId])
 
-  const selected = useMemo(
-    () => airports.find((a) => a.id === selectedId) ?? null,
-    [airports, selectedId],
-  )
+  const byId = useMemo(() => new Map(airports.map((a) => [a.id, a])), [airports])
+  const selected = selectedId ? byId.get(selectedId) ?? null : null
+  const highlighted = highlightId && highlightId !== selectedId ? byId.get(highlightId) ?? null : null
 
-  // Pulsing ring under the selected airport, in its status color.
-  const ringsData = useMemo(
-    () => (selected ? [{ lat: selected.lat, lng: selected.lng, color: statusMeta(selected.aerovectStatus).color }] : []),
-    [selected],
-  )
+  // Pulsing ring under the selected airport (its layer color) + a faster,
+  // tighter ring under a hover-highlighted row (two-way linking).
+  const ringsData = useMemo(() => {
+    const rings: { lat: number; lng: number; color: string; maxR: number; speed: number }[] = []
+    if (selected) {
+      rings.push({
+        lat: selected.lat,
+        lng: selected.lng,
+        color: colorFor(selected) ?? statusMeta(selected.aerovectStatus).color,
+        maxR: 4,
+        speed: 2.2,
+      })
+    }
+    if (highlighted) {
+      rings.push({ lat: highlighted.lat, lng: highlighted.lng, color: '#eef3fa', maxR: 2.4, speed: 3.4 })
+    }
+    return rings
+  }, [selected, highlighted, colorFor])
 
   const pointColor = (d: object) => {
     const a = d as Airport
-    const meta = statusMeta(a.aerovectStatus)
-    if (visibleIds.has(a.id)) return meta.color
-    return 'rgba(90,102,117,0.14)' // dimmed / filtered out
+    if (!visibleIds.has(a.id)) return 'rgba(90,102,117,0.14)' // dimmed / filtered out
+    return colorFor(a)
   }
 
   const pointRadius = (d: object) => {
     const a = d as Airport
     const base = radiusFor(a)
+    if (a.id === highlightId) return base * 1.5
     return visibleIds.has(a.id) ? base : base * 0.55
   }
 
@@ -149,6 +193,7 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
         backgroundColor="rgba(0,0,0,0)"
         atmosphereColor="#3aa0ff"
         atmosphereAltitude={0.2}
+        onGlobeReady={onReady}
         pointsData={airports}
         pointLat={(d: object) => (d as Airport).lat}
         pointLng={(d: object) => (d as Airport).lng}
@@ -159,6 +204,7 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
         pointsMerge={false}
         pointLabel={pointLabel}
         onPointClick={(d: object) => onSelect((d as Airport).id)}
+        onPointHover={(d: object | null) => onHover(d ? (d as Airport).id : null)}
         ringsData={ringsData}
         ringLat={(d: object) => (d as { lat: number }).lat}
         ringLng={(d: object) => (d as { lng: number }).lng}
@@ -166,9 +212,21 @@ export default function GlobeView({ airports, visibleIds, selectedId, onSelect }
           const c = (d as { color: string }).color
           return (t: number) => `${c}${Math.round((1 - t) * 200).toString(16).padStart(2, '0')}`
         }}
-        ringMaxRadius={4}
-        ringPropagationSpeed={2.2}
+        ringMaxRadius={(d: object) => (d as { maxR: number }).maxR}
+        ringPropagationSpeed={(d: object) => (d as { speed: number }).speed}
         ringRepeatPeriod={900}
+        arcsData={arcs}
+        arcStartLat={(d: object) => (d as ArcDatum).startLat}
+        arcStartLng={(d: object) => (d as ArcDatum).startLng}
+        arcEndLat={(d: object) => (d as ArcDatum).endLat}
+        arcEndLng={(d: object) => (d as ArcDatum).endLng}
+        arcColor={(d: object) => (d as ArcDatum).color}
+        arcLabel={(d: object) => `<div class="globe-tip"><div class="gt-name">${(d as ArcDatum).label}</div></div>`}
+        arcAltitude={0.28}
+        arcStroke={0.45}
+        arcDashLength={0.45}
+        arcDashGap={0.18}
+        arcDashAnimateTime={2200}
       />
     </div>
   )

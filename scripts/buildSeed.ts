@@ -1,5 +1,5 @@
 /**
- * buildSeed.ts — regenerates src/data/airports.json from open sources.
+ * buildSeed.ts: regenerates src/data/airports.json from open sources.
  *
  * Pipeline:
  *   1. Read OurAirports airports.csv + countries.csv (public domain, in scripts/rawdata).
@@ -149,7 +149,7 @@ const CURATED: [string, number, number][] = [
 ]
 
 // ---------------------------------------------------------------------------
-// Tier B marquee records — hand-verified, each with confidence + sources.
+// Tier B marquee records: hand-verified, each with confidence + sources.
 // Deep-merged onto the Tier A skeleton. This is the ONLY source of Tier B data.
 // ---------------------------------------------------------------------------
 const LAST_UPDATED = '2026-06-30'
@@ -265,7 +265,7 @@ const MARQUEE: Record<string, Partial<Airport>> = {
         name: 'Fraport Ground Services (FraGround)',
         role: 'primary ramp & cargo handler',
         notes:
-          'Fraport is BOTH the airport operator AND the handler — the rare "authority + handler in one"',
+          'Fraport is BOTH the airport operator AND the handler: the rare "authority + handler in one"',
       },
     ],
     aerovectStatus: 'active_target',
