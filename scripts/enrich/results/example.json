@@ -1,0 +1,30 @@
+{
+  "_note": "Template for a research-agent result. enrich:merge ignores this file by name. Copy the shape, name your file <IATA>.json, and OMIT any field you cannot source.",
+  "id": "YYZ",
+  "gseModel": "handler_led",
+  "groundHandlers": [
+    { "name": "Swissport", "role": "primary ramp & cargo handler", "notes": "Large third-party footprint at YYZ" },
+    { "name": "Air Canada", "role": "self-handling (mainline)" }
+  ],
+  "gseFleetEstimate": "unknown",
+  "laborPressure": "medium",
+  "aerovectStatus": "prospect",
+  "aerovectNotes": "Handler-led ramp with a dominant self-handling flag carrier; Swissport presence means the account is contestable but Aurrigo-adjacent.",
+  "operationsNotes": "Winter de-icing operations add GSE utilization pressure.",
+  "competitors": [],
+  "tailwinds": [
+    {
+      "headline": "Canadian ground-handling labor shortages persist post-pandemic",
+      "date": "2024-06-01",
+      "url": "https://example.com/source-article",
+      "relevance": "Supports the unstaffable-shift argument for autonomy"
+    }
+  ],
+  "confidence": "low",
+  "sources": ["https://example.com/handler-listing", "https://example.com/labor-report"],
+  "_agent": {
+    "found": ["gseModel", "groundHandlers", "laborPressure", "tailwinds"],
+    "unknown": ["gseFleetEstimate", "competitors"],
+    "notes": "Illustrative only. Real results must cite real URLs the agent retrieved."
+  }
+}

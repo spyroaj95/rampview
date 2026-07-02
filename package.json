@@ -1,0 +1,31 @@
+{
+  "name": "rampview",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "RampView - interactive 3D globe GTM intelligence tool for AeroVect autonomous ground support equipment",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "build:seed": "tsx scripts/buildSeed.ts",
+    "enrich:plan": "tsx scripts/enrich/enrich.ts plan",
+    "enrich:merge": "tsx scripts/enrich/enrich.ts merge"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-globe.gl": "^2.33.2",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
