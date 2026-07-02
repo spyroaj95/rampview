@@ -11,8 +11,16 @@
 const PASS_HASH = 'db1a4ed7ffcd4b067b37788f336a933b5ccce93b8ee7b7b144b45d66d9d6fd05'
 const KEY = 'rv_unlocked'
 
-/** Dev builds skip the gate; the sample data carries nothing sensitive anyway. */
-export function gateRequired(): boolean {
+/**
+ * Founder-demo rule: the gate exists to protect REAL deal/contact intel, so it
+ * only engages when the running build actually contains a real pipeline.json
+ * (hasRealCrm). A public deploy is always built from a fresh checkout where
+ * pipeline.json is gitignored-absent, so it runs on the dummy sample and the
+ * GTM views stay open: that public link is exactly the founder demo.
+ * Dev builds also skip the gate.
+ */
+export function gateRequired(hasRealCrm: boolean): boolean {
+  if (!hasRealCrm) return false
   return import.meta.env.PROD && sessionStorage.getItem(KEY) !== '1'
 }
 

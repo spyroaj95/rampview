@@ -48,6 +48,25 @@ import { ShortcutsOverlay, AboutModal } from './components/Modals'
 const ARC_COLOR = '#22d3ee'
 const NEWS_SEEN_KEY = 'rv_news_seen'
 
+// ---- deep-link permalinks: ?a=DXB&layer=competitor&view=network ----
+const VIEW_KEYS = ['globe', 'pipeline', 'board', 'network', 'whitespace', 'coverage'] as const
+const LAYER_KEYS = ['status', 'score', 'competitor', 'confidence'] as const
+
+function urlParam(name: string): string | null {
+  return new URLSearchParams(window.location.search).get(name)
+}
+function initialView(): ViewKey {
+  const v = urlParam('view')
+  return VIEW_KEYS.includes(v as ViewKey) ? (v as ViewKey) : 'globe'
+}
+function initialLayer(): LayerKey {
+  const l = urlParam('layer')
+  return LAYER_KEYS.includes(l as (typeof LAYER_KEYS)[number]) ? (l as LayerKey) : 'status'
+}
+// Captured once at load: the permalink writer rewrites the URL as soon as the
+// app mounts, which would otherwise race the async airport load for ?a=.
+const INITIAL_AIRPORT = urlParam('a')?.toUpperCase() ?? null
+
 interface Digest {
   ranAt: string | null
   items: WhatsNewItem[]
@@ -96,9 +115,9 @@ export default function App() {
   const [bridges, setBridges] = useState<Bridge[]>([])
   const [sampleCrm, setSampleCrm] = useState(true)
 
-  // ---- ui state ----
-  const [view, setView] = useState<ViewKey>('globe')
-  const [layer, setLayer] = useState<LayerKey>('status')
+  // ---- ui state (view/layer restore from the permalink) ----
+  const [view, setView] = useState<ViewKey>(initialView)
+  const [layer, setLayer] = useState<LayerKey>(initialLayer)
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -113,7 +132,9 @@ export default function App() {
   const [showShortcuts, setShowShortcuts] = useState(false)
   const [showAbout, setShowAbout] = useState(false)
   const [globeReady, setGlobeReady] = useState(false)
-  const [gateLocked, setGateLocked] = useState(gateRequired())
+  // C1 gate: engages only when this build carries REAL CRM data (see gate.ts).
+  // Public deploys run on the committed sample, so founders are never locked out.
+  const [gateDismissed, setGateDismissed] = useState(false)
   const [narrow, setNarrow] = useState(window.innerWidth < 900)
 
   // ---- dirty tracking (C4) ----
@@ -125,13 +146,34 @@ export default function App() {
   const searchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    loadAirports().then(setAirports)
+    loadAirports().then((list) => {
+      setAirports(list)
+      // Permalink airport (?a=DXB): apply once the dataset is in.
+      if (INITIAL_AIRPORT && list.some((x) => x.id === INITIAL_AIRPORT)) {
+        setSelectedId(INITIAL_AIRPORT)
+        setPanelOpen(true)
+      }
+    })
     loadPipeline().then((p) => {
       setDeals(p.deals)
       setSampleCrm(p.sample)
     })
     loadBridges().then(setBridges)
   }, [])
+
+  // Permalink writer: keep ?a / ?layer / ?view in the URL so a shared link
+  // opens exactly where the conversation ended. replaceState = no history spam.
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search)
+    if (view === 'globe') p.delete('view')
+    else p.set('view', view)
+    if (layer === 'status') p.delete('layer')
+    else p.set('layer', layer)
+    if (selectedId) p.set('a', selectedId)
+    else p.delete('a')
+    const qs = p.toString()
+    window.history.replaceState(null, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname)
+  }, [view, layer, selectedId])
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 900px)')
@@ -432,6 +474,9 @@ export default function App() {
     flash('Downloaded updated files')
   }, [airportsDirty, pipelineDirty, bridgesDirty, airports, deals, bridges, sampleCrm, flash])
 
+  // Gate engages only against real CRM data; the sample-data demo stays open.
+  const gateLocked = !gateDismissed && gateRequired(!sampleCrm)
+
   const exportCsv = useCallback(
     (items: { airport: Airport }[] | Airport[]) => {
       const arr = (items as any[]).map((x) => (x.airport ? x.airport : x)) as Airport[]
@@ -563,7 +608,7 @@ export default function App() {
         gatedViewLocked ? (
           <div className="overlay-panel slim">
             <div className="overlay-head"><h3>Pipeline</h3></div>
-            <PassGate what="The pipeline view" onUnlocked={() => setGateLocked(false)} />
+            <PassGate what="The pipeline view" onUnlocked={() => setGateDismissed(true)} />
           </div>
         ) : (
           <PipelineTable
@@ -584,7 +629,7 @@ export default function App() {
         gatedViewLocked ? (
           <div className="overlay-panel slim">
             <div className="overlay-head"><h3>Board</h3></div>
-            <PassGate what="The board view" onUnlocked={() => setGateLocked(false)} />
+            <PassGate what="The board view" onUnlocked={() => setGateDismissed(true)} />
           </div>
         ) : (
           <BoardView
@@ -648,7 +693,7 @@ export default function App() {
           tab={panelTab}
           onTab={setPanelTab}
           pipelineLocked={gateLocked}
-          onUnlocked={() => setGateLocked(false)}
+          onUnlocked={() => setGateDismissed(true)}
           onClose={closePanel}
           onEdit={() => setEditing(true)}
           onBrief={openBrief}
