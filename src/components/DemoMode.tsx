@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { DEMO_STEPS, type DemoStep } from '../lib/demoScript'
+import { DEMO_STEPS, type DemoStep, type DemoCtx } from '../lib/demoScript'
 
 interface Props {
   applyStep: (step: DemoStep) => void
   onExit: () => void
+  ctx: DemoCtx
 }
 
 /**
  * Hands-free founder walkthrough (A2): auto-advances through DEMO_STEPS,
  * with pause/prev/next and a caption overlay. Esc or ✕ exits.
  */
-export default function DemoMode({ applyStep, onExit }: Props) {
+export default function DemoMode({ applyStep, onExit, ctx }: Props) {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
   const timer = useRef<number | undefined>(undefined)
@@ -34,7 +35,9 @@ export default function DemoMode({ applyStep, onExit }: Props) {
 
   return (
     <>
-      <div className="demo-caption">{step.caption}</div>
+      <div className="demo-caption">
+        {typeof step.caption === 'function' ? step.caption(ctx) : step.caption}
+      </div>
       <div className="demo-controls">
         <button onClick={() => setIdx(Math.max(0, idx - 1))} title="Previous" aria-label="Previous">
           ⏮

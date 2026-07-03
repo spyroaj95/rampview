@@ -6,8 +6,8 @@
 
 :root {
   /* Brand accents (placeholder: replace with AeroVect brand colors) */
-  --brand-cyan: #22d3ee;
-  --brand-cyan-dim: #0e7d90;
+  --brand-cyan: #14b8a6;
+  --brand-cyan-dim: #0b8074;
   --brand-amber: #f5a623;
 
   /* Surfaces */
@@ -34,7 +34,7 @@
   --radius-sm: 7px;
 
   --shadow-panel: 0 24px 60px -20px rgba(0, 0, 0, 0.75);
-  --shadow-glow: 0 0 0 1px rgba(34, 211, 238, 0.25), 0 8px 30px -8px rgba(34, 211, 238, 0.25);
+  --shadow-glow: 0 0 0 1px rgba(20, 184, 166, 0.25), 0 8px 30px -8px rgba(20, 184, 166, 0.25);
 
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --mono: 'SF Mono', 'JetBrains Mono', ui-monospace, 'Menlo', monospace;
@@ -182,6 +182,16 @@ button {
   letter-spacing: 0.04em;
   text-align: center;
 }
+.brand-mark {
+  height: 26px;
+  width: auto;
+  display: block;
+}
+.brand-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--line-strong);
+}
 
 /* Stats strip */
 .stats {
@@ -255,7 +265,7 @@ button {
 }
 .search input:focus {
   border-color: var(--brand-cyan);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.14);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.14);
 }
 .search-icon {
   position: absolute;
@@ -499,7 +509,7 @@ button {
   position: relative;
   padding: 22px 22px 18px;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(34, 211, 238, 0.07), transparent);
+  background: linear-gradient(180deg, rgba(20, 184, 166, 0.07), transparent);
 }
 .panel-close {
   position: absolute;
@@ -529,8 +539,8 @@ button {
   font-size: 12px;
   font-weight: 600;
   color: var(--brand-cyan);
-  background: rgba(34, 211, 238, 0.1);
-  border: 1px solid rgba(34, 211, 238, 0.25);
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.25);
   padding: 2px 8px;
   border-radius: 6px;
   letter-spacing: 0.03em;
@@ -604,8 +614,8 @@ button {
 }
 .section-title .tier.b {
   color: var(--brand-cyan);
-  border-color: rgba(34, 211, 238, 0.3);
-  background: rgba(34, 211, 238, 0.07);
+  border-color: rgba(20, 184, 166, 0.3);
+  background: rgba(20, 184, 166, 0.07);
 }
 
 /* metric grid */
@@ -942,8 +952,8 @@ button {
 .export-note {
   font-size: 11.5px;
   color: var(--text-mid);
-  background: rgba(34, 211, 238, 0.06);
-  border: 1px solid rgba(34, 211, 238, 0.18);
+  background: rgba(20, 184, 166, 0.06);
+  border: 1px solid rgba(20, 184, 166, 0.18);
   border-radius: var(--radius-sm);
   padding: 11px 13px;
   line-height: 1.5;
@@ -1096,8 +1106,8 @@ button {
 }
 .viewtab.active {
   color: var(--brand-cyan);
-  background: rgba(34, 211, 238, 0.09);
-  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
+  background: rgba(20, 184, 166, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(20, 184, 166, 0.35);
 }
 .viewtab.locked::after {
   content: ' 🔒';
@@ -1142,8 +1152,8 @@ button {
 }
 .layerbtn.active {
   color: var(--brand-cyan);
-  border-color: rgba(34, 211, 238, 0.35);
-  background: rgba(34, 211, 238, 0.08);
+  border-color: rgba(20, 184, 166, 0.35);
+  background: rgba(20, 184, 166, 0.08);
 }
 
 /* ---------- Overlay panels (pipeline / network / coverage / whitespace) ---------- */
@@ -1217,7 +1227,7 @@ button {
 }
 .minibtn.accent {
   color: var(--brand-cyan);
-  border-color: rgba(34, 211, 238, 0.35);
+  border-color: rgba(20, 184, 166, 0.35);
 }
 .minibtn.warn {
   color: var(--brand-amber);
@@ -1341,7 +1351,7 @@ button {
 }
 .bcol.dragover {
   border-color: var(--brand-cyan);
-  background: rgba(34, 211, 238, 0.05);
+  background: rgba(20, 184, 166, 0.05);
 }
 .bcol-head {
   display: flex;
@@ -1415,7 +1425,7 @@ button {
   color: var(--text-hi);
 }
 .org-row.active {
-  background: rgba(34, 211, 238, 0.07);
+  background: rgba(20, 184, 166, 0.07);
   box-shadow: inset 2px 0 0 var(--brand-cyan);
 }
 .org-name {
@@ -1450,7 +1460,7 @@ button {
 .rollup {
   padding: 14px 16px;
   border-bottom: 1px dashed var(--line-strong);
-  background: rgba(34, 211, 238, 0.04);
+  background: rgba(20, 184, 166, 0.04);
 }
 .rollup h4 {
   margin: 0 0 8px;
@@ -1547,7 +1557,7 @@ button {
   max-width: 720px;
   width: calc(100vw - 80px);
   background: rgba(8, 12, 20, 0.94);
-  border: 1px solid rgba(34, 211, 238, 0.35);
+  border: 1px solid rgba(20, 184, 166, 0.35);
   border-radius: var(--radius-md);
   padding: 16px 22px;
   text-align: center;
@@ -1895,7 +1905,7 @@ kbd {
   letter-spacing: 0.09em;
   font-weight: 800;
   color: var(--brand-cyan);
-  border: 1px solid rgba(34, 211, 238, 0.3);
+  border: 1px solid rgba(20, 184, 166, 0.3);
   border-radius: 4px;
   padding: 1px 5px;
   height: fit-content;
@@ -1974,6 +1984,17 @@ kbd {
   z-index: 5;
   color: var(--text-mid);
   text-align: center;
+}
+
+/* clickable source links (P2 credibility pass) */
+.src-link {
+  color: var(--brand-cyan);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand-cyan-dim);
+  word-break: break-all;
+}
+.src-link:hover {
+  filter: brightness(1.2);
 }
 
 /* two-way linking: a globe-hovered airport glows in any visible list */

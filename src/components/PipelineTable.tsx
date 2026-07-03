@@ -144,7 +144,7 @@ export default function PipelineTable({
           <div className="stat-label">Weighted value</div>
         </div>
         <div className="stat">
-          <div className="stat-value" style={{ color: '#22d3ee' }}>
+          <div className="stat-value" style={{ color: '#14b8a6' }}>
             {metrics.pilotsLive}
           </div>
           <div className="stat-label">Pilots live</div>

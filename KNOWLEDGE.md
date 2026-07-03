@@ -37,7 +37,7 @@ scale across a mixed fleet.
 | **Swissport** | #1 globally | Currently aligned with **Aurrigo**. Contested, not lost. |
 | **dnata** | ~130 airports / 35+ countries / 700k+ turns per year | Part of the **Emirates Group** (Investment Corporation of Dubai). AeroVect **pilot** (up to 100 autonomous vehicles across DXB + DWC). Hedges across vendors (also runs TractEasy). |
 | **Menzies Aviation** | ~350 airports / 65 countries | Broad third-party footprint. |
-| **Unifi Aviation** | ~210 US airports | **Delta owns ~20%**; grew out of Delta Global Services. A Delta reference is the bridge to Unifi's US network. |
+| **Unifi Aviation** | ~210 US airports | **Delta holds ~49% (minority)**; grew out of Delta Global Services. A Delta reference is the bridge to Unifi's US network. |
 | **SATS** | Asia-Pacific leader (Singapore Changi home) | Government-linked; autonomy-forward market. |
 | **GAT** | US regional handler | **AeroVect partner** (up to ~50 US vehicles). |
 | **Fraport Ground Services (FraGround)** | Frankfurt | Fraport is **both the airport operator and the handler**: the rare "authority + handler in one." |
@@ -95,12 +95,35 @@ Selling autonomous GSE is a committee sale. RampView's contact personas encode i
 - **dnata DXB pilot** travels the dnata network (~130 airports) and, via the
   Emirates Group parent (Investment Corporation of Dubai), bridges to Emirates
   the airline.
-- **Delta pilot** bridges to Unifi (Delta owns ~20%) and Unifi's ~210 US
+- **Delta pilot** bridges to Unifi (Delta holds a ~49% minority stake) and Unifi's ~210 US
   stations; ATL is the hinge.
 - **Prove dnata, sell Menzies**: a credible handler reference is the door into
   the other global handlers (~350 airports at Menzies).
 - Encoded as arcs in src/data/bridges.json; each bridge carries a rationale and
   feeds the BRIDGE component of the opportunity score.
+
+## The economics (what feeds the RaaS value model)
+
+Inputs behind src/lib/valueModel.ts. Sourced facts vs assumptions are labeled;
+the UI shows the same labels on every input.
+
+- **Ramp wages**: US baggage/ramp roles post at roughly $13-19/hr
+  (agent-sourced job postings at MCO/LAS, 2026). Loaded FTE cost adds ~30-35%
+  employer burden. The $45K default loaded cost is an ASSUMPTION in that range.
+- **Turnover**: ~35% annually in some US regions (Aviation Pros); ~100% at some
+  large hubs (Air Cargo Week citing SFO). The 60% default is an ASSUMPTION
+  inside the sourced range. Replacement cost per departure (recruiting,
+  training, badging) modeled at 25% of loaded cost: ASSUMPTION.
+- **Ground damage**: industry projections (IATA) put annual ground-damage cost
+  on a path toward ~$10B by 2035. Not yet modeled as a line item; listed as a
+  qualitative tailwind.
+- **Per-turn savings**: AeroVect materials cite 14-18% per-turn cost savings.
+  INTERNAL CLAIM, not independently verified; not used directly in the model.
+- **RaaS fee and onboarding cost**: placeholders ($30K/unit/yr, $10K/unit)
+  until real pricing is loaded. ASSUMPTIONS, marked as such in the UI.
+
+Deal `value` and the weighted-pipeline metric derive from units x RaaS fee, so
+the pipeline numbers always reconcile with the visible model.
 
 ## Tiers (how the schema is split)
 

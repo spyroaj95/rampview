@@ -158,12 +158,21 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
             />
           </div>
           <div className="form-row">
-            <label>Value (USD/yr) {deal.value ? `· ${money(deal.value)}` : ''}</label>
-            <input
-              inputMode="numeric"
-              value={deal.value ?? ''}
-              onChange={(e) => patch({ value: parseNum(e.target.value) })}
-            />
+            <label>
+              Value (USD/yr)
+              {deal.unitsTarget ? ' · DERIVED from the value model (units x RaaS fee)' : deal.value ? ` · ${money(deal.value)}` : ''}
+            </label>
+            {deal.unitsTarget ? (
+              <div className="form-hint" style={{ marginTop: 2 }}>
+                Set by units target; edit assumptions in the INTEL tab's VALUE MODEL section.
+              </div>
+            ) : (
+              <input
+                inputMode="numeric"
+                value={deal.value ?? ''}
+                onChange={(e) => patch({ value: parseNum(e.target.value) })}
+              />
+            )}
           </div>
         </div>
         <div className="form-row">

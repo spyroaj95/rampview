@@ -24,7 +24,7 @@ export const STATUS_META: Record<AeroVectStatus, StatusMeta> = {
   pilot: {
     key: 'pilot',
     label: 'Pilot',
-    color: '#22d3ee', // teal / cyan
+    color: '#14b8a6', // teal / cyan
     blurb: 'Active pilot or trial',
   },
   active_target: {

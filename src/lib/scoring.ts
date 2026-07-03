@@ -134,7 +134,7 @@ export function opportunityScore(a: Airport, bridges: Bridge[]): ScoreInfo {
 /** Score color ramp: dim slate, blue, cyan, green as opportunity rises. */
 export function scoreColor(score: number): string {
   if (score >= 70) return '#2ee6a6'
-  if (score >= 55) return '#22d3ee'
+  if (score >= 55) return '#14b8a6'
   if (score >= 40) return '#4f8cff'
   if (score >= 25) return '#7d8a9c'
   return '#404a58'
@@ -142,7 +142,7 @@ export function scoreColor(score: number): string {
 
 export const SCORE_BUCKETS: { label: string; min: number; color: string }[] = [
   { label: '70+', min: 70, color: '#2ee6a6' },
-  { label: '55-69', min: 55, color: '#22d3ee' },
+  { label: '55-69', min: 55, color: '#14b8a6' },
   { label: '40-54', min: 40, color: '#4f8cff' },
   { label: '25-39', min: 25, color: '#7d8a9c' },
   { label: '0-24', min: 0, color: '#404a58' },

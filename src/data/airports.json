@@ -11,30 +11,31 @@
     "lat": 33.6367,
     "lng": -84.428101,
     "sizeClass": "large_hub",
-    "passengersAnnual": 104700000,
-    "passengersYear": 2023,
+    "passengersAnnual": 108067766,
+    "passengersYear": 2024,
     "aerovectStatus": "active_target",
-    "confidence": "high",
+    "confidence": "medium",
     "owner": "City of Atlanta Department of Aviation",
     "ownershipType": "public",
     "hubFor": [
       "Delta Air Lines"
     ],
-    "gseModel": "mixed",
+    "gseModel": "carrier_led",
     "groundHandlers": [
       {
         "name": "Delta Air Lines",
-        "role": "self-handling (majority of operations)"
+        "role": "self-handles its own ramp (100k+ bags/day)",
+        "notes": "ATL ramp baggage workers are Delta employees (NPR, May 2026); Delta runs autonomous bag tugs and Baggage AI on the ATL ramp under a $110M program."
       },
       {
         "name": "Unifi Aviation",
-        "role": "ramp & cargo handling",
-        "notes": "Delta owns ~20%; grew out of Delta Global Services; operates at ~210 US airports"
+        "role": "non-ramp services at ATL (janitorial, wheelchair, bus ops, GSE maintenance)",
+        "notes": "Delta retains a ~49% minority stake (Argenbright Holdings bought 51% in Dec 2018); ~210 US airports; grew out of Delta Global Services. Delta ended Unifi's long-running ATL commissary contract effective Sept 30, 2025 (379 workers; Newrest took over)."
       }
     ],
     "gseFleetEstimate": "very large (world’s busiest airport by passengers)",
     "laborPressure": "high",
-    "aerovectNotes": "Delta is a pilot; ATL hub is the expansion. A Delta reference bridges to Unifi’s ~210-airport US network. GAT (AeroVect US handler partner, up to ~50 vehicles) extends the domestic story.",
+    "aerovectNotes": "Delta is a pilot; ATL hub is the expansion. Delta self-handles the ATL ramp, so Delta is the buyer here, and its ~49% minority stake in Unifi keeps the Unifi network (~210 US stations) as the reference bridge. Note: Delta is also deploying its own autonomous bag tugs at ATL (15 units planned), so the account may build in-house.",
     "tailwinds": [
       {
         "headline": "US ramp labor crisis; severe turnover",
@@ -75,9 +76,14 @@
     ],
     "sources": [
       "City of Atlanta Dept. of Aviation",
-      "Unifi Aviation corporate profile (Delta ~20% ownership; ~210 US airports)"
+      "Unifi Aviation corporate profile (Delta ~49% minority ownership; ~210 US airports)",
+      "https://www.forbes.com/sites/tedreed/2023/03/28/what-happened-to-delta-global-services-its-successor-wants-to-reshape-aviation-services/",
+      "https://www.indeed.com/q-unifi-l-hartsfield-jackson-atlanta-international-airport,-ga-jobs.html",
+      "https://aviationa2z.com/index.php/2025/08/10/delta-change-affecting-400-workers-at-atlanta-airport/",
+      "https://news.delta.com/delta-spurs-innovation-worlds-busiest-ramp"
     ],
-    "lastUpdated": "2026-07-02"
+    "lastUpdated": "2026-07-03",
+    "operationsNotes": "German-style handler split does not apply: the ATL ramp is carrier-led by Delta. Unifi's remaining ATL scope is non-ramp services. Ground services contracts are in flux post-2025 (commissary moved to Newrest)."
   },
   {
     "id": "DXB",
@@ -91,10 +97,10 @@
     "lat": 25.24979,
     "lng": 55.370992,
     "sizeClass": "large_hub",
-    "passengersAnnual": 87000000,
-    "passengersYear": 2023,
+    "passengersAnnual": 92331506,
+    "passengersYear": 2024,
     "aerovectStatus": "pilot",
-    "confidence": "high",
+    "confidence": "medium",
     "owner": "Dubai Airports (Investment Corporation of Dubai)",
     "ownershipType": "sovereign",
     "hubFor": [
@@ -105,16 +111,12 @@
     "groundHandlers": [
       {
         "name": "dnata",
-        "role": "primary ramp & cargo handler",
-        "notes": "Part of the Emirates Group (Investment Corporation of Dubai); sister company to Emirates airline"
-      },
-      {
-        "name": "Emirates",
-        "role": "self-handling at Terminal 3"
+        "role": "sole ground handling agent at DXB",
+        "notes": "Part of the Emirates Group (Investment Corporation of Dubai); dnata states it services DXB as the sole ground handling agent and handles 1M+ tonnes of cargo annually in Dubai."
       }
     ],
     "gseFleetEstimate": "large (dnata handles 700k+ aircraft turns/yr network-wide)",
-    "aerovectNotes": "dnata partnership announced June 2026: plan for up to 100 autonomous vehicles across DXB and DWC. The Emirates Group parent (Investment Corporation of Dubai) is the warm bridge to Emirates the airline.",
+    "aerovectNotes": "dnata partnership (publicly announced September 2022): the companies aim to deploy up to 100 autonomous ground support vehicles at airports including DXB and DWC. The Emirates Group parent (Investment Corporation of Dubai) is the warm bridge to Emirates the airline.",
     "competitors": [
       {
         "vendor": "TractEasy",
@@ -157,11 +159,14 @@
       }
     ],
     "sources": [
+      "https://www.dnata.com/en/global-network/united-arab-emirates/",
+      "https://www.aviationpros.com/directory/pushback-equipment/press-release/21280655/aerovect-technologies-inc-aerovect-and-dnata-partner-to-deploy-autonomous-ground-support-equipment-worldwide",
+      "https://en.wikipedia.org/wiki/Dnata",
       "AeroVect / dnata partnership briefing (June 2026)",
       "Dubai Airports corporate profile",
       "dnata network facts (130 airports / 35+ countries / 700k+ turns)"
     ],
-    "lastUpdated": "2026-07-02"
+    "lastUpdated": "2026-07-03"
   },
   {
     "id": "DFW",
@@ -175,8 +180,8 @@
     "lat": 32.896801,
     "lng": -97.038002,
     "sizeClass": "large_hub",
-    "passengersAnnual": 81800000,
-    "passengersYear": 2023,
+    "passengersAnnual": 87817864,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Cities of Dallas & Fort Worth",
@@ -234,8 +239,8 @@
     "lat": 51.470748,
     "lng": -0.459909,
     "sizeClass": "large_hub",
-    "passengersAnnual": 79200000,
-    "passengersYear": 2023,
+    "passengersAnnual": 83884572,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Heathrow Airport Ltd",
@@ -307,8 +312,8 @@
     "lat": 35.549678,
     "lng": 139.786958,
     "sizeClass": "large_hub",
-    "passengersAnnual": 78700000,
-    "passengersYear": 2023,
+    "passengersAnnual": 85900167,
+    "passengersYear": 2024,
     "aerovectStatus": "competitor_held",
     "gseModel": "carrier_led",
     "groundHandlers": [
@@ -402,8 +407,8 @@
     "lat": 39.860027,
     "lng": -104.673792,
     "sizeClass": "large_hub",
-    "passengersAnnual": 77800000,
-    "passengersYear": 2023,
+    "passengersAnnual": 82358744,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "City & County of Denver",
@@ -456,8 +461,8 @@
     "lat": 41.274874,
     "lng": 28.732136,
     "sizeClass": "large_hub",
-    "passengersAnnual": 76000000,
-    "passengersYear": 2023,
+    "passengersAnnual": 80073252,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "iGA (İGA Havalimanı İşletmesi)",
@@ -494,8 +499,8 @@
     "lat": 33.942501,
     "lng": -118.407997,
     "sizeClass": "large_hub",
-    "passengersAnnual": 75100000,
-    "passengersYear": 2023,
+    "passengersAnnual": 76588028,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Los Angeles World Airports (City of Los Angeles)",
@@ -539,8 +544,8 @@
     "lat": 41.9786,
     "lng": -87.9048,
     "sizeClass": "large_hub",
-    "passengersAnnual": 73900000,
-    "passengersYear": 2023,
+    "passengersAnnual": 80043050,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "City of Chicago Department of Aviation",
@@ -569,8 +574,8 @@
     "lat": 28.55563,
     "lng": 77.09519,
     "sizeClass": "large_hub",
-    "passengersAnnual": 72200000,
-    "passengersYear": 2023,
+    "passengersAnnual": 77820834,
+    "passengersYear": 2024,
     "aerovectStatus": "watch",
     "gseModel": "handler_led",
     "groundHandlers": [
@@ -642,8 +647,8 @@
     "lat": 49.00896,
     "lng": 2.554117,
     "sizeClass": "large_hub",
-    "passengersAnnual": 67400000,
-    "passengersYear": 2023,
+    "passengersAnnual": 70290260,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Groupe ADP",
@@ -680,8 +685,8 @@
     "lat": 23.392401,
     "lng": 113.299004,
     "sizeClass": "large_hub",
-    "passengersAnnual": 63100000,
-    "passengersYear": 2023,
+    "passengersAnnual": 76365092,
+    "passengersYear": 2024,
     "aerovectStatus": "unknown"
   },
   {
@@ -696,8 +701,8 @@
     "lat": 40.639447,
     "lng": -73.779317,
     "sizeClass": "large_hub",
-    "passengersAnnual": 62500000,
-    "passengersYear": 2023,
+    "passengersAnnual": 63265984,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Port Authority of New York & New Jersey",
@@ -741,8 +746,8 @@
     "lat": 52.308601,
     "lng": 4.76389,
     "sizeClass": "large_hub",
-    "passengersAnnual": 61900000,
-    "passengersYear": 2023,
+    "passengersAnnual": 66828759,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "confidence": "low",
     "owner": "Royal Schiphol Group",
@@ -788,8 +793,8 @@
     "lat": 40.493407,
     "lng": -3.572249,
     "sizeClass": "large_hub",
-    "passengersAnnual": 60200000,
-    "passengersYear": 2023,
+    "passengersAnnual": 66148340,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "gseModel": "handler_led",
     "groundHandlers": [
@@ -865,8 +870,8 @@
     "lat": 50.026706,
     "lng": 8.55835,
     "sizeClass": "large_hub",
-    "passengersAnnual": 59400000,
-    "passengersYear": 2023,
+    "passengersAnnual": 61564957,
+    "passengersYear": 2024,
     "aerovectStatus": "active_target",
     "confidence": "high",
     "owner": "Fraport AG",
@@ -913,10 +918,10 @@
     "lat": 1.35019,
     "lng": 103.994003,
     "sizeClass": "large_hub",
-    "passengersAnnual": 58900000,
-    "passengersYear": 2023,
-    "aerovectStatus": "watch",
-    "confidence": "medium",
+    "passengersAnnual": 67650000,
+    "passengersYear": 2024,
+    "aerovectStatus": "competitor_held",
+    "confidence": "high",
     "owner": "Changi Airport Group",
     "ownershipType": "public",
     "hubFor": [
@@ -934,19 +939,32 @@
         "role": "ground handling"
       }
     ],
-    "aerovectNotes": "Autonomy-forward and government-backed, but competitor-active (TractEasy trials). Monitor for an opening.",
+    "aerovectNotes": "Changi is the most competitor-active ramp in the dataset: UISEE autonomous tractors are in live baggage operations with SATS (Jan 2026), Aurrigo is in multi-phase trials, and TractEasy trialled earlier. Autonomy-forward and government-backed, but a rival is deployed; monitor for retrofit angles across SATS's wider mixed fleet.",
     "competitors": [
       {
-        "vendor": "TractEasy",
-        "status": "trial",
-        "source": "Autonomous baggage tractor trials at Changi"
+        "vendor": "UISEE",
+        "status": "deployed (2 fully autonomous tractors in live airside baggage ops between T1 and T4 since Jan 2026, with SATS; 6 more planned 2026, fleet target 24 by 2027)",
+        "source": "https://www.futuretravelexperience.com/2026/01/changi-airport-deploys-autonomous-tractors-in-major-step-towards-airside-automation/"
+      },
+      {
+        "vendor": "Aurrigo",
+        "status": "trial (Auto-DollyTug at Changi since Feb 2022; Phase 2A complete; four-vehicle fleet announced May 2024 for Phase 2B widebody turnaround testing)",
+        "source": "https://aurrigo.com/aurrigo-to-introduce-four-new-autonomous-baggage-handling-vehicles-at-changi-airport/"
+      },
+      {
+        "vendor": "TractEasy (EasyMile/TLD)",
+        "status": "trialled 2020-2021 at Terminal 3 with SATS; described in Jan 2026 coverage as a previous initiative",
+        "source": "https://aerospaceglobalnews.com/news/changi-airport-driverless-baggage-tractors-to-redefine-airport-operations/"
       }
     ],
     "sources": [
       "Changi Airport Group profile",
-      "Changi autonomous baggage-tractor trial reporting"
+      "Changi autonomous baggage-tractor trial reporting",
+      "https://www.futuretravelexperience.com/2026/01/changi-airport-deploys-autonomous-tractors-in-major-step-towards-airside-automation/",
+      "https://aurrigo.com/aurrigo-to-introduce-four-new-autonomous-baggage-handling-vehicles-at-changi-airport/",
+      "https://aerospaceglobalnews.com/news/changi-airport-driverless-baggage-tractors-to-redefine-airport-operations/"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-03"
   },
   {
     "id": "MCO",
@@ -960,8 +978,8 @@
     "lat": 28.429399490356445,
     "lng": -81.30899810791016,
     "sizeClass": "large_hub",
-    "passengersAnnual": 57700000,
-    "passengersYear": 2023,
+    "passengersAnnual": 57211628,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "groundHandlers": [
       {
@@ -1034,8 +1052,8 @@
     "lat": 36.083361,
     "lng": -115.151817,
     "sizeClass": "large_hub",
-    "passengersAnnual": 57600000,
-    "passengersYear": 2023,
+    "passengersAnnual": 58447782,
+    "passengersYear": 2024,
     "aerovectStatus": "prospect",
     "groundHandlers": [
       {
@@ -1046,7 +1064,7 @@
       {
         "name": "Unifi Aviation",
         "role": "third-party ground handler",
-        "notes": "Actively hires ramp agents at LAS for multiple carriers including Delta, Alaska, and Copa. Unifi handles passenger baggage, airmail and freight and operates ramp equipment (bag tugs, belt loaders, aircraft tow tractors, water/lav service vehicles). Local LAS office at 6889 S. Eastern Ave. Delta owns ~20% of Unifi (per AeroVect context). Unifi acquired Prospect Airport Services (announced Apr 15, 2024; combined revenue >$1.7B, +11,000 employees), consolidating a key third-party competitor. Sources: https://unifiservice.com/jobs-las-airport-pkli/ ; https://www.glassdoor.com/job-listing/airport-ramp-agent-copa-las-unifi-aviation-llc-JV_IC1149603_KO0,27_KE28,46.htm ; https://aviationpros.com/ground-handling/press-release/55018140/unifi-unifi-aviation-acquires-prospect-airport-services"
+        "notes": "Actively hires ramp agents at LAS for multiple carriers including Delta, Alaska, and Copa. Unifi handles passenger baggage, airmail and freight and operates ramp equipment (bag tugs, belt loaders, aircraft tow tractors, water/lav service vehicles). Local LAS office at 6889 S. Eastern Ave. Delta holds a ~49% minority stake in Unifi (Argenbright 51% since Dec 2018, per Forbes) (per AeroVect context). Unifi acquired Prospect Airport Services (announced Apr 15, 2024; combined revenue >$1.7B, +11,000 employees), consolidating a key third-party competitor. Sources: https://unifiservice.com/jobs-las-airport-pkli/ ; https://www.glassdoor.com/job-listing/airport-ramp-agent-copa-las-unifi-aviation-llc-JV_IC1149603_KO0,27_KE28,46.htm ; https://aviationpros.com/ground-handling/press-release/55018140/unifi-unifi-aviation-acquires-prospect-airport-services"
       },
       {
         "name": "Menzies Aviation",
@@ -1076,7 +1094,7 @@
       }
     ],
     "operationsNotes": "LAS handled a record ~58.4M passengers in 2024 with 613,973 aircraft movements; ~54.99M pax processed through 2025. Airport is approaching a practical ceiling of ~65M pax/year and is projected to be severely capacity-constrained by 2033, driving a multibillion-dollar Terminal 1 expansion (gates from 39 to ~65), Terminal 3-to-2 redesignation with curbside self-bag-drop, and phased baggage handling system modernization (multiple carousels completed/underway). Cargo handlers include FedEx Express and UPS Airlines. Sources: https://en.wikipedia.org/wiki/Harry_Reid_International_Airport ; https://lasvegassun.com/news/2026/jan/09/with-mega-events-ahead-harry-reid-airport-plans-mu/",
-    "aerovectNotes": "No autonomous GSE deployment found at LAS. Ramp is mixed but heavily carrier-led by Southwest self-handling (~43% of pax), with Unifi (Delta/Alaska/Copa) and Menzies covering third-party work. AeroVect's retrofit model could target either Southwest's own tug fleet or Unifi's third-party GSE. Delta's ~20% stake in Unifi and Unifi's Prospect acquisition make Unifi the largest third-party lever here. High ramp turnover and a multibillion-dollar terminal/baggage modernization program (record-of-decision ~2028, construction ~2029) are supportive but the automation timeline for ramp GSE specifically is unproven. Treat as prospect, not active.",
+    "aerovectNotes": "No autonomous GSE deployment found at LAS. Ramp is mixed but heavily carrier-led by Southwest self-handling (~43% of pax), with Unifi (Delta/Alaska/Copa) and Menzies covering third-party work. AeroVect's retrofit model could target either Southwest's own tug fleet or Unifi's third-party GSE. Delta's ~49% minority stake in Unifi and Unifi's Prospect acquisition make Unifi the largest third-party lever here. High ramp turnover and a multibillion-dollar terminal/baggage modernization program (record-of-decision ~2028, construction ~2029) are supportive but the automation timeline for ramp GSE specifically is unproven. Treat as prospect, not active.",
     "confidence": "medium",
     "sources": [
       "https://en.wikipedia.org/wiki/Harry_Reid_International_Airport",
@@ -1106,8 +1124,8 @@
     "lat": 37.469101,
     "lng": 126.450996,
     "sizeClass": "large_hub",
-    "passengersAnnual": 56300000,
-    "passengersYear": 2023,
+    "passengersAnnual": 71212515,
+    "passengersYear": 2024,
     "aerovectStatus": "watch",
     "groundHandlers": [
       {
@@ -1188,8 +1206,8 @@
     "lat": 31.1434,
     "lng": 121.805,
     "sizeClass": "large_hub",
-    "passengersAnnual": 54400000,
-    "passengersYear": 2023,
+    "passengersAnnual": 76787039,
+    "passengersYear": 2024,
     "aerovectStatus": "unknown"
   },
   {
@@ -1204,8 +1222,8 @@
     "lat": 35.2140007019043,
     "lng": -80.94309997558594,
     "sizeClass": "large_hub",
-    "passengersAnnual": 53400000,
-    "passengersYear": 2023,
+    "passengersAnnual": 58811725,
+    "passengersYear": 2024,
     "aerovectStatus": "unknown"
   },
   {
@@ -1220,8 +1238,8 @@
     "lat": 40.077349,
     "lng": 116.596702,
     "sizeClass": "large_hub",
-    "passengersAnnual": 52900000,
-    "passengersYear": 2023,
+    "passengersAnnual": 67367428,
+    "passengersYear": 2024,
     "aerovectStatus": "watch",
     "confidence": "low",
     "hubFor": [
@@ -1247,8 +1265,8 @@
     "lat": 13.6811,
     "lng": 100.747002,
     "sizeClass": "large_hub",
-    "passengersAnnual": 52900000,
-    "passengersYear": 2023,
+    "passengersAnnual": 62234693,
+    "passengersYear": 2024,
     "aerovectStatus": "unknown"
   },
   {
@@ -1263,8 +1281,8 @@
     "lat": 22.639474,
     "lng": 113.803262,
     "sizeClass": "large_hub",
-    "passengersAnnual": 52700000,
-    "passengersYear": 2023,
+    "passengersAnnual": 61477337,
+    "passengersYear": 2024,
     "aerovectStatus": "unknown"
   },
   {
@@ -2208,12 +2226,12 @@
         "notes": "Zurich is Swissport’s home market; Swissport is the world’s #1 handler"
       }
     ],
-    "aerovectNotes": "Swissport (world #1 handler) is currently aligned with Aurrigo here, so ZRH is contested. AeroVect’s retrofit-as-a-service is the counter-position vs Aurrigo’s purpose-built vehicles.",
+    "aerovectNotes": "Swissport (world #1 handler) is running its first global autonomous ground-handling pilot here with Aurrigo (announced May 2025, simulation phase first, live Auto-DollyTug trial as the next phase). Contested, not settled: retrofit-as-a-service is the counter-position if the pilot underdelivers.",
     "competitors": [
       {
         "vendor": "Aurrigo",
-        "status": "deployed",
-        "source": "Swissport’s first global autonomous ground-handling pilot launched at ZRH (2025)"
+        "status": "live trial (pilot)",
+        "source": "Swissport-Aurrigo ZRH pilot announced May 2025, starting with the Auto-Sim digital simulation phase; Aurrigo (Mar 2026) lists Zurich among eight live trials, not commercial deployments. https://www.airport-suppliers.com/aurrigo-international-brings-auto-dolly-tug-and-auto-shuttle-to-pte-world-2026/"
       }
     ],
     "tailwinds": [
@@ -2224,9 +2242,11 @@
     ],
     "sources": [
       "Swissport–Aurrigo ZRH pilot announcement (2025)",
-      "Flughafen Zürich AG profile"
+      "Flughafen Zürich AG profile",
+      "https://www.aviationpros.com/ground-handling/press-release/55293003/swissport-swissport-launches-industry-first-autonomous-ground-handling-pilot-with-aurrigo",
+      "https://www.airport-suppliers.com/aurrigo-international-brings-auto-dolly-tug-and-auto-shuttle-to-pte-world-2026/"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-03"
   },
   {
     "id": "ATH",
@@ -4473,7 +4493,7 @@
     "passengersAnnual": 1300000,
     "passengersYear": 2023,
     "aerovectStatus": "pilot",
-    "confidence": "high",
+    "confidence": "medium",
     "owner": "Dubai Airports (Investment Corporation of Dubai)",
     "ownershipType": "sovereign",
     "gseModel": "handler_led",
@@ -4483,12 +4503,12 @@
         "role": "primary handler"
       }
     ],
-    "aerovectNotes": "Same dnata autonomous-vehicle program as DXB (up to 100 vehicles across both fields). Greenfield apron makes DWC an ideal autonomy canvas.",
+    "aerovectNotes": "Same dnata autonomous-vehicle program as DXB (publicly announced 2022: up to 100 vehicles across both fields). Greenfield apron makes DWC an ideal autonomy canvas; UAE GCAA granted the first national approval for autonomous baggage-vehicle trials here (July 2025).",
     "competitors": [
       {
         "vendor": "TractEasy",
-        "status": "deployed",
-        "source": "dnata EZTow autonomous tractors at DWC; dnata deliberately hedges across vendors"
+        "status": "in daily service at Level 3 autonomy (human oversight) under GCAA trial approval; Level 4 targeted early 2026, not yet publicly confirmed live",
+        "source": "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/"
       }
     ],
     "tailwinds": [
@@ -4499,8 +4519,10 @@
     ],
     "sources": [
       "AeroVect / dnata partnership briefing (June 2026)",
-      "Dubai Airports DWC expansion plan"
+      "Dubai Airports DWC expansion plan",
+      "https://www.dnata.com/media-centre/dnata-rolls-out-autonomous-vehicles-in-airport-operations/",
+      "https://www.khaleejtimes.com/business/aviation/uae-trial-baggage-vehicles-al-maktoum-international"
     ],
-    "lastUpdated": "2026-06-30"
+    "lastUpdated": "2026-07-03"
   }
 ]

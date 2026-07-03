@@ -35,7 +35,8 @@ interface Props {
   onSelect: (id: string) => void
   searchRef: React.RefObject<HTMLInputElement>
   dirty: boolean
-  onDownloadAll: () => void
+  savedAt: string | null
+  onWorkspace: () => void
   onPlayDemo: () => void
   whatsNew: WhatsNewItem[]
   whatsNewUnread: number
@@ -77,18 +78,14 @@ export default function TopBar(props: Props) {
   return (
     <div className="topbar">
       <div className="brand">
-        {/* --- AeroVect logo slot: replace this block with the real mark --- */}
-        <div className="brand-logo" title="AeroVect logo slot">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            <circle cx="12" cy="12" r="10" />
-          </svg>
-        </div>
+        {/* AeroVect brand mark (white wordmark from aerovect.com) */}
+        <img className="brand-mark" src="./aerovect-logo-white.png" alt="AeroVect" />
+        <div className="brand-divider" />
         <div className="brand-text">
           <div className="brand-name">
             Ramp<em>View</em>
           </div>
-          <div className="brand-sub">AEROVECT · GTM INTELLIGENCE</div>
+          <div className="brand-sub">GTM INTELLIGENCE</div>
         </div>
       </div>
 
@@ -127,11 +124,21 @@ export default function TopBar(props: Props) {
         </span>
       )}
 
-      {props.dirty && (
-        <button className="minibtn warn unsaved" onClick={props.onDownloadAll} title="You have unsaved edits. Download the updated JSON files and commit them (airports/bridges) or keep them local (pipeline).">
-          ● UNSAVED · DOWNLOAD
-        </button>
-      )}
+      <button
+        className={`minibtn${props.dirty ? ' warn' : ''}`}
+        onClick={props.onWorkspace}
+        title={
+          props.dirty
+            ? 'Edits are autosaved to this browser. Open the workspace to download files for commit, import, or reset.'
+            : 'Workspace: autosave status, downloads, import, reset'
+        }
+      >
+        {props.dirty
+          ? '● AUTOSAVED · EXPORT'
+          : props.savedAt
+            ? `SAVED ${new Date(props.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+            : 'WORKSPACE'}
+      </button>
 
       <div ref={wnRef} style={{ position: 'relative' }}>
         <button

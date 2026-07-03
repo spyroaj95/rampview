@@ -187,7 +187,7 @@ export default function GlobeView({
         ref={globeRef}
         width={size.w}
         height={size.h}
-        backgroundImageUrl="./textures/night-sky.png"
+        backgroundImageUrl="./textures/night-sky.jpg"
         globeImageUrl="./textures/earth-night.jpg"
         bumpImageUrl="./textures/earth-topology.png"
         backgroundColor="rgba(0,0,0,0)"

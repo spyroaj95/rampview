@@ -6,11 +6,20 @@
  */
 import type { LayerKey } from './layers'
 
+/** Live aggregates computed by App and injected into dynamic captions (P5). */
+export interface DemoCtx {
+  openHandlerLedHubs: number
+  unitsInPipe: number
+  modeledArr: string //   pre-formatted, e.g. "$5.4M"
+  topAccount: { iata: string; why: string }
+}
+
 export interface DemoStep {
   id: string
-  caption: string
+  caption: string | ((ctx: DemoCtx) => string)
   view: 'globe' | 'network' | 'whitespace' | 'coverage'
   layer?: LayerKey
+  /** '$TOP' resolves to the highest-scoring open account at runtime */
   airportId?: string
   orgKey?: string
   /** close the detail panel for wide shots */
@@ -60,7 +69,7 @@ export const DEMO_STEPS: DemoStep[] = [
     orgKey: 'unifi',
     airportId: 'ATL',
     panel: false,
-    caption: 'Delta owns ~20% of Unifi. A Delta reference unlocks ~210 US stations. The arcs are the expansion path.',
+    caption: 'Delta holds a ~49% minority stake in Unifi (Argenbright 51% since Dec 2018, per Forbes). A Delta reference unlocks ~210 US stations. The arcs are the expansion path.',
     dwellMs: 10000,
   },
   {
@@ -86,14 +95,18 @@ export const DEMO_STEPS: DemoStep[] = [
     view: 'whitespace',
     airportId: undefined,
     panel: false,
-    caption: 'The whitespace sweep: green is ours, red is contested, blue is open. Most of the map is still open.',
+    caption:
+      'The whitespace sweep: green is ours, red is contested, blue is open. Every claim is sourced; unknown stays visible until researched.',
     dwellMs: 9000,
   },
   {
-    id: 'close',
-    view: 'coverage',
-    panel: false,
-    caption: 'Every field is sourced and confidence-rated. Unknown stays visible until researched, so the map never lies.',
-    dwellMs: 8000,
+    id: 'finale',
+    view: 'globe',
+    layer: 'score',
+    airportId: '$TOP',
+    panel: true,
+    caption: (ctx) =>
+      `The so-what: ${ctx.openHandlerLedHubs} open handler-led hubs, ${ctx.unitsInPipe} retrofittable units in pipe, ${ctx.modeledArr} in modeled ARR. First account I would open: ${ctx.topAccount.iata}. ${ctx.topAccount.why}`,
+    dwellMs: 12000,
   },
 ]

@@ -230,7 +230,7 @@ const MARQUEE: Record<string, Partial<Airport>> = {
         name: 'Unifi Aviation',
         role: 'ramp & cargo handling',
         notes:
-          'Delta owns ~20%; grew out of Delta Global Services; operates at ~210 US airports',
+          'Delta holds ~49% (minority); grew out of Delta Global Services; operates at ~210 US airports',
       },
     ],
     gseFleetEstimate: 'very large (world’s busiest airport by passengers)',
@@ -251,7 +251,7 @@ const MARQUEE: Record<string, Partial<Airport>> = {
     confidence: 'high',
     sources: [
       'City of Atlanta Dept. of Aviation',
-      'Unifi Aviation corporate profile (Delta ~20% ownership; ~210 US airports)',
+      'Unifi Aviation corporate profile (Delta ~49% minority ownership; ~210 US airports)',
     ],
     lastUpdated: LAST_UPDATED,
   },

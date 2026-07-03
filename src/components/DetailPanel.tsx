@@ -9,11 +9,13 @@ import {
   CONFIDENCE_COLOR,
   SIZE_CLASS_LABEL,
 } from '../lib/statusMeta'
-import { compactNumber, fullNumber, humanize, shortDate } from '../lib/format'
+import { compactNumber, fullNumber, humanize, shortDate, todayIso } from '../lib/format'
 import type { ScoreInfo } from '../lib/scoring'
 import { scoreColor } from '../lib/scoring'
 import PipelinePanel from './PipelinePanel'
 import PassGate from './PassGate'
+import ValueSection from './ValueSection'
+import type { ValueAssumptions } from '../lib/valueModel'
 
 export type PanelTab = 'intel' | 'pipeline'
 
@@ -26,6 +28,8 @@ interface Props {
   onTab: (t: PanelTab) => void
   pipelineLocked: boolean
   onUnlocked: () => void
+  assumptions: ValueAssumptions
+  onAssumptions: (a: ValueAssumptions) => void
   onClose: () => void
   onEdit: () => void
   onBrief: () => void
@@ -66,6 +70,33 @@ function ConfidenceBadge({ value }: { value?: Confidence }) {
 function UnknownHint({ text = 'Unknown, not yet researched' }: { text?: string }) {
   return <div className="unknown-hint">{text}</div>
 }
+
+/** Render a source string with any embedded http(s) URL as a clickable link. */
+function SourceText({ text }: { text: string }) {
+  const m = text.match(/https?:\/\/[^\s)"]+/)
+  if (!m || m.index == null) return <>{text}</>
+  const url = m[0]
+  const before = text.slice(0, m.index)
+  const after = text.slice(m.index + url.length)
+  const label = url.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  return (
+    <>
+      {before}
+      <a href={url} target="_blank" rel="noreferrer" className="src-link">
+        {label.length > 56 ? `${label.slice(0, 56)}…` : label} ↗
+      </a>
+      {after}
+    </>
+  )
+}
+
+/** Days between two ISO dates. */
+function daysSince(iso: string | undefined, today: string): number | null {
+  if (!iso) return null
+  const ms = new Date(today).getTime() - new Date(iso).getTime()
+  return Number.isNaN(ms) ? null : Math.floor(ms / 86400000)
+}
+const STALE_DAYS = 90
 
 export default function DetailPanel(props: Props) {
   const { airport: a, deal, scoreInfo, tab, onTab } = props
@@ -296,17 +327,38 @@ export default function DetailPanel(props: Props) {
                       Competitor presence
                     </div>
                     {a.competitors && a.competitors.length > 0 ? (
-                      a.competitors.map((c, i) => (
-                        <div className="compet" key={i} title={c.source}>
-                          <span className="compet-vendor">{c.vendor}</span>
-                          {c.status && <span className="compet-status">{c.status}</span>}
-                        </div>
-                      ))
+                      a.competitors.map((c, i) => {
+                        const srcUrl = c.source?.match(/https?:\/\/[^\s)"]+/)?.[0]
+                        return (
+                          <div className="compet" key={i} title={c.source}>
+                            <span className="compet-vendor">{c.vendor}</span>
+                            <span className="compet-status">
+                              {c.status ?? ''}
+                              {srcUrl && (
+                                <>
+                                  {' '}
+                                  <a href={srcUrl} target="_blank" rel="noreferrer" className="src-link">
+                                    src ↗
+                                  </a>
+                                </>
+                              )}
+                            </span>
+                          </div>
+                        )
+                      })
                     ) : (
                       <UnknownHint text="None recorded" />
                     )}
                   </div>
                 </div>
+
+                {/* ---------- Value model (P3) ---------- */}
+                <ValueSection
+                  deal={deal}
+                  assumptions={props.assumptions}
+                  onAssumptions={props.onAssumptions}
+                  gateLocked={props.pipelineLocked}
+                />
 
                 {/* ---------- Tailwinds / News (Tier B) ---------- */}
                 <div className="section">
@@ -343,7 +395,9 @@ export default function DetailPanel(props: Props) {
                   {a.sources && a.sources.length > 0 ? (
                     <ul className="sources" style={{ margin: 0, paddingLeft: 16 }}>
                       {a.sources.map((s, i) => (
-                        <li key={i}>{s}</li>
+                        <li key={i}>
+                          <SourceText text={s} />
+                        </li>
                       ))}
                     </ul>
                   ) : (
@@ -351,7 +405,15 @@ export default function DetailPanel(props: Props) {
                   )}
                   <div className="meta-foot">
                     <ConfidenceBadge value={a.confidence} />
-                    <span>Updated {a.lastUpdated ? shortDate(a.lastUpdated) : 'never'}</span>
+                    <span>
+                      Sources as of {a.lastUpdated ? shortDate(a.lastUpdated) : 'never'}
+                    </span>
+                    {(() => {
+                      const d = daysSince(a.lastUpdated, todayIso())
+                      return d != null && d > STALE_DAYS ? (
+                        <span className="stalled-badge">STALE {d}D</span>
+                      ) : null
+                    })()}
                   </div>
                 </div>
               </>

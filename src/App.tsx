@@ -18,15 +18,17 @@ import {
   upsertDeal,
   serializePipeline,
   serializeBridges,
-  getDeal,
+  computePipelineMetrics,
 } from './services/pipelineService'
 import { opportunityScore, type ScoreInfo } from './lib/scoring'
 import { layerColor, whitespaceCategory, type LayerKey } from './lib/layers'
 import { ORG_REGISTRY, orgByKey, airportsForOrg } from './lib/orgs'
 import { gateRequired } from './lib/gate'
 import { targetListCsv, downloadText, openAccountBrief } from './lib/exports'
-import { todayIso } from './lib/format'
-import type { DemoStep } from './lib/demoScript'
+import { DEFAULT_ASSUMPTIONS, derivedDealValue, type ValueAssumptions } from './lib/valueModel'
+import { saveWorkspace, loadWorkspace, clearWorkspace, parsePipelineImport } from './services/workspaceService'
+import { todayIso, money } from './lib/format'
+import type { DemoStep, DemoCtx } from './lib/demoScript'
 import digestRaw from './data/newsDigest.json'
 
 import GlobeView, { type ArcDatum } from './components/GlobeView'
@@ -44,8 +46,9 @@ import CoverageView from './components/CoverageView'
 import DemoMode from './components/DemoMode'
 import PassGate from './components/PassGate'
 import { ShortcutsOverlay, AboutModal } from './components/Modals'
+import WorkspaceModal from './components/WorkspaceModal'
 
-const ARC_COLOR = '#22d3ee'
+const ARC_COLOR = '#14b8a6'
 const NEWS_SEEN_KEY = 'rv_news_seen'
 
 // ---- deep-link permalinks: ?a=DXB&layer=competitor&view=network ----
@@ -114,6 +117,7 @@ export default function App() {
   const [deals, setDeals] = useState<Deal[]>([])
   const [bridges, setBridges] = useState<Bridge[]>([])
   const [sampleCrm, setSampleCrm] = useState(true)
+  const [assumptions, setAssumptions] = useState<ValueAssumptions>(DEFAULT_ASSUMPTIONS)
 
   // ---- ui state (view/layer restore from the permalink) ----
   const [view, setView] = useState<ViewKey>(initialView)
@@ -144,22 +148,50 @@ export default function App() {
   const dirty = airportsDirty || pipelineDirty || bridgesDirty
 
   const searchRef = useRef<HTMLInputElement>(null)
+  const [savedAt, setSavedAt] = useState<string | null>(null)
+  const [showWorkspace, setShowWorkspace] = useState(false)
 
+  const hydratedRef = useRef(false)
   useEffect(() => {
-    loadAirports().then((list) => {
-      setAirports(list)
+    Promise.all([loadAirports(), loadPipeline(), loadBridges()]).then(([list, p, b]) => {
+      // Autosaved workspace (P4) overlays the committed data. Airports are only
+      // ever in the snapshot if the user edited them in-app.
+      const w = loadWorkspace()
+      const airportsFinal = w?.airports ?? list
+      setAirports(airportsFinal)
+      setDeals(w?.deals ?? p.deals)
+      setBridges(w?.bridges ?? b)
+      if (w?.assumptions) setAssumptions({ ...DEFAULT_ASSUMPTIONS, ...w.assumptions })
+      setSampleCrm(p.sample)
+      if (w) {
+        setSavedAt(w.savedAt)
+        if (w.airports) setAirportsDirty(true)
+        flash(`Workspace restored from autosave (${new Date(w.savedAt).toLocaleString()})`)
+      }
       // Permalink airport (?a=DXB): apply once the dataset is in.
-      if (INITIAL_AIRPORT && list.some((x) => x.id === INITIAL_AIRPORT)) {
+      if (INITIAL_AIRPORT && airportsFinal.some((x) => x.id === INITIAL_AIRPORT)) {
         setSelectedId(INITIAL_AIRPORT)
         setPanelOpen(true)
       }
+      hydratedRef.current = true
     })
-    loadPipeline().then((p) => {
-      setDeals(p.deals)
-      setSampleCrm(p.sample)
-    })
-    loadBridges().then(setBridges)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Debounced autosave (P4): every edit lands in localStorage within a second.
+  useEffect(() => {
+    if (!hydratedRef.current) return
+    const t = window.setTimeout(() => {
+      const at = saveWorkspace({
+        deals,
+        bridges,
+        assumptions,
+        ...(airportsDirty && airports ? { airports } : {}),
+      })
+      if (at) setSavedAt(at)
+    }, 800)
+    return () => window.clearTimeout(t)
+  }, [deals, bridges, assumptions, airports, airportsDirty])
 
   // Permalink writer: keep ?a / ?layer / ?view in the URL so a shared link
   // opens exactly where the conversation ended. replaceState = no history spam.
@@ -188,10 +220,13 @@ export default function App() {
     setHighlightId(null)
   }, [view, demoOn])
 
-  // Warn on navigating away with unsaved edits (C4).
+  // Warn on navigating away with unsaved edits (C4). Reset uses the skip ref
+  // so its intentional reload does not trip the warning.
+  const skipUnloadRef = useRef(false)
   useEffect(() => {
     if (!dirty) return
     const onUnload = (e: BeforeUnloadEvent) => {
+      if (skipUnloadRef.current) return
       e.preventDefault()
       e.returnValue = ''
     }
@@ -222,6 +257,19 @@ export default function App() {
     [scores],
   )
   const dealOf = useCallback((a: Airport) => dealsById.get(a.id), [dealsById])
+
+  // Deal value DERIVES from the RaaS value model (units x fee) whenever a deal
+  // has unitsTarget; stored values are only a fallback. Display/metric views
+  // consume these; edits always operate on the raw deals so no derived number
+  // ever gets baked into saved JSON.
+  const effectiveDeals = useMemo(
+    () =>
+      deals.map((d) => ({
+        ...d,
+        value: derivedDealValue(d.unitsTarget, d.value, assumptions).value,
+      })),
+    [deals, assumptions],
+  )
 
   // Whitespace view forces its own encoding; everywhere else the toggle rules.
   const effectiveLayer: LayerKey = view === 'whitespace' ? 'whitespace' : layer
@@ -305,17 +353,46 @@ export default function App() {
   )
 
   // ---- demo mode (A2/C3) ----
-  const applyDemoStep = useCallback((step: DemoStep) => {
-    setEditing(false)
-    setShowShortcuts(false)
-    setShowAbout(false)
-    setView(step.view === 'network' ? 'network' : step.view === 'whitespace' ? 'whitespace' : step.view === 'coverage' ? 'coverage' : 'globe')
-    if (step.layer) setLayer(step.layer)
-    setSelectedOrg(step.orgKey ?? null)
-    setSelectedId(step.airportId ?? null)
-    setPanelOpen(step.panel ?? false)
-    setPanelTab('intel')
-  }, [])
+  // Live aggregates for the quantified finale (P5): open handler-led hubs,
+  // units in pipe, modeled ARR from the value model, and the top open account.
+  const demoCtx: DemoCtx = useMemo(() => {
+    const openList = list.filter((a) => whitespaceCategory(a, dealsById.get(a.id)) === 'open')
+    const openHandlerLedHubs = openList.filter((a) => a.gseModel === 'handler_led').length
+    const metrics = computePipelineMetrics(effectiveDeals, todayIso())
+    const unitsInPipe = metrics.unitsTarget
+    const modeledArr = money(unitsInPipe * assumptions.raasFeePerUnitYear)
+    const top = [...openList].sort((x, y) => (scores.get(y.id)?.score ?? 0) - (scores.get(x.id)?.score ?? 0))[0]
+    const topBridge = top ? bridges.find((b) => b.from === top.id || b.to === top.id) : undefined
+    return {
+      openHandlerLedHubs,
+      unitsInPipe,
+      modeledArr,
+      topAccount: top
+        ? {
+            iata: top.iata ?? top.id,
+            why: topBridge
+              ? `Score ${scores.get(top.id)?.score ?? 0}/100. ${topBridge.rationale}`
+              : `Score ${scores.get(top.id)?.score ?? 0}/100 on volume, labor, and open whitespace.`,
+          }
+        : { iata: 'ATL', why: 'Highest-scoring open account.' },
+    }
+  }, [list, dealsById, effectiveDeals, assumptions, scores, bridges])
+
+  const applyDemoStep = useCallback(
+    (step: DemoStep) => {
+      setEditing(false)
+      setShowShortcuts(false)
+      setShowAbout(false)
+      setView(step.view === 'network' ? 'network' : step.view === 'whitespace' ? 'whitespace' : step.view === 'coverage' ? 'coverage' : 'globe')
+      if (step.layer) setLayer(step.layer)
+      setSelectedOrg(step.orgKey ?? null)
+      const target = step.airportId === '$TOP' ? demoCtx.topAccount.iata : step.airportId
+      setSelectedId(target ?? null)
+      setPanelOpen(step.panel ?? false)
+      setPanelTab('intel')
+    },
+    [demoCtx],
+  )
 
   const exitDemo = useCallback(() => {
     setDemoOn(false)
@@ -458,21 +535,33 @@ export default function App() {
     flash('Downloaded bridges.json, commit it to persist')
   }, [bridges, flash])
 
-  const downloadAllDirty = useCallback(() => {
-    if (airportsDirty && airports) {
-      downloadText('airports.json', serializeAirports(airports), 'application/json')
-      setAirportsDirty(false)
-    }
-    if (pipelineDirty) {
-      downloadText('pipeline.json', serializePipeline(deals, sampleCrm), 'application/json')
-      setPipelineDirty(false)
-    }
-    if (bridgesDirty) {
-      downloadText('bridges.json', serializeBridges(bridges), 'application/json')
-      setBridgesDirty(false)
-    }
-    flash('Downloaded updated files')
-  }, [airportsDirty, pipelineDirty, bridgesDirty, airports, deals, bridges, sampleCrm, flash])
+  // ---- workspace import / reset (P4) ----
+  const handleImportPipeline = useCallback(
+    (text: string): string | null => {
+      const res = parsePipelineImport(text, new Set(list.map((a) => a.id)))
+      if ('error' in res) return res.error
+      setDeals(res.deals)
+      setPipelineDirty(true)
+      setSampleCrm(false) // imported data is the user's own, not the dummy sample
+      setGateDismissed(true) // the importer evidently possesses the data
+      flash(`Imported ${res.deals.length} deals`)
+      return null
+    },
+    [list, flash],
+  )
+
+  const handleResetWorkspace = useCallback(() => {
+    clearWorkspace()
+    skipUnloadRef.current = true
+    window.location.reload()
+  }, [])
+
+  const downloadAirportsNow = useCallback(() => {
+    if (!airports) return
+    downloadText('airports.json', serializeAirports(airports), 'application/json')
+    setAirportsDirty(false)
+    flash('Downloaded airports.json, commit it to persist')
+  }, [airports, flash])
 
   // Gate engages only against real CRM data; the sample-data demo stays open.
   const gateLocked = !gateDismissed && gateRequired(!sampleCrm)
@@ -544,6 +633,7 @@ export default function App() {
 
       <div className={`loading-overlay${globeReady ? ' done' : ''}`}>
         <div className="loading-box">
+          <img src="./aerovect-logo-white.png" alt="AeroVect" style={{ height: 34, marginBottom: 22, opacity: 0.92 }} />
           <div className="ring" />
           INITIALIZING RAMPVIEW
         </div>
@@ -564,7 +654,8 @@ export default function App() {
           }}
           searchRef={searchRef}
           dirty={dirty}
-          onDownloadAll={downloadAllDirty}
+          savedAt={savedAt}
+          onWorkspace={() => setShowWorkspace(true)}
           onPlayDemo={() => setDemoOn(true)}
           whatsNew={digest.items}
           whatsNewUnread={whatsNewUnread}
@@ -612,7 +703,7 @@ export default function App() {
           </div>
         ) : (
           <PipelineTable
-            deals={deals}
+            deals={effectiveDeals}
             airportsById={byId}
             scoreOf={scoreOf}
             regions={regions}
@@ -633,7 +724,7 @@ export default function App() {
           </div>
         ) : (
           <BoardView
-            deals={deals}
+            deals={effectiveDeals}
             airportsById={byId}
             onStageChange={handleStageChange}
             onSelect={select}
@@ -645,7 +736,7 @@ export default function App() {
       {view === 'network' && !demoOn && (
         <NetworkView
           airports={list}
-          deals={deals}
+          deals={effectiveDeals}
           bridges={bridges}
           selectedOrg={selectedOrg}
           onSelectOrg={setSelectedOrg}
@@ -694,6 +785,8 @@ export default function App() {
           onTab={setPanelTab}
           pipelineLocked={gateLocked}
           onUnlocked={() => setGateDismissed(true)}
+          assumptions={assumptions}
+          onAssumptions={setAssumptions}
           onClose={closePanel}
           onEdit={() => setEditing(true)}
           onBrief={openBrief}
@@ -703,9 +796,21 @@ export default function App() {
         />
       )}
 
-      {demoOn && <DemoMode applyStep={applyDemoStep} onExit={exitDemo} />}
+      {demoOn && <DemoMode applyStep={applyDemoStep} onExit={exitDemo} ctx={demoCtx} />}
       {showShortcuts && <ShortcutsOverlay onClose={() => setShowShortcuts(false)} />}
       {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
+      {showWorkspace && (
+        <WorkspaceModal
+          savedAt={savedAt}
+          dirty={{ airports: airportsDirty, pipeline: pipelineDirty, bridges: bridgesDirty }}
+          onDownloadAirports={downloadAirportsNow}
+          onDownloadPipeline={downloadPipeline}
+          onDownloadBridges={downloadBridges}
+          onImportPipeline={handleImportPipeline}
+          onReset={handleResetWorkspace}
+          onClose={() => setShowWorkspace(false)}
+        />
+      )}
       {toast && <div className="toast">{toast}</div>}
       {overlayView && null}
     </div>

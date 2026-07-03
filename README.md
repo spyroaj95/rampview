@@ -10,6 +10,10 @@ deal stage and buying committee, warm-bridge expansion paths, and a transparent
 opportunity score. Then flip to Pipeline, Board, Network, Whitespace, or
 Coverage: same data, different lenses.
 
+**Live demo:** https://spyroaj95.github.io/rampview/ (founder-demo mode on sample
+CRM data). Deep links work: `?a=DXB&layer=competitor&view=network` opens exactly
+that scene. Deploys automatically from main via GitHub Actions.
+
 > No public dataset says who operates the GSE at each airport. RampView is the
 > system of record AeroVect builds up over time: seeded automatically for the
 > boring facts, enriched by hand and by research agents for the golden ones,
@@ -54,8 +58,8 @@ static host works with zero config.
 | View | What it shows |
 | --- | --- |
 | **GLOBE** | Full-viewport globe. Point size = passengers; color = the active layer (status, opportunity score, competitor presence, or research confidence) via the bottom-right toggle. |
-| **PIPELINE** | Sortable, filterable deal table + live metrics (units in pipe, units live, weighted value, pilots, stalled 30d+). Gated on deployed builds. |
-| **BOARD** | Kanban by deal stage; drag cards to move deals. Gated on deployed builds. |
+| **PIPELINE** | Sortable, filterable deal table + live metrics (units in pipe, units live, weighted value, pilots, stalled 30d+). Gated only when the build carries real CRM data. |
+| **BOARD** | Kanban by deal stage; drag cards to move deals. Same conditional gate. |
 | **NETWORK** | Handler/carrier rollups (dnata, Swissport, Menzies, Unifi, GAT, Delta...) with ours/contested/open counts, plus warm-bridge expansion arcs drawn on the globe. Add bridges in-app. |
 | **WHITESPACE** | Ours / contested / open / unknown coloring with an "only open" toggle and a ranked open-target list. |
 | **COVERAGE** | How much of the golden Tier B is populated per field and region, plus an "enrich next" list (high score, low confidence) to aim the research agents. |
@@ -127,10 +131,11 @@ Real contacts and deal notes must never reach a public deploy. Three layers:
 2. **The app loads the real file only when present locally** (build-time glob
    fallback to the sample). A public deploy built from a fresh checkout ships
    the sample; the top bar shows a SAMPLE CRM badge whenever the sample is live.
-3. **PIPELINE and BOARD views (and the panel's PIPELINE tab) are passphrase-gated
-   on production builds.** Default passphrase `rampview`; change the SHA-256 in
-   `src/lib/gate.ts`. This is a deterrent, not encryption; the structural
-   protection is layers 1-2. Airport reference data stays public by design.
+3. **The passphrase gate engages only when the running build contains a real
+   pipeline.json.** Public deploys are built from fresh checkouts, run on the
+   dummy sample, and therefore stay fully open: that is the founder demo.
+   Default passphrase `rampview`; change the SHA-256 in `src/lib/gate.ts`.
+   This is a deterrent, not encryption; the structural protection is layers 1-2.
 
 If you build a private deploy WITH your local pipeline.json present, treat the
 whole deployment as confidential.
@@ -164,6 +169,25 @@ reviewable PR; it requires wiring an agent runner and never invents items.
 dnata DXB to AUH/SIN/LHR, Delta ATL to Unifi JFK/LAX/MCO. Add more in the
 Network view, then download and commit the file. Bridges feed the BRIDGE
 component of the opportunity score and the arcs on the globe.
+
+## Phase 3 additions
+
+- **Permalinks**: `?a=<IATA>&layer=<layer>&view=<view>` round-trips both ways.
+- **RaaS value model** (`src/lib/valueModel.ts`): per-account economics with
+  every input visible and labeled sourced-or-assumption; deal value and the
+  weighted pipeline derive from units x RaaS fee. VALUE section in the panel.
+- **Autosave**: the whole workspace (deals, bridges, airport edits, assumptions)
+  persists to localStorage within a second of any edit; the topbar shows the
+  save state, and the Workspace modal handles download-to-commit, import
+  (file or paste), and reset.
+- **Credibility pass**: sources render as clickable links, competitor facts
+  carry src links, records show "sources as of" + a stale badge past 90 days,
+  the 6 marquee records were fact-checked against live sources (ZRH corrected
+  to live trial; ATL re-verified as carrier-led with Delta self-handling;
+  Changi's UISEE deployment added), and the top 25 passenger figures are ACI
+  2024 totals.
+- **Branding**: AeroVect wordmark + teal palette from aerovect.com, branded
+  favicon, OG/Twitter share card (`public/og.png`).
 
 ## Reporting
 

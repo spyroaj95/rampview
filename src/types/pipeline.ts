@@ -108,7 +108,7 @@ export const STAGE_META: Record<DealStage, StageMeta> = {
   researching: { key: 'researching', label: 'Researching', color: '#7d8a9c', weight: 0.1 },
   engaged: { key: 'engaged', label: 'Engaged', color: '#4f8cff', weight: 0.25 },
   pilot_scoping: { key: 'pilot_scoping', label: 'Pilot scoping', color: '#38b6d8', weight: 0.4 },
-  pilot_live: { key: 'pilot_live', label: 'Pilot live', color: '#22d3ee', weight: 0.6 },
+  pilot_live: { key: 'pilot_live', label: 'Pilot live', color: '#14b8a6', weight: 0.6 },
   expansion: { key: 'expansion', label: 'Expansion', color: '#5fe3b8', weight: 0.75 },
   won: { key: 'won', label: 'Won', color: '#2ee6a6', weight: 1 },
   lost: { key: 'lost', label: 'Lost', color: '#404a58', weight: 0 },
