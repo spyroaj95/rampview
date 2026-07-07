@@ -11,7 +11,7 @@ import {
   type Contact,
   type Activity,
 } from '../types/pipeline'
-import { isStalled } from '../services/pipelineService'
+import { isStalled, CRM_INTEGRATION, syncDealToCrm } from '../services/pipelineService'
 import { dayDate, todayIso, isOverdue, money } from '../lib/format'
 
 interface Props {
@@ -42,6 +42,12 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
   const [cDispo, setCDispo] = useState<NonNullable<Contact['disposition']>>('unknown')
   const [actType, setActType] = useState<Activity['type']>('note')
   const [actSummary, setActSummary] = useState('')
+  const [crmNote, setCrmNote] = useState<string | null>(null)
+
+  const tryCrmSync = async () => {
+    const res = await syncDealToCrm(deal!)
+    setCrmNote(res.ok ? null : `${res.reason}. Deals persist to pipeline.json and this browser meanwhile.`)
+  }
 
   const today = todayIso()
 
@@ -67,6 +73,10 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
         >
           Create deal record
         </button>
+        <div className="form-hint" style={{ marginTop: 10 }}>
+          Deals will sync to AeroVect's CRM once connected (provider TBD); until then they live in
+          pipeline.json and this browser's autosave.
+        </div>
       </div>
     )
   }
@@ -327,14 +337,27 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
           <b>How this persists:</b> edits save to this browser automatically. Download
           pipeline.json for a durable backup; it stays local and private.
         </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+        <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
           <button className="minibtn accent" onClick={onDownload}>
             Download pipeline.json
           </button>
           <button className="minibtn" onClick={onCopy}>
             Copy JSON
           </button>
+          <button
+            className="minibtn"
+            style={{ opacity: CRM_INTEGRATION.connected ? 1 : 0.65 }}
+            title="Placeholder: one-click sync to AeroVect's CRM once a provider is chosen (Salesforce, HubSpot, or other TBD)"
+            onClick={tryCrmSync}
+          >
+            ⇄ Connect CRM
+          </button>
         </div>
+        {crmNote && (
+          <div className="form-hint" style={{ marginTop: 8, color: 'var(--brand-amber)' }}>
+            {crmNote}
+          </div>
+        )}
       </div>
     </>
   )

@@ -46,6 +46,26 @@ export function getDeal(deals: Deal[], airportId: string): Deal | undefined {
   return deals.find((d) => d.airportId === airportId)
 }
 
+// ---------------------------------------------------------------------------
+// CRM integration placeholder.
+//
+// AeroVect's CRM is not yet known (Salesforce, HubSpot, Attio, or other).
+// When it is, implement push/pull here and flip `connected`; the "Connect CRM"
+// button in PipelinePanel is already wired to this single surface, so the UI
+// needs no further changes. Deals keep flowing through pipeline.json and the
+// localStorage autosave in the meantime.
+// ---------------------------------------------------------------------------
+export const CRM_INTEGRATION: { connected: boolean; provider: string | null } = {
+  connected: false,
+  provider: null, // e.g. 'salesforce' | 'hubspot' | 'attio' once chosen
+}
+
+/** Stub: replace with the real CRM push once a provider is chosen. */
+export async function syncDealToCrm(deal: Deal): Promise<{ ok: false; reason: string }> {
+  void deal
+  return { ok: false, reason: 'CRM integration not configured yet (provider TBD)' }
+}
+
 /** Insert or replace by airportId; returns a NEW array. */
 export function upsertDeal(deals: Deal[], next: Deal): Deal[] {
   const idx = deals.findIndex((d) => d.airportId === next.airportId)

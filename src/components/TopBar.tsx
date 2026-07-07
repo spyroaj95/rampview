@@ -186,7 +186,12 @@ export default function TopBar(props: Props) {
         ▶ WALKTHROUGH
       </button>
 
-      <button className="minibtn" onClick={props.onAbout} title="Data sources and attribution">
+      <button
+        className="minibtn"
+        style={{ fontSize: 14, lineHeight: 1, padding: '4px 10px' }}
+        onClick={props.onAbout}
+        title="Data sources and attribution"
+      >
         ⓘ
       </button>
 

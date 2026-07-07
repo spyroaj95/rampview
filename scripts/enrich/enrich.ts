@@ -125,7 +125,10 @@ const ST = new Set([
   'unknown',
 ])
 const CF = new Set(['high', 'medium', 'low'])
-const NEGATION = /\bno\b|\bnot\b|\bnone\b|no confirmed|not confirmed|no presence|absent/i
+// Drop only entries that ASSERT ABSENCE ("no presence found at X"), not real
+// findings that carry honest caveats ("trial began July 2025; no confirmation
+// it converted to full deployment"). Anchored/narrow on purpose.
+const NEGATION = /^\s*(no|none)\b|no (confirmed )?(presence|activity|trial|deployment)( found)?|nothing found|not present at/i
 
 function sanitize(raw: Record<string, any>): Record<string, any> {
   if (typeof raw.gseModel === 'string') {

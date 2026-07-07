@@ -201,19 +201,19 @@ export default function DetailPanel(props: Props) {
                           </div>
                         </>
                       ) : (
-                        <div className="metric-value muted">n/a</div>
+                        <div className="metric-value muted">unknown</div>
                       )}
                     </div>
                     <div className="metric">
                       <div className="metric-label">Aircraft movements</div>
                       <div className={`metric-value${a.aircraftMovementsAnnual ? '' : ' muted'}`}>
-                        {a.aircraftMovementsAnnual ? fullNumber(a.aircraftMovementsAnnual) : 'n/a'}
+                        {a.aircraftMovementsAnnual ? fullNumber(a.aircraftMovementsAnnual) : 'unknown'}
                       </div>
                     </div>
                     <div className="metric">
                       <div className="metric-label">Cargo (tonnes/yr)</div>
                       <div className={`metric-value${a.cargoTonnesAnnual ? '' : ' muted'}`}>
-                        {a.cargoTonnesAnnual ? fullNumber(a.cargoTonnesAnnual) : 'n/a'}
+                        {a.cargoTonnesAnnual ? fullNumber(a.cargoTonnesAnnual) : 'unknown'}
                       </div>
                     </div>
                   </div>
@@ -406,7 +406,7 @@ export default function DetailPanel(props: Props) {
                   <div className="meta-foot">
                     <ConfidenceBadge value={a.confidence} />
                     <span>
-                      Sources as of {a.lastUpdated ? shortDate(a.lastUpdated) : 'never'}
+                      {a.lastUpdated ? `Sources as of ${shortDate(a.lastUpdated)}` : 'Not yet researched'}
                     </span>
                     {(() => {
                       const d = daysSince(a.lastUpdated, todayIso())

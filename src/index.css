@@ -169,9 +169,9 @@ button {
   font-style: normal;
 }
 .brand-sub {
-  font-size: 10.5px;
+  font-size: 10px;
   color: var(--text-lo);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   margin-top: 2px;
   white-space: nowrap;
 }
@@ -471,8 +471,8 @@ button {
   margin-top: 11px;
   padding-top: 10px;
   border-top: 1px solid var(--line);
-  font-size: 10.5px;
-  color: var(--text-faint);
+  font-size: 11px;
+  color: var(--text-lo);
   line-height: 1.45;
 }
 .legend-foot b {
@@ -605,7 +605,7 @@ button {
 }
 .section-title .tier {
   margin-left: auto;
-  font-size: 8.5px;
+  font-size: 9.5px;
   letter-spacing: 0.1em;
   padding: 2px 6px;
   border-radius: 4px;
@@ -833,7 +833,7 @@ button {
   padding-top: 12px;
   border-top: 1px solid var(--line);
   font-size: 11px;
-  color: var(--text-faint);
+  color: var(--text-lo);
 }
 
 /* empty / unknown hint */
@@ -1736,7 +1736,7 @@ kbd {
   padding: 10px 14px;
   color: var(--text-mid);
 }
-.wn-item:hover {
+button.wn-item:hover {
   background: var(--bg-chip);
   color: var(--text-hi);
 }
@@ -1864,7 +1864,7 @@ kbd {
   color: var(--text-hi);
 }
 .persona-tag {
-  font-size: 8.5px;
+  font-size: 9.5px;
   letter-spacing: 0.09em;
   font-weight: 800;
   padding: 1px 6px;
@@ -1901,7 +1901,7 @@ kbd {
   width: 52px;
 }
 .act-type {
-  font-size: 8.5px;
+  font-size: 9.5px;
   letter-spacing: 0.09em;
   font-weight: 800;
   color: var(--brand-cyan);

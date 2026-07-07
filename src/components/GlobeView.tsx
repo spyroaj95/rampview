@@ -1,5 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Globe, { type GlobeMethods } from 'react-globe.gl'
+import {
+  AdditiveBlending,
+  AmbientLight,
+  CanvasTexture,
+  Color,
+  DirectionalLight,
+  MeshPhongMaterial,
+  Sprite,
+  SpriteMaterial,
+} from 'three'
 import type { Airport } from '../types/airport'
 import { statusMeta } from '../lib/statusMeta'
 import { compactNumber } from '../lib/format'
@@ -32,16 +42,32 @@ interface Props {
 
 const MAX_PAX = 105_000_000
 
-/** sqrt scale so a 100M-pax hub isn't 30x the area of a 3M field. */
+/**
+ * sqrt scale so a 100M-pax hub isn't 30x the area of a 3M field.
+ * Floor at 0.26 deg so small fields stay legible dots, slope trimmed so the
+ * biggest hubs keep the same max size as before (design review, dots lens).
+ */
 function radiusFor(a: Airport): number {
   const p = a.passengersAnnual ?? 1_000_000
-  return 0.18 + 0.62 * Math.sqrt(Math.min(p, MAX_PAX) / MAX_PAX)
+  return 0.26 + 0.54 * Math.sqrt(Math.min(p, MAX_PAX) / MAX_PAX)
 }
 
-function altitudeFor(a: Airport): number {
-  const p = a.passengersAnnual ?? 1_000_000
-  return 0.006 + 0.05 * (Math.min(p, MAX_PAX) / MAX_PAX)
-}
+/**
+ * Shared radial-gradient sprite texture for the additive glow behind visible
+ * dots: one 128px canvas, tinted per point via SpriteMaterial.color.
+ */
+const GLOW_TEXTURE = (() => {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const ctx = c.getContext('2d')!
+  const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64)
+  grad.addColorStop(0, 'rgba(255,255,255,1)')
+  grad.addColorStop(0.2, 'rgba(255,255,255,0.45)')
+  grad.addColorStop(1, 'rgba(255,255,255,0)')
+  ctx.fillStyle = grad
+  ctx.fillRect(0, 0, 128, 128)
+  return new CanvasTexture(c)
+})()
 
 export default function GlobeView({
   airports,
@@ -86,6 +112,14 @@ export default function GlobeView({
     controls.rotateSpeed = 0.7
     g.pointOfView({ lat: 24, lng: 18, altitude: 2.5 }, 0)
 
+    // Brightness (design review): globe.gl defaults render the night texture
+    // at ~0.8x. A stronger white ambient lifts the whole globe while a soft
+    // directional keeps a hint of topology relief; flat ambient also renders
+    // the dot colors saturated instead of half-shaded.
+    const dir = new DirectionalLight(0xffffff, 0.2 * Math.PI)
+    dir.position.set(1, 1, 1)
+    g.lights([new AmbientLight(0xffffff, 1.3 * Math.PI), dir])
+
     const onStart = () => {
       interactingRef.current = true
       controls.autoRotate = false
@@ -128,6 +162,28 @@ export default function GlobeView({
     }
   }, [selectedId])
 
+  // Emissive globe material: three-globe loads earth-night.jpg into .map and
+  // the topology into .bumpMap; once ready we feed the same texture into
+  // emissiveMap so the city lights self-illuminate (design review, brightness).
+  const globeMaterial = useMemo(() => new MeshPhongMaterial({ color: 0xffffff }), [])
+  const handleGlobeReady = () => {
+    if (globeMaterial.map) {
+      globeMaterial.emissiveMap = globeMaterial.map
+      globeMaterial.emissive = new Color(0xffffff)
+      globeMaterial.emissiveIntensity = 0.35
+      globeMaterial.needsUpdate = true
+    }
+    onReady()
+  }
+
+  // Additive glow sprites behind VISIBLE dots only (filtered points stay quiet).
+  const glowData = useMemo(
+    () => airports.filter((a) => visibleIds.has(a.id)),
+    // colorFor in deps: a layer switch must retint the sprites
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [airports, visibleIds, colorFor],
+  )
+
   const byId = useMemo(() => new Map(airports.map((a) => [a.id, a])), [airports])
   const selected = selectedId ? byId.get(selectedId) ?? null : null
   const highlighted = highlightId && highlightId !== selectedId ? byId.get(highlightId) ?? null : null
@@ -153,7 +209,8 @@ export default function GlobeView({
 
   const pointColor = (d: object) => {
     const a = d as Airport
-    if (!visibleIds.has(a.id)) return 'rgba(90,102,117,0.14)' // dimmed / filtered out
+    // Dimmed = quiet context, not invisible (design review, dots lens).
+    if (!visibleIds.has(a.id)) return 'rgba(148,163,184,0.28)'
     return colorFor(a)
   }
 
@@ -161,7 +218,7 @@ export default function GlobeView({
     const a = d as Airport
     const base = radiusFor(a)
     if (a.id === highlightId) return base * 1.5
-    return visibleIds.has(a.id) ? base : base * 0.55
+    return visibleIds.has(a.id) ? base : base * 0.7
   }
 
   const pointLabel = (d: object) => {
@@ -192,15 +249,16 @@ export default function GlobeView({
         bumpImageUrl="./textures/earth-topology.png"
         backgroundColor="rgba(0,0,0,0)"
         atmosphereColor="#3aa0ff"
-        atmosphereAltitude={0.2}
-        onGlobeReady={onReady}
+        atmosphereAltitude={0.25}
+        globeMaterial={globeMaterial}
+        onGlobeReady={handleGlobeReady}
         pointsData={airports}
         pointLat={(d: object) => (d as Airport).lat}
         pointLng={(d: object) => (d as Airport).lng}
         pointColor={pointColor}
         pointRadius={pointRadius}
-        pointAltitude={(d: object) => altitudeFor(d as Airport)}
-        pointResolution={6}
+        pointAltitude={0.006}
+        pointResolution={24}
         pointsMerge={false}
         pointLabel={pointLabel}
         onPointClick={(d: object) => onSelect((d as Airport).id)}
@@ -227,6 +285,31 @@ export default function GlobeView({
         arcDashLength={0.45}
         arcDashGap={0.18}
         arcDashAnimateTime={2200}
+        customLayerData={glowData}
+        customThreeObject={(d: object) => {
+          const a = d as Airport
+          const sprite = new Sprite(
+            new SpriteMaterial({
+              map: GLOW_TEXTURE,
+              color: colorFor(a),
+              transparent: true,
+              opacity: 0.55,
+              blending: AdditiveBlending,
+              depthWrite: false,
+            }),
+          )
+          const s = radiusFor(a) * 8
+          sprite.scale.set(s, s, 1)
+          sprite.raycast = () => undefined // hover/click stay on the points layer
+          return sprite
+        }}
+        customThreeObjectUpdate={(obj: object, d: object) => {
+          const a = d as Airport
+          const g = globeRef.current
+          if (!g) return
+          Object.assign((obj as Sprite).position, g.getCoords(a.lat, a.lng, 0.012))
+          ;(obj as Sprite).material.color.set(colorFor(a))
+        }}
       />
     </div>
   )
