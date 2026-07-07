@@ -28,6 +28,7 @@ import { targetListCsv, downloadText, openAccountBrief } from './lib/exports'
 import { DEFAULT_ASSUMPTIONS, derivedDealValue, type ValueAssumptions } from './lib/valueModel'
 import { saveWorkspace, loadWorkspace, clearWorkspace, parsePipelineImport } from './services/workspaceService'
 import { todayIso, money } from './lib/format'
+import { track } from './lib/analytics'
 import type { DemoStep, DemoCtx } from './lib/demoScript'
 import digestRaw from './data/newsDigest.json'
 
@@ -219,6 +220,20 @@ export default function App() {
   useEffect(() => {
     setHighlightId(null)
   }, [view, demoOn])
+
+  // Analytics events: view switches after the initial render (the pageload
+  // itself is counted by the script tag), and walkthrough starts.
+  const viewTrackedRef = useRef(false)
+  useEffect(() => {
+    if (!viewTrackedRef.current) {
+      viewTrackedRef.current = true // skip the initial view: pageload covers it
+      return
+    }
+    track(`view-${view}`, `View: ${view}`)
+  }, [view])
+  useEffect(() => {
+    if (demoOn) track('walkthrough-start', 'Walkthrough started')
+  }, [demoOn])
 
   // Warn on navigating away with unsaved edits (C4). Reset uses the skip ref
   // so its intentional reload does not trip the warning.
