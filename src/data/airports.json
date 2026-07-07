@@ -294,7 +294,7 @@
       {
         "headline": "WHILL trials autonomous mobility service at London Heathrow Terminal 3",
         "url": "https://runwaygirlnetwork.com/2026/06/whill-trials-autonomous-mobility-at-london-heathrow-t3/",
-        "date": "",
+        "date": "2026-06-03",
         "relevance": "Heathrow is running autonomous vehicle trials in live passenger operations, evidence its safety case and approval pathway for autonomy at LHR is open and active.",
         "firstSeen": "2026-07-02"
       }
@@ -358,12 +358,6 @@
         "date": "2025-12-15",
         "url": "https://www.marubeni.com/en/news/2025/info/00041.html",
         "relevance": "Primary-source confirmation of the labor-shortage driver and Level 4 practical operations; validates the automation demand thesis even though the buyers are carriers using purpose-built vehicles."
-      },
-      {
-        "headline": "Japan labour shortages prompt ground-handling recruitment drive; ~5% ramp-handling and ~14% passenger-handling workforce decline vs 2019, Narita denied added flights for lack of handlers",
-        "date": "2023-09-01",
-        "url": "https://airsideint.com/japan-labour-shortages-prompt-ground-handling-recruitment-drive/",
-        "relevance": "Documents structural ground-handling labor shortage in Japan (ramp handling down ~5% vs March 2019 across 61 major handlers), the underlying tailwind for GSE automation demand. (URL cited from search summary; direct fetch returned a bot-verification page.)"
       },
       {
         "headline": "TractEasy and EasyMile power JAL's Level 4 autonomous EZTow baggage and cargo towing at Narita, claimed as Japan's first",
@@ -443,7 +437,7 @@
       {
         "headline": "Delta wins four Colorado Clean Diesel Program grants in 2024-2025 to buy six electric baggage tugs and seven electric belt loaders at Denver International Airport",
         "url": "https://cocleandiesel.org/airport-ground-support-equipment/",
-        "date": "",
+        "date": "2026-03-18",
         "relevance": "Carriers are refreshing DEN tug fleets to electric with state grant money, creating new-generation tractors that are prime candidates for AeroVect driverless retrofits.",
         "firstSeen": "2026-07-02"
       }
@@ -1986,7 +1980,28 @@
     "sizeClass": "large_hub",
     "passengersAnnual": 35000000,
     "passengersYear": 2023,
-    "aerovectStatus": "unknown"
+    "aerovectStatus": "competitor_held",
+    "tailwinds": [
+      {
+        "headline": "Japan labour shortages prompt ground-handling recruitment drive; ~5% ramp-handling and ~14% passenger-handling workforce decline vs 2019, Narita denied added flights for lack of handlers",
+        "date": "2023-09-01",
+        "url": "https://airsideint.com/japan-labour-shortages-prompt-ground-handling-recruitment-drive/",
+        "relevance": "Documents structural ground-handling labor shortage in Japan (ramp handling down ~5% vs March 2019 across 61 major handlers), the underlying tailwind for GSE automation demand. (URL cited from search summary; direct fetch returned a bot-verification page.)"
+      }
+    ],
+    "competitors": [
+      {
+        "vendor": "TractEasy (EasyMile EZTow)",
+        "status": "deployed (Level 4 autonomous baggage/cargo towing with JAL, Japan’s first, from Dec 15 2025)",
+        "source": "https://easymile.com/en/news-insights/easymile-technology-powers-japan-s-first-level-4-autonomous-towing-at-narita-international-airport-2"
+      }
+    ],
+    "aerovectNotes": "TractEasy/EasyMile run Level 4 autonomous EZTow towing with JAL here (announced Dec 2025), the same carrier-led autonomy wave as Haneda. Purpose-built vendor entrenched; retrofit angle would ride JAL’s wider mixed fleet.",
+    "confidence": "medium",
+    "sources": [
+      "https://easymile.com/en/news-insights/easymile-technology-powers-japan-s-first-level-4-autonomous-towing-at-narita-international-airport-2"
+    ],
+    "lastUpdated": "2026-07-03"
   },
   {
     "id": "TPE",
@@ -2252,17 +2267,86 @@
     "id": "ATH",
     "iata": "ATH",
     "icao": "LGAV",
-    "name": "Athens Eleftherios Venizelos International Airport",
-    "city": "Spata-Artemida",
+    "name": "Athens International Airport (Eleftherios Venizelos)",
+    "city": "Athens",
     "country": "Greece",
     "countryCode": "GR",
     "region": "Europe",
     "lat": 37.936401,
     "lng": 23.9445,
-    "sizeClass": "medium_hub",
-    "passengersAnnual": 28200000,
-    "passengersYear": 2023,
-    "aerovectStatus": "unknown"
+    "sizeClass": "large_hub",
+    "passengersAnnual": 33993681,
+    "passengersYear": 2025,
+    "aerovectStatus": "prospect",
+    "owner": "Athens International Airport S.A. (AviAlliance 50.2%, Greek state via HCAP 25.6%, free float; listed on the Athens Exchange since the Feb 2024 IPO)",
+    "ownershipType": "mixed",
+    "hubFor": [
+      "Aegean Airlines",
+      "Olympic Air"
+    ],
+    "gseModel": "handler_led",
+    "groundHandlers": [
+      {
+        "name": "Goldair Handling",
+        "role": "licensed third-party ramp & passenger handler",
+        "notes": "First private handler in the liberalized Greek market (since 1999); network of 28 Greek airports, 160+ airline clients incl. Aegean, Lufthansa, Emirates, Turkish."
+      },
+      {
+        "name": "Skyserv Handling Services",
+        "role": "licensed third-party handler",
+        "notes": "Headquartered at ATH; acquired by Swissport Aviareps Hellas S.A. in Dec 2015, so Swissport-linked ownership."
+      },
+      {
+        "name": "Swissport Hellas",
+        "role": "licensed third-party handler",
+        "notes": "One of the three HCAA-licensed ground handling operators at ATH (approval announced Sept 2022)."
+      }
+    ],
+    "aerovectNotes": "Large, fast-growing European hub with no incumbent autonomous-GSE vendor: clean whitespace. Handler-led market with three licensed operators; watch that Swissport Hellas ties into Swissport’s global Aurrigo alignment. AIA’s Digital Gate open-innovation program is a documented technology entry point.",
+    "operationsNotes": "Greek ground handling has been liberalized since 1999; HCAA licenses exactly three third-party operators at ATH (Goldair, Skyserv, Swissport Hellas) and AIA awards and supervises handling without self-handling. Flight disruptions in 2024-2026 were driven by ATC actions and nationwide general strikes (e.g. Apr 9 and Oct 1, 2025), not by ground-handler disputes. Expansion program (~1.28B euros) targets 40M passengers by 2032 with a 68% terminal expansion; airport reached Net Zero in 2025 with electrified operational vehicles.",
+    "competitors": [],
+    "tailwinds": [
+      {
+        "date": "2025-12-23",
+        "headline": "ATH closes 2025 at a record ~34M passengers and launches a 1.28B euro expansion targeting 40M annual passengers by 2032",
+        "url": "https://news.gtp.gr/2025/12/23/athens-airport-hits-new-34m-passenger-traffic-record-unveils-e1-3-billion-expansion-plan/",
+        "relevance": "A growing, capacity-constrained hub adds ramp tempo and new apron capacity (32-position facility underway): more turns per tractor and a build window to design autonomy in.",
+        "firstSeen": "2026-07-03"
+      },
+      {
+        "date": "2026-01-20",
+        "headline": "AIA: 2025 was the fastest growth among European capital/major airports vs pre-pandemic levels (+33% vs 2019, per ACI-Europe), with 283,589 flight movements (+5.7%)",
+        "url": "https://news.gtp.gr/2026/01/20/athens-airport-ends-record-2025-among-europes-fastest-growing-mega-airports/",
+        "relevance": "Fastest-growing major European airport claim verified via AIA citing ACI-Europe: the growth story behind the GSE fleet expanding here.",
+        "firstSeen": "2026-07-03"
+      },
+      {
+        "date": "2025-12-13",
+        "headline": "ATH reaches Net Zero in 2025 via its Route 2025 program (16 MWp solar park, 70M euro investment), 25 years ahead of the industry 2050 target",
+        "url": "https://news.gtp.gr/2025/12/13/athens-international-airport-achieves-net-zero-25-years-ahead-of-2050-target/",
+        "relevance": "A sustainability-forward operator already electrifying airside vehicles is a natural adopter of electric retrofit autonomous tractors.",
+        "firstSeen": "2026-07-03"
+      },
+      {
+        "date": "2024-02-07",
+        "headline": "AIA lists on the Athens Exchange: 785M euros raised at a 2.46B euro market cap, the largest Greek IPO in over two decades; AviAlliance takes majority control",
+        "url": "https://www.euronews.com/business/2024/02/07/shares-flying-high-for-athens-airport-in-biggest-greek-ipo-in-two-decades",
+        "relevance": "Publicly listed, majority-private ownership (AviAlliance/PSP) means commercial capital discipline and appetite for efficiency investment.",
+        "firstSeen": "2026-07-03"
+      }
+    ],
+    "confidence": "medium",
+    "sources": [
+      "https://media.aia.gr/assets/aiaportal/media/root/corporate/statistics/passengers (AIA official traffic statistics: 33,993,681 pax 2025; 31,854,758 pax 2024)",
+      "https://hcaa.gov.gr/en/newsroom/announcements/adeiodotisi-foreon-epigeias-exypiretisis (HCAA licensing of Goldair, Swissport Hellas, Skyserv at ATH)",
+      "https://www.avialliance.com/avia_en/Athens-International-Airport-30.jhtml (shareholding: AviAlliance 50.19%, HCAP 25.60%, free float)",
+      "https://www.goldair-handling.gr/about-us/ (liberalized market since 1999; Goldair network)",
+      "https://www.businessairnews.com/hb_airportpage.html?recnum=823 (Skyserv + Swissport Hellas at ATH)",
+      "https://news.gtp.gr/2025/12/23/athens-airport-hits-new-34m-passenger-traffic-record-unveils-e1-3-billion-expansion-plan/",
+      "https://www.euronews.com/business/2024/02/07/shares-flying-high-for-athens-airport-in-biggest-greek-ipo-in-two-decades",
+      "https://thedigitalgate.gr/en/ (AIA open-innovation program)"
+    ],
+    "lastUpdated": "2026-07-03"
   },
   {
     "id": "MAN",

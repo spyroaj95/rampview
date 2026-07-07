@@ -62,7 +62,14 @@ export function isEnriched(a: Airport): boolean {
 export function searchAirports(list: Airport[], q: string): Airport[] {
   const needle = q.trim().toLowerCase()
   if (!needle) return list
-  return list.filter((a) => matchesQuery(a, needle))
+  // Rank: exact IATA/ICAO code, then name/city prefix, then any substring
+  // (typing "ATH" must return Athens before He-ATH-row).
+  const rank = (a: Airport): number => {
+    if (a.iata?.toLowerCase() === needle || a.icao?.toLowerCase() === needle || a.id.toLowerCase() === needle) return 0
+    if (a.name.toLowerCase().startsWith(needle) || a.city?.toLowerCase().startsWith(needle)) return 1
+    return 2
+  }
+  return list.filter((a) => matchesQuery(a, needle)).sort((x, y) => rank(x) - rank(y))
 }
 
 function matchesQuery(a: Airport, needle: string): boolean {

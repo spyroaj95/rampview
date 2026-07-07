@@ -101,10 +101,12 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
 
   return (
     <>
+      {/* Dev note: this banner shows when the build runs on pipeline.sample.json.
+          A real src/data/pipeline.json (gitignored, local-only) loads automatically instead. */}
       {sample && (
         <div className="export-note" style={{ marginTop: 14 }}>
-          <b>SAMPLE DATA:</b> this is the committed pipeline.sample.json with dummy contacts. Create
-          src/data/pipeline.json locally (gitignored) for real deal intel; it loads automatically.
+          <b>SAMPLE DATA:</b> showing sample CRM data with placeholder contacts. The live pipeline
+          stays local and private.
         </div>
       )}
 
@@ -322,8 +324,8 @@ export default function PipelinePanel({ airport, deal, sample, onUpsert, onDownl
       {/* ---------- Persistence ---------- */}
       <div className="section">
         <div className="export-note" style={{ margin: 0 }}>
-          <b>How this persists:</b> edits update the live app. Download pipeline.json and keep it
-          local (it is gitignored); the committed sample never carries real contacts.
+          <b>How this persists:</b> edits save to this browser automatically. Download
+          pipeline.json for a durable backup; it stays local and private.
         </div>
         <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
           <button className="minibtn accent" onClick={onDownload}>

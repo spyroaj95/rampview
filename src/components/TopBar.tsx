@@ -118,8 +118,10 @@ export default function TopBar(props: Props) {
 
       <div className="topbar-spacer" />
 
+      {/* Dev note: the badge shows when the build runs on pipeline.sample.json.
+          Drop a real src/data/pipeline.json locally (gitignored) and it loads instead. */}
       {props.sample && (
-        <span className="sample-badge" title="Pipeline is running on the committed sample file with dummy contacts. Create src/data/pipeline.json locally for real data.">
+        <span className="sample-badge" title="Showing sample CRM data. The live pipeline stays local and private.">
           SAMPLE CRM
         </span>
       )}
