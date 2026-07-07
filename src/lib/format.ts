@@ -30,9 +30,11 @@ export function humanize(s?: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-/** ISO date -> "Jun 2026". */
+/** ISO date -> "Jun 2026". Year-only strings pass through unchanged, since
+ *  new Date('2025') would otherwise mislabel them as "Jan 2025". */
 export function shortDate(iso?: string): string {
   if (!iso) return 'n/a'
+  if (/^\d{4}$/.test(iso.trim())) return iso.trim()
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return iso
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })

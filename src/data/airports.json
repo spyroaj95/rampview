@@ -3268,7 +3268,6 @@
       {
         "headline": "Massport reports 374 airside charging ports for tenant-owned GSE as tenants electrify tugs and tractors at Logan",
         "url": "https://www.massport.com/environment/roadmap-to-net-zero/electric-vehicle-charging",
-        "date": "undated Massport page, accessed 2026-07",
         "relevance": "Existing airside charging infrastructure and an electrifying tenant GSE fleet lower the barrier to deploying retrofit autonomous electric baggage tractors. Companion page: https://www.massport.com/environment/roadmap-to-net-zero/ev-fleet-transition"
       }
     ],
@@ -5299,14 +5298,16 @@
     ],
     "tailwinds": [
       {
-        "headline": "Swissport–Aurrigo pilot at ZRH (2025)",
-        "relevance": "Signals handler appetite for autonomy; the account is winnable if Aurrigo underdelivers"
+        "headline": "Swissport and Aurrigo launch first global pilot of autonomous ground handling at ZRH",
+        "relevance": "Signals handler appetite for autonomy; the account is winnable if Aurrigo underdelivers",
+        "date": "2025-05-21",
+        "url": "https://aurrigo.com/swissport-and-aurrigo-launch-first-global-pilot-of-autonomous-ground-handling/"
       }
     ],
     "sources": [
       "Swissport–Aurrigo ZRH pilot announcement (2025)",
       "Flughafen Zürich AG profile",
-      "https://www.aviationpros.com/ground-handling/press-release/55293003/swissport-swissport-launches-industry-first-autonomous-ground-handling-pilot-with-aurrigo",
+      "https://aurrigo.com/swissport-and-aurrigo-launch-first-global-pilot-of-autonomous-ground-handling/ (announcement, May 21 2025)",
       "https://www.airport-suppliers.com/aurrigo-international-brings-auto-dolly-tug-and-auto-shuttle-to-pte-world-2026/"
     ],
     "lastUpdated": "2026-07-03"
